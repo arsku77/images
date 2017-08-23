@@ -41,11 +41,11 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'profile/<nickname:\w+>' => 'user/profile/view',
             ],
         ],
     ],
