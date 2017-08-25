@@ -12,8 +12,11 @@ use yii\helpers\HtmlPurifier;
 <p><?php echo HtmlPurifier::process($user->about); ?></p>
 <hr>
 <?php if($user->id <> $currentUser->id): ?>
-    <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
-    <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
+    <?php if($currentUser->getFollower($user)): ?>
+        <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
+    <?php else: ?>
+        <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
+    <?php endif; ?>
 <?php endif; ?>
 <hr>
 
