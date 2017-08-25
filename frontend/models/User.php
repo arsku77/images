@@ -281,11 +281,8 @@ class User extends ActiveRecord implements IdentityInterface
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         $ids = $redis->sinter($key1, $key2);
-        if ($ids = $redis->sinter($key1, $key2)) {
             return User::find()->select('id, username, nickname')->where(['id' => $ids])->orderBy('username')->asArray()->all();
 
-        }
-         return null;
     }
 
 }

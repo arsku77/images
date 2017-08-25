@@ -19,7 +19,6 @@ use yii\helpers\HtmlPurifier;
 
 <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
 <div class="row">
-    <?php if ($currentUser->getMutualSubscriptionsTo($user)): ?>
 
     <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
         <div class="col-md-12">
@@ -29,7 +28,6 @@ use yii\helpers\HtmlPurifier;
         </div>
     <?php endforeach; ?>
 
-    <?php endif; ?>
 
 </div>
 
