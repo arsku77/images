@@ -12,7 +12,7 @@ use yii\helpers\HtmlPurifier;
     <h3><?php echo Html::encode($user->username); ?></h3>
     <p><?php echo HtmlPurifier::process($user->about); ?></p>
     <hr>
-    <?php if($user->id <> $currentUser->id): ?>
+    <?php if(!($currentUser->isEqualUsers($user))): ?>
         <?php if($currentUser->getFollower($user)): ?>
             <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
         <?php else: ?>

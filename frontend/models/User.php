@@ -257,6 +257,14 @@ class User extends ActiveRecord implements IdentityInterface
         $key = "user:{$user->getId()}:followers";
        return $redis->sismember($key, $this->getId());
     }
+    /**
+     * @param \frontend\models\User $user
+     * @return boolean
+     */
+    public function isEqualUsers(User $user)
+    {
+        return ($user->getId() == $this->getId()) ? true : false;
+    }
 
     /**
      * @return mixed
