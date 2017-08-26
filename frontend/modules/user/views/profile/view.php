@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 ?>
+
 <?php if (!Yii::$app->user->isGuest): ?>
     <h3><?php echo Html::encode($user->username); ?></h3>
     <p><?php echo HtmlPurifier::process($user->about); ?></p>
@@ -19,7 +20,11 @@ use yii\helpers\HtmlPurifier;
         <?php endif; ?>
     <?php endif; ?>
     <hr>
-    <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
+
+    <?php if(!empty($currentUser->getMutualSubscriptionsTo($user))): ?>
+        <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
+    <?php endif; ?>
+
     <div class="row">
 
         <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
