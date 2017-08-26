@@ -7,45 +7,48 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 ?>
-
-<h3><?php echo Html::encode($user->username); ?></h3>
-<p><?php echo HtmlPurifier::process($user->about); ?></p>
-<hr>
-<?php if($user->id <> $currentUser->id): ?>
-    <?php if($currentUser->getFollower($user)): ?>
-        <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
-    <?php else: ?>
-        <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
+<?php if (!Yii::$app->user->isGuest): ?>
+    <h3><?php echo Html::encode($user->username); ?></h3>
+    <p><?php echo HtmlPurifier::process($user->about); ?></p>
+    <hr>
+    <?php if($user->id <> $currentUser->id): ?>
+        <?php if($currentUser->getFollower($user)): ?>
+            <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
+        <?php else: ?>
+            <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
+        <?php endif; ?>
     <?php endif; ?>
+    <hr>
+    <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
+    <div class="row">
+
+        <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
+            <div class="col-md-12">
+                <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($item['nickname']) ? $item['nickname'] : $item['id']]); ?>">
+                    <?php echo Html::encode($item['username']); ?>
+                </a>
+            </div>
+        <?php endforeach; ?>
+
+
+    </div>
+
+    <hr>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1">
+        Subscriptions: <?php echo $user->countSubscriptions(); ?>
+    </button>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2">
+        Followers: <?php echo $user->countFollowers(); ?>
+    </button>
+<?php else: ?>
+
+    <a href="<?php echo Url::to(['/user/default/login']); ?>" class="btn btn-info">Login</a>
+
 <?php endif; ?>
-<hr>
-
-<h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
-<div class="row">
-
-    <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
-        <div class="col-md-12">
-            <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($item['nickname']) ? $item['nickname'] : $item['id']]); ?>">
-                <?php echo Html::encode($item['username']); ?>
-            </a>
-        </div>
-    <?php endforeach; ?>
-
-
-</div>
-
-<hr>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1">
-    Subscriptions: <?php echo $user->countSubscriptions(); ?>
-</button>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2">
-    Followers: <?php echo $user->countFollowers(); ?>
-</button>
-
 
 <!-- Modal subscriptions -->
 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
