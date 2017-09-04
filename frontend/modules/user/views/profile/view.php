@@ -2,16 +2,36 @@
 /* @var $this yii\web\View */
 /* @var $user frontend\models\User */
 /* @var $currentUser frontend\models\User */
+/* @var $modelPicture frontend\modules\user\models\forms\PictureForm */
+
 
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
+use dosamigos\fileupload\FileUpload;
 ?>
 
 <?php if (!Yii::$app->user->isGuest): ?>
     <h3><?php echo Html::encode($user->username); ?></h3>
     <p><?php echo HtmlPurifier::process($user->about); ?></p>
     <hr>
+    <?= FileUpload::widget([
+        'model' => $modelPicture,
+        'attribute' => 'picture',
+        'url' => ['/user/profile/upload-picture'], // your url, this is just for demo purposes,
+        'options' => ['accept' => 'image/*'],
+        'clientEvents' => [
+            'fileuploaddone' => 'function(e, data) {
+                                console.log(e);
+                                console.log(data);
+                                }',
+            'fileuploadfail' => 'function(e, data) {
+                                console.log(e);
+                                console.log(data);
+                                }',
+        ],
+    ]); ?>
+
     <?php if(!($currentUser->isEqualUsers($user))): ?>
         <?php if($currentUser->getFollower($user)): ?>
             <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
