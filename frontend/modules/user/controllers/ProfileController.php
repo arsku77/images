@@ -35,16 +35,12 @@ class ProfileController extends Controller
         $model->picture = UploadedFile::getInstance($model, 'picture');
 
         if ($model->validate()) {
-            $pictureUri = Yii::$app->storage->saveUploadedFile($model->picture);
-            echo '<pre>';
-            print_r($model->attributes);
-            print_r($pictureUri);
-            echo '<pre>';
-            echo 'ok';die;
+            $user = Yii::$app->user->identity;
+            $user->picture = Yii::$app->storage->saveUploadedFile($model->picture); // 15/27/30379e706840f951d22de02458a4788eb55f.jpg
+            if ($user->save(false, ['picture'])) {
+                print_r($user->attributes);die;
+            }
         }
-        echo '<pre>';
-        print_r($model->getErrors());
-        echo '<pre>';
     }
 
 

@@ -15,6 +15,8 @@ use dosamigos\fileupload\FileUpload;
     <h3><?php echo Html::encode($user->username); ?></h3>
     <p><?php echo HtmlPurifier::process($user->about); ?></p>
     <hr>
+    <img src="<?php echo $user->getPicture(); ?>" />
+
     <?= FileUpload::widget([
         'model' => $modelPicture,
         'attribute' => 'picture',
