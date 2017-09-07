@@ -15,7 +15,11 @@ use dosamigos\fileupload\FileUpload;
     <h3><?php echo Html::encode($user->username); ?></h3>
     <p><?php echo HtmlPurifier::process($user->about); ?></p>
     <hr>
-    <img src="<?php echo $user->getPicture(); ?>" />
+    <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" />
+
+    <div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
+    <div class="alert alert-danger display-none" id="profile-image-fail"></div>
+
 
     <?= FileUpload::widget([
         'model' => $modelPicture,
@@ -24,13 +28,15 @@ use dosamigos\fileupload\FileUpload;
         'options' => ['accept' => 'image/*'],
         'clientEvents' => [
             'fileuploaddone' => 'function(e, data) {
-                                console.log(e);
-                                console.log(data);
-                                }',
-            'fileuploadfail' => 'function(e, data) {
-                                console.log(e);
-                                console.log(data);
-                                }',
+                if (data.result.success) {
+                    $("#profile-image-success").show();
+                    $("#profile-image-fail").hide();
+                    $("#profile-picture").attr("src", data.result.pictureUri);
+                } else {
+                    $("#profile-image-fail").html(data.result.errors.picture).show();
+                    $("#profile-image-success").hide();
+                }               
+            }',
         ],
     ]); ?>
 
