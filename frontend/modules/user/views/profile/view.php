@@ -16,11 +16,11 @@ use dosamigos\fileupload\FileUpload;
     <p><?php echo HtmlPurifier::process($user->about); ?></p>
     <hr>
     <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" />
-
+    <br>
     <div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
     <div class="alert alert-danger display-none" id="profile-image-fail"></div>
 
-
+<?php if ($currentUser->equals($user)): ?>
     <?= FileUpload::widget([
         'model' => $modelPicture,
         'attribute' => 'picture',
@@ -39,8 +39,10 @@ use dosamigos\fileupload\FileUpload;
             }',
         ],
     ]); ?>
+    <?php endif; ?>
 
-    <?php if(!($currentUser->isEqualUsers($user))): ?>
+    
+    <?php if(!($currentUser->equals($user))): ?>
         <?php if($currentUser->getFollower($user)): ?>
             <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
         <?php else: ?>

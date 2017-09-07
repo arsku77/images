@@ -264,10 +264,10 @@ class User extends ActiveRecord implements IdentityInterface
      * @param \frontend\models\User $user
      * @return boolean
      */
-    public function isEqualUsers(User $user)
-    {
-        return ($user->getId() == $this->getId()) ? true : false;
-    }
+//    public function isEqualUsers(User $user)
+//    {
+//        return ($user->getId() == $this->getId()) ? true : false;
+//    }
 
     /**
      * @return mixed
