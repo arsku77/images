@@ -58,13 +58,33 @@ class Storage extends Component implements StorageInterface
     protected function getFilename(UploadedFile $file)
     {
         // $file->tempname   -   /tmp/qio93kf
-        $manager = new ImageManager(array('driver' => 'imagick'));
-        $newTempFileResize = $manager->make($file->tempName)->resize(20,20)->save();
-        $hash = sha1_file($file->tempName); // 0ca9277f91e40054767f69afeb0426711ca0fddd
+        if ($this->fileResize($file)) {
+            $hash = sha1_file($file->tempName);// 0ca9277f91e40054767f69afeb0426711ca0fddd
 
-        $name = substr_replace($hash, '/', 2, 0);
-        $name = substr_replace($name, '/', 5, 0);  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd
-        return $name . '.' . $file->extension;  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
+
+            $name = substr_replace($hash, '/', 2, 0);
+            $name = substr_replace($name, '/', 5, 0);  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd
+            return $name . '.' . $file->extension;  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
+        }
+        return null;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     */
+    protected function fileResize(UploadedFile $file): bool
+    {
+        $manager = new ImageManager(array('driver' => 'imagick'));
+        $newTempFileResize = $manager->make($file->tempName);
+//        echo '<pre>';
+//        print_r($newTempFileResize->filesize());
+//        echo '<pre>';die;
+        if ($newTempFileResize->filesize()>1200000){
+            $newTempFileResize->resize(600,800)->save();
+            return true;
+        } else { return true;}
+        return false;
     }
 
     /**
