@@ -73,15 +73,13 @@ class Storage extends Component implements StorageInterface
      * @param UploadedFile $file
      * @return bool
      */
-    protected function fileResize(UploadedFile $file): bool
+    protected function fileResize(UploadedFile $file)
     {
         $manager = new ImageManager(array('driver' => 'imagick'));
-        $newTempFileResize = $manager->make($file->tempName);
-//        echo '<pre>';
-//        print_r($newTempFileResize->filesize());
-//        echo '<pre>';die;
-        if ($newTempFileResize->filesize()>1200000){
-            $newTempFileResize->resize(600,800)->save();
+        $tempFileForResize = $manager->make($file->tempName);
+        if ($tempFileForResize->filesize()>Yii::$app->params['maxFileSizeUserAvatar']*1024000){
+            $tempFileForResize->resize(Yii::$app->params['widthImageAvatar'],
+                        Yii::$app->params['heightImageAvatar'])->save();
             return true;
         } else { return true;}
         return false;
