@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Component;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
+use Intervention\Image\ImageManager;
 
 /**
  * File storage compoment
@@ -57,7 +58,8 @@ class Storage extends Component implements StorageInterface
     protected function getFilename(UploadedFile $file)
     {
         // $file->tempname   -   /tmp/qio93kf
-
+        $manager = new ImageManager(array('driver' => 'imagick'));
+        $newTempFileResize = $manager->make($file->tempName)->resize(20,20)->save();
         $hash = sha1_file($file->tempName); // 0ca9277f91e40054767f69afeb0426711ca0fddd
 
         $name = substr_replace($hash, '/', 2, 0);
