@@ -39,6 +39,17 @@ use dosamigos\fileupload\FileUpload;
             }',
         ],
     ]); ?>
+        <?= Html::a('Delete', ['/user/profile/delete-picture', 'filename' => $user->picture], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this picture?',
+                'method' => 'post',
+            ],
+        ]) ?>
+
+
+
+
     <?php endif; ?>
 
     

@@ -51,6 +51,38 @@ class Storage extends Component implements StorageInterface
         }
     }
 
+    public function deleteFile(string $filename){
+        echo '<pre>';
+        echo '<br>';
+        print_r($filename);
+        echo '<br>';
+        print_r($this->deletePath($filename));
+        echo '<br>';
+//        print_r($user->picture);
+//        echo '<br>';
+//        print_r(Yii::$app->storage->getFile($user->picture));
+        echo '<pre>';
+//        if (file_exists('/var/www/project/frontend/web/uploads/75/18/ebcbfd1a59b263c2fb24c63bbb1956295207.jpg')){
+        if (file_exists($this->deletePath($filename))){
+            return true;
+        }
+        return false;
+    }
+
+    protected function deletePath(string $filename)
+    {
+        //  comes   0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
+
+        $path = $this->getStoragePath() . $filename;
+        //     /var/www/project/frontend/web/uploads/0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
+
+       return $path = FileHelper::normalizePath($path);
+
+//        if (FileHelper::createDirectory(dirname($path))) {
+//            return $path;
+//        }
+    }
+
     /**
      * @param UploadedFile $file
      * @return string

@@ -15,4 +15,6 @@ interface StorageInterface
     public function saveUploadedFile(UploadedFile $file);
 
     public function getFile(string $filename);
+
+    public function deleteFile(string $filename);
 }

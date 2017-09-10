@@ -51,6 +51,52 @@ class ProfileController extends Controller
         return ['success' => false, 'errors' => $model->getErrors()];
     }
 
+    /**
+     * Handle profile image upload via ajax request
+     */
+    public function actionDeletePicture(string $filename)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $user = Yii::$app->user->identity;
+
+
+//check for file name from form == from value user table picture
+if ($filename == $user->picture){
+
+//    echo '<pre>';
+//    print_r($filename);
+//    echo '<br>';
+//    print_r($user->picture);
+//    echo '<br>';
+//    print_r(Yii::$app->storage->getFile($user->picture));
+//    echo '<pre>';
+        if (Yii::$app->storage->deleteFile($filename)){
+            return [
+                'success' => true,
+            ];
+        }
+    return [
+        'success' => false,
+    ];
+
+
+}
+
+
+
+//            $user->picture = Yii::$app->storage->saveUploadedFile($model->picture); // 15/27/30379e706840f951d22de02458a4788eb55f.jpg
+
+//            if ($user->save(false, ['picture'])) {
+//                return [
+//                    'success' => true,
+//                    'pictureUri' => Yii::$app->storage->getFile($user->picture),
+//                ];
+//            }
+
+//        return ['success' => false, 'errors' => $model->getErrors()];
+    }
+
 
     /**
      * @param string $nickname
