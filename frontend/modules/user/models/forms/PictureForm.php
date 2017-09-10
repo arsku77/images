@@ -15,7 +15,8 @@ class PictureForm extends Model
         return [
             [['picture'], 'file',
                 'extensions' => ['jpg'],
-                'checkExtensionByMimeType' => true
+                'checkExtensionByMimeType' => true,
+                'maxSize' => Yii::$app->params['maxFileSizeUserAvatar']*1024000,
             ],
         ];
     }

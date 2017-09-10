@@ -77,14 +77,32 @@ class Storage extends Component implements StorageInterface
     {
         $manager = new ImageManager(array('driver' => 'imagick'));
         $tempFileForResize = $manager->make($file->tempName);
-        if ($tempFileForResize->filesize()>Yii::$app->params['maxFileSizeUserAvatar']*1024000){
-            $tempFileForResize->resize(Yii::$app->params['widthImageAvatar'],
-                        Yii::$app->params['heightImageAvatar'])->save();
+        $widthOrigin = $tempFileForResize->getWidth();
+        $heightOrigin = $tempFileForResize->getHeight();
+        $widthAvatarImageParams = Yii::$app->params['widthImageAvatar'];
+        $heightAvatarImageParams = Yii::$app->params['heightImageAvatar'];
+        $widthNewSize = 0;
+        $heightNewSize = 0;
+        $changed = false;
+
+        if ($widthOrigin > $widthAvatarImageParams) {
+            $widthNewSize = $widthAvatarImageParams;
+            $heightNewSize = $heightOrigin;
+            $changed = true;
+        }
+        if ($heightOrigin > $heightAvatarImageParams) {
+            $heightNewSize = $heightAvatarImageParams;
+            ($widthNewSize = 0) ? $widthNewSize = $widthOrigin :
+                $changed = true;
+        }
+
+        if ($changed) {
+            return $tempFileForResize->resize($widthNewSize, $heightNewSize)->save();
+        } else {
             return true;
-        } else { return true;}
+        }
         return false;
     }
-
     /**
      * @return string
      */
