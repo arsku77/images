@@ -41,7 +41,7 @@ use dosamigos\fileupload\FileUpload;
             ],
         ]); ?>
 
-        <?php if ($user->picture>''): ?>
+        <?php if ($user->picture > ''): ?>
             <?= Html::a('Delete', ['/user/profile/delete-picture', 'filename' => $user->picture], [
                 'class' => 'btn btn-danger',
                 'id' => 'btnDelete',

@@ -52,20 +52,18 @@ class Storage extends Component implements StorageInterface
     }
 
     public function deleteFile(string $filename){
-        echo '<pre>';
-        echo '<br>';
-        print_r($filename);
-        echo '<br>';
-        print_r($this->deletePath($filename));
-        echo '<br>';
-//        print_r($user->picture);
-//        echo '<br>';
-//        print_r(Yii::$app->storage->getFile($user->picture));
-        echo '<pre>';
 //        if (file_exists('/var/www/project/frontend/web/uploads/75/18/ebcbfd1a59b263c2fb24c63bbb1956295207.jpg')){
         if (file_exists($this->deletePath($filename))){
             if (unlink($this->deletePath($filename))){
-                return true;
+                //check empty or not directory
+                if ($files = glob(substr($this->deletePath($filename),0,-41) . "/*")) {
+                    return true;///var/www/project/frontend/web/uploads/75/18 not empty
+                } else {
+                    rmdir(substr($this->deletePath($filename),0,-41));//empty
+                    rmdir(substr($this->deletePath($filename),0,-44));
+                    return true;
+                }
+
             }
 
         }
@@ -79,7 +77,7 @@ class Storage extends Component implements StorageInterface
         $path = $this->getStoragePath() . $filename;
         //     /var/www/project/frontend/web/uploads/0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
 
-       return $path = FileHelper::normalizePath($path);
+        return $path = FileHelper::normalizePath($path);
 
 //        if (FileHelper::createDirectory(dirname($path))) {
 //            return $path;
@@ -128,7 +126,7 @@ class Storage extends Component implements StorageInterface
         if ($heightOrigin > $heightAvatarImageParams) {
             $heightNewSize = $heightAvatarImageParams;
             ($widthNewSize = 0) ? $widthNewSize = $widthOrigin : $widthNewSize = $widthAvatarImageParams;
-                $changed = true;
+            $changed = true;
         }
 
         if ($changed) {
