@@ -60,44 +60,17 @@ class ProfileController extends Controller
 
         $user = Yii::$app->user->identity;
 
-
 //check for file name from form == from value user table picture
-if ($filename == $user->picture){
-
-//    echo '<pre>';
-//    print_r($filename);
-//    echo '<br>';
-//    print_r($user->picture);
-//    echo '<br>';
-//    print_r(Yii::$app->storage->getFile($user->picture));
-//    echo '<pre>';
-        if (Yii::$app->storage->deleteFile($filename)){
-            $user->picture ='';
-            if ($user->save(false, ['picture'])) {
-            return [
-                'success' => true,
-            ];
+        if ($filename == $user->picture){
+            if (Yii::$app->storage->deleteFile($filename)){
+                $user->picture ='';
+                if ($user->save(false, ['picture'])) {
+                    return $this->redirect(['/user/profile/view', 'nickname' => $user->nickname]);
+                }
             }
+            return false;//need write redirect 404
         }
-    return [
-        'success' => false,
-    ];
 
-
-}
-
-
-
-//            $user->picture = Yii::$app->storage->saveUploadedFile($model->picture); // 15/27/30379e706840f951d22de02458a4788eb55f.jpg
-
-//            if ($user->save(false, ['picture'])) {
-//                return [
-//                    'success' => true,
-//                    'pictureUri' => Yii::$app->storage->getFile($user->picture),
-//                ];
-//            }
-
-//        return ['success' => false, 'errors' => $model->getErrors()];
     }
 
 
