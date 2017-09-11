@@ -64,7 +64,10 @@ class Storage extends Component implements StorageInterface
         echo '<pre>';
 //        if (file_exists('/var/www/project/frontend/web/uploads/75/18/ebcbfd1a59b263c2fb24c63bbb1956295207.jpg')){
         if (file_exists($this->deletePath($filename))){
-            return true;
+            if (unlink($this->deletePath($filename))){
+                return true;
+            }
+
         }
         return false;
     }

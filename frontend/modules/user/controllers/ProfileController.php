@@ -72,9 +72,12 @@ if ($filename == $user->picture){
 //    print_r(Yii::$app->storage->getFile($user->picture));
 //    echo '<pre>';
         if (Yii::$app->storage->deleteFile($filename)){
+            $user->picture ='';
+            if ($user->save(false, ['picture'])) {
             return [
                 'success' => true,
             ];
+            }
         }
     return [
         'success' => false,
