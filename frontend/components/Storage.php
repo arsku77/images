@@ -63,25 +63,21 @@ class Storage extends Component implements StorageInterface
                     rmdir(substr($this->deletePath($filename),0,-44));
                     return true;
                 }
-
             }
-
         }
         return false;
     }
 
+    /**
+     * @param string $filename
+     * @return string
+     */
     protected function deletePath(string $filename)
     {
         //  comes   0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-
         $path = $this->getStoragePath() . $filename;
         //     /var/www/project/frontend/web/uploads/0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-
         return $path = FileHelper::normalizePath($path);
-
-//        if (FileHelper::createDirectory(dirname($path))) {
-//            return $path;
-//        }
     }
 
     /**

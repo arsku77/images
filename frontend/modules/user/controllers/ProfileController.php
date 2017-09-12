@@ -52,7 +52,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Handle profile image upload via ajax request
+     * Handle profile image delete
      */
     public function actionDeletePicture(string $filename)
     {
