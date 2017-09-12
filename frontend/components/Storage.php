@@ -52,15 +52,16 @@ class Storage extends Component implements StorageInterface
     }
 
     public function deleteFile(string $filename){
-//        if (file_exists('/var/www/project/frontend/web/uploads/75/18/ebcbfd1a59b263c2fb24c63bbb1956295207.jpg')){
-        if (file_exists($this->deletePath($filename))){
-            if (unlink($this->deletePath($filename))){
+        $file = $this->getStoragePath().$filename;
+        //        if (file_exists('/var/www/project/frontend/web/uploads/75/18/ebcbfd1a59b263c2fb24c63bbb1956295207.jpg')){
+        if (file_exists($file)){
+            if (unlink($file)){
                 //check empty or not directory
-                if ($files = glob(substr($this->deletePath($filename),0,-41) . "/*")) {
+                if ($files = glob(substr($file,0,-41) . "/*")) {
                     return true;///var/www/project/frontend/web/uploads/75/18 not empty
                 } else {
-                    rmdir(substr($this->deletePath($filename),0,-41));//empty
-                    rmdir(substr($this->deletePath($filename),0,-44));
+                    rmdir(substr($file,0,-41));//empty
+                    rmdir(substr($file,0,-44));
                     return true;
                 }
             }
@@ -68,17 +69,17 @@ class Storage extends Component implements StorageInterface
         return false;
     }
 
-    /**
-     * @param string $filename
-     * @return string
-     */
-    protected function deletePath(string $filename)
-    {
-        //  comes   0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-        $path = $this->getStoragePath() . $filename;
-        //     /var/www/project/frontend/web/uploads/0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-        return $path = FileHelper::normalizePath($path);
-    }
+//    /**
+//     * @param string $filename
+//     * @return string
+//     */
+//    protected function deletePath(string $filename)
+//    {
+//        //  comes   0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
+//        $path = $this->getStoragePath() . $filename;
+//        //     /var/www/project/frontend/web/uploads/0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
+//        return $path = FileHelper::normalizePath($path);
+//    }
 
     /**
      * @param UploadedFile $file

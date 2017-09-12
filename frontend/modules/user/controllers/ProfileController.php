@@ -54,25 +54,21 @@ class ProfileController extends Controller
     /**
      * Handle profile image delete
      */
-    public function actionDeletePicture(string $filename)
+    public function actionDeletePicture()
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $user = Yii::$app->user->identity;
-
-//check for file name from form == from value user table picture
-        if ($filename == $user->picture){
-            if (Yii::$app->storage->deleteFile($filename)){
-                $user->picture ='';
-                if ($user->save(false, ['picture'])) {
-                    return $this->redirect(['/user/profile/view', 'nickname' => $user->nickname]);
-                }
-            }
-            return false;//need write redirect 404
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
         }
 
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+        if ($currentUser->deletePicture()) {
+            Yii::$app->session->setFlash('success', 'Picture deleted');
+        } else {
+            Yii::$app->session->setFlash('danger', 'Error occured');
+        }
+        return $this->redirect(['/user/profile/view', 'nickname' => $currentUser->getNickname()]);
     }
-
 
     /**
      * @param string $nickname
