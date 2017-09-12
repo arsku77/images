@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Component;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
-use Intervention\Image\ImageManager;
+//use Intervention\Image\ImageManager;
 
 /**
  * File storage compoment
@@ -87,51 +87,14 @@ class Storage extends Component implements StorageInterface
     protected function getFilename(UploadedFile $file)
     {
         // $file->tempname   -   /tmp/qio93kf
-        if ($this->fileResize($file)) {
             $hash = sha1_file($file->tempName);// 0ca9277f91e40054767f69afeb0426711ca0fddd
 
 
             $name = substr_replace($hash, '/', 2, 0);
             $name = substr_replace($name, '/', 5, 0);  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd
             return $name . '.' . $file->extension;  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-        }
-        return null;
     }
 
-    /**
-     * @param UploadedFile $file
-     * @return bool
-     */
-    protected function fileResize(UploadedFile $file)
-    {
-        $manager = new ImageManager(array('driver' => 'imagick'));
-        $tempFileForResize = $manager->make($file->tempName);
-        $widthOrigin = $tempFileForResize->getWidth($file->tempName);
-        $heightOrigin = $tempFileForResize->getHeight($file->tempName);
-        $widthAvatarImageParams = Yii::$app->params['widthImageAvatar'];
-        $heightAvatarImageParams = Yii::$app->params['heightImageAvatar'];
-        $widthNewSize = 0;
-        $heightNewSize = 0;
-        $changed = false;
-
-        if ($widthOrigin > $widthAvatarImageParams) {
-            $widthNewSize = $widthAvatarImageParams;
-            $heightNewSize = $heightOrigin;
-            $changed = true;
-        }
-        if ($heightOrigin > $heightAvatarImageParams) {
-            $heightNewSize = $heightAvatarImageParams;
-            ($widthNewSize = 0) ? $widthNewSize = $widthOrigin : $widthNewSize = $widthAvatarImageParams;
-            $changed = true;
-        }
-
-        if ($changed) {
-            return $tempFileForResize->resize($widthNewSize, $heightNewSize)->save();
-        } else {
-            return true;
-        }
-        return false;
-    }
     /**
      * @return string
      */
