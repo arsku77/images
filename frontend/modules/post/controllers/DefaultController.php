@@ -53,6 +53,53 @@ class DefaultController extends Controller
             'currentUser' => $currentUser,
         ]);
     }
+
+    public function actionLike()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+        $post = $this->findPost($id);
+
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+
+        $post->like($currentUser);
+
+        return [
+            'success' => true,
+            'likesCount' => $post->countLikes(),
+        ];
+    }
+
+    public function actionUnlike()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+
+        $post->unLike($currentUser);
+
+        return [
+            'success' => true,
+            'likesCount' => $post->countLikes(),
+        ];
+    }
+
+
+
     /**
      * @param integer $id
      * @return User
