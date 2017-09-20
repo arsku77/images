@@ -10,5 +10,9 @@ return [
         'maxWidth' => 1280,
         'maxHeight' => 1024,
     ],
+    'postPicture' => [
+        'maxWidth' => 1024,
+        'maxHeight' => 768,
+    ],
 
 ];
