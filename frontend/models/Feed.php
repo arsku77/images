@@ -28,8 +28,20 @@ class Feed extends \yii\db\ActiveRecord
         return 'feed';
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['user_id', 'author_id', 'author_nickname', 'post_id', 'post_created_at'], 'integer'],
+            [['post_filename', 'post_created_at'], 'required'],
+            [['post_description'], 'string'],
+            [['author_name', 'author_picture', 'post_filename'], 'string', 'max' => 255],
+        ];
+    }
 
-     /**
+    /**
      * @inheritdoc
      */
     public function attributeLabels()
@@ -47,4 +59,15 @@ class Feed extends \yii\db\ActiveRecord
             'post_created_at' => 'Post Created At',
         ];
     }
+
+    /**
+     * @return mixed
+     */
+    public function countLikes()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("post:{$this->post_id}:likes");
+    }
+
 }

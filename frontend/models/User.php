@@ -32,8 +32,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     const DEFAULT_IMAGE = '/img/profile_default_image.jpg';
 
-
-
     /**
      * @inheritdoc
      */
@@ -249,25 +247,6 @@ class User extends ActiveRecord implements IdentityInterface
         $ids = $redis->smembers($key);
         return User::find()->select('id, username, nickname')->where(['id' => $ids])->orderBy('username')->asArray()->all();
     }
-    /**
-     * @param \frontend\models\User $user
-     * @return boolean
-     */
-    public function getFollower(User $user)
-    {
-        /* @var $redis Connection */
-        $redis = Yii::$app->redis;
-        $key = "user:{$user->getId()}:followers";
-       return $redis->sismember($key, $this->getId());
-    }
-    /**
-     * @param \frontend\models\User $user
-     * @return boolean
-     */
-//    public function isEqualUsers(User $user)
-//    {
-//        return ($user->getId() == $this->getId()) ? true : false;
-//    }
 
     /**
      * @return mixed
@@ -302,10 +281,11 @@ class User extends ActiveRecord implements IdentityInterface
 
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
-        $ids = $redis->sinter($key1, $key2);
-            return User::find()->select('id, username, nickname')->where(['id' => $ids])->orderBy('username')->asArray()->all();
 
+        $ids = $redis->sinter($key1, $key2);
+        return User::find()->select('id, username, nickname')->where(['id' => $ids])->orderBy('username')->asArray()->all();
     }
+
     /**
      * Get profile picture
      * @return string
@@ -319,19 +299,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Delete picture from user record and file system
-     * @return boolean
-     */
-    public function deletePicture()
-    {
-        if ($this->picture && Yii::$app->storage->deleteFile($this->picture)) {
-            $this->picture = null;
-            return $this->save(false, ['picture']);
-        }
-        return false;
-    }
-
-    /**
      * Get data for newsfeed
      * @param integer $limit
      * @return array
@@ -342,6 +309,16 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Feed::className(), ['user_id' => 'id'])->orderBy($order)->limit($limit)->all();
     }
 
-
+    /**
+     * Check whether current user likes post with given id
+     * @param integer $postId
+     * @return boolean
+     */
+    public function likesPost(int $postId)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return (bool) $redis->sismember("user:{$this->getId()}:likes", $postId);
+    }
 
 }
