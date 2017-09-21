@@ -58,7 +58,7 @@ use dosamigos\fileupload\FileUpload;
 
 
     <?php if(!($currentUser->equals($user))): ?>
-        <?php if($currentUser->getFollower($user)): ?>
+        <?php if($currentUser->getFollowers($user)): ?>
             <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
         <?php else: ?>
             <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
