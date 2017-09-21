@@ -17,7 +17,7 @@ class m170921_051222_create_feed_table extends Migration
             'user_id' => $this->integer(),
             'author_id' => $this->integer(),
             'author_name' => $this->string(),
-            'author_nickname' => $this->integer(70),
+            'author_nickname' => $this->string(70),
             'author_picture' => $this->string(),
             'post_id' => $this->integer(),
             'post_filename' => $this->string()->notNull(),
