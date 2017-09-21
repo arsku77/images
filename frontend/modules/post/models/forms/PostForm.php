@@ -44,7 +44,7 @@ class PostForm extends Model
     {
         $this->user = $user;
         $this->on(self::EVENT_AFTER_VALIDATE, [$this, 'resizePicture']);
-       // $this->on(self::EVENT_POST_CREATED, [Yii::$app->feedService, 'addToFeeds']);
+        $this->on(self::EVENT_POST_CREATED, [Yii::$app->feedService, 'addToFeeds']);
     }
 
     /**
@@ -82,11 +82,14 @@ class PostForm extends Model
             $post = new Post();//sukuriam naują egzempliorių
             $post->description = $this->description;//jo savybei suteikiam duomenį iš formos
             $post->created_at = time();// šiai naujo egzemplioriaus savybei priskiriam dabartinę datą
-            $post->filename = Yii::$app->storage->saveUploadedFile($this->picture);
+            $post->filename = Yii::$app->storage->saveUploadedFile($this->picture);//apdorojam ir irasom
             $post->user_id = $this->user->getId();
-            return $post->save(false);
+            if ($post->save(false)) {
+                $this->trigger(self::EVENT_POST_CREATED);
+                return  true;
+            }
         }
-
+        return false;//po blogos validacijos
     }
 
     /**
