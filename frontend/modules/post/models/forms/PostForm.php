@@ -7,6 +7,7 @@ use yii\base\Model;
 use frontend\models\Post;
 use frontend\models\User;
 use Intervention\Image\ImageManager;
+use frontend\models\events\PostCreatedEvent;
 
 class PostForm extends Model
 {
@@ -85,7 +86,11 @@ class PostForm extends Model
             $post->filename = Yii::$app->storage->saveUploadedFile($this->picture);//apdorojam ir irasom
             $post->user_id = $this->user->getId();
             if ($post->save(false)) {
-                $this->trigger(self::EVENT_POST_CREATED);
+                $event = new PostCreatedEvent();
+                $event->user = $this->user;//is post creator
+                $event->post = $post;
+
+                $this->trigger(self::EVENT_POST_CREATED, $event);
                 return  true;
             }
         }
