@@ -82,7 +82,9 @@ class PostForm extends Model
 
             $post = new Post();//sukuriam naują egzempliorių
             $post->description = $this->description;//jo savybei suteikiam duomenį iš formos
-            $post->created_at = time();// šiai naujo egzemplioriaus savybei priskiriam dabartinę datą
+
+//            $post->created_at = time();// šiai naujo egzemplioriaus savybei priskiriam dabartinę datą
+
             $post->filename = Yii::$app->storage->saveUploadedFile($this->picture);//apdorojam ir irasom
             $post->user_id = $this->user->getId();
             if ($post->save(false)) {

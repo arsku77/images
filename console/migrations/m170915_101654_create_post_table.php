@@ -16,6 +16,7 @@ class m170915_101654_create_post_table extends Migration
             'filename' => $this->string()->notNull(),
             'description' => $this->text(),
             'created_at' => $this->integer()->notNull(),
+            'created_at' => $this->integer()->notNull(),
         ]);
     }
 
