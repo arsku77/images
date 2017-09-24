@@ -16,7 +16,7 @@ $this->title = 'My Yii Application';
             <?php foreach ($feedItems as $feedItem): ?>
                 <?php /* @var $feedItem Feed */ ?>
 
-                <div class="col-md-12">
+                <a class="col-md-12">
 
                     <div class="col-md-12">
                         <img src="<?php echo $feedItem->author_picture; ?>" width="30" height="30" />
@@ -25,7 +25,11 @@ $this->title = 'My Yii Application';
                         </a>
                     </div>
 
-                    <img src="<?php echo Yii::$app->storage->getFile($feedItem->post_filename); ?>" />
+
+                    <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
+                        <img src="<?php echo Yii::$app->storage->getFile($feedItem->post_filename); ?>" />
+                    </a>
+
                     <div class="col-md-12">
                         <?php echo HtmlPurifier::process($feedItem->post_description); ?>
                     </div>
