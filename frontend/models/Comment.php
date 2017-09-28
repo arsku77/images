@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "comment".
@@ -17,6 +18,13 @@ use Yii;
  */
 class Comment extends \yii\db\ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'class' => TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -51,5 +59,11 @@ class Comment extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+    public static function getCommentsList($max, $post_id)
+    {
+        $order = ['created_at' => SORT_DESC];
+        return self::find()->where(['post_id' => $post_id])->orderby($order)->limit($max)->all();
+
     }
 }

@@ -4,42 +4,58 @@
 
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
-
+use frontend\modules\post\widgets\commentsList\CommentsList;
 ?>
-<div class="post-default-index">
+    <div class="post-default-index">
 
-    <div class="row">
+        <div class="row">
+            <div class="col-md-12">
+                <?php if ($post->user): ?>
+                    <img src="<?php echo $post->user->getPicture(); ?>" width="30" height="30" />
+                    <?php echo $post->user->username; ?>
+                <?php endif; ?>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <img src="<?php echo $post->getImage(); ?>" />
+            </div>
 
-        <div class="col-md-12">
-            <?php if ($post->user): ?>
-                <?php echo $post->user->username; ?>
-            <?php endif; ?>
+            <div class="col-md-12">
+                <?php echo Html::encode($post->description); ?>
+            </div>
         </div>
 
         <div class="col-md-12">
-            <img src="<?php echo $post->getImage(); ?>" />
+            Likes: <span class="likes-count"><?php echo $post->countLikes(); ?></span>
+
+            <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
+                Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
+            </a>
+            <a href="#" class="btn btn-primary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
+                Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+            </a>
         </div>
 
-        <div class="col-md-12">
-            <?php echo Html::encode($post->description); ?>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <div class="comment">
+                    <!--                <h2 class="post-title">news list</h2>-->
+                    <?php echo CommentsList::widget([
+                        'showLimit' => Yii::$app->params['maxCommentsInOnePost'],
+                        'post_id' => $post->id,
+                    ]); ?>
+
+                </div>
+
+            </div>
         </div>
+
+
 
     </div>
-    <div class="col-md-12">
-        Likes: <span class="likes-count"><?php echo $post->countLikes(); ?></span>
 
-        <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
-            Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
-        </a>
-        <a href="#" class="btn btn-primary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
-            Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
-        </a>
-
-    </div>
-
-
-
-</div>
 
 <?php $this->registerJsFile('@web/js/likes.js', [
     'depends' => JqueryAsset::className(),

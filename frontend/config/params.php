@@ -15,5 +15,6 @@ return [
         'maxHeight' => 768,
     ],
     'feedPostLimit' => 200,
+    'maxCommentsInOnePost' => 6,
 
 ];
