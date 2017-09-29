@@ -49,8 +49,6 @@ use frontend\modules\post\widgets\commentsList\CommentsList;
                     <?= $this->render('comment/_create', [
                         'model' => $modelComment,
                         'post_id' => $post->id,
-                        'author_id' => $currentUser->getId(),
-
                     ]) ?>
                 </div>
 

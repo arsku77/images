@@ -1,8 +1,6 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha;
-
 ?>
 <p>
     Comment respectfully comment. Thank you.
@@ -16,10 +14,6 @@ use yii\captcha\Captcha;
         ]); ?>
 
         <?= $form->field($model, 'parent_id')->textInput(['autofocus' => true]) ?>
-
-        <?= $form->field($model, 'post_id')->textInput() ?>
-
-        <?= $form->field($model, 'author_id')->textInput() ?>
 
         <?= $form->field($model, 'text')->textarea(['rows' => 6])->label('Comment') ?>
 

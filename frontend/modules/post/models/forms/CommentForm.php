@@ -30,18 +30,17 @@ class CommentForm extends Model
     public function rules()
     {
         return [
-            [['parent_id', 'post_id', 'author_id'], 'integer'],
-            [['post_id', 'author_id'], 'required'],
+//            [['parent_id', 'post_id', 'author_id'], 'integer'],
+            [['parent_id'], 'integer'],
+          //  [['post_id', 'author_id'], 'required'],
             [['text'], 'string', 'max' => Yii::$app->params['maxCommentLenghtInPost']],
-            // verifyCode needs to be entered correctly
-           // ['verifyCode', 'captcha'],
 
         ];
     }
 
     /**
      * CommentForm constructor.
-     * @param Comment $comment
+     * @param Post $post, User $user
      */
     public function __construct(Post $post, User $user)
     {
@@ -50,22 +49,20 @@ class CommentForm extends Model
     }
 
     /**
+     * Comment save method
      * @return boolean
      */
     public function save()
     {
-        if ($this->validate()) {
-//            echo '<pre>';
-//            print_r($this);
-//            echo '<pre>';die;
 
+        if ($this->validate()) {
 
             $comment = new Comment();//sukuriam naują egzempliorių
 
-            $comment->parent_id = $this->parent_id;//jo savybei suteikiam duomenį iš formos
-            $comment->post_id = $this->post->getId();//jo savybei suteikiam duomenį iš formos
-            $comment->author_id = $this->user->getId();//jo savybei suteikiam duomenį iš formos
-            $comment->text = $this->text;//jo savybei suteikiam duomenį iš formos
+            $comment->parent_id = $this->parent_id;
+            $comment->post_id = $this->post->getId();
+            $comment->author_id = $this->user->getId();
+            $comment->text = $this->text;
 
             if ($comment->save(false)) {
                 return true;
@@ -73,6 +70,5 @@ class CommentForm extends Model
             return false;
         }
     }
-
 
 }

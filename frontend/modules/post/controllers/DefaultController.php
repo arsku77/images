@@ -68,6 +68,7 @@ class DefaultController extends Controller
      */
     public function actionCreateComment($id)
     {
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/user/default/login']);
         }
@@ -76,12 +77,10 @@ class DefaultController extends Controller
         $post = $this->findPost($id);
         $model = new CommentForm($post, $currentUser);
 
-//        echo '<pre>';
-//        print_r($model);
-//        echo '<pre>';die;
-
-
         if ($model->load(Yii::$app->request->post())) {
+//            echo '<pre>';
+//            print_r($model);
+//            echo '<pre>';die;
 
             if ($model->save()) {
 
@@ -92,6 +91,7 @@ class DefaultController extends Controller
 
         return $this->redirect(['view', 'id' => $id]);
     }
+
 
     public function actionLike()
     {
