@@ -9,7 +9,7 @@ use yii\web\UploadedFile;
 use frontend\models\Post;
 use frontend\modules\post\models\forms\PostForm;
 use frontend\modules\post\models\forms\CommentForm;
-//use frontend\models\User;
+use frontend\models\Comment;
 
 /**
  * Default controller for the `post` module
@@ -66,7 +66,7 @@ class DefaultController extends Controller
     /**
      * create new comment
      */
-    public function actionCreateComment($id)
+    public function actionCreateComment($post_id)
     {
 
         if (Yii::$app->user->isGuest) {
@@ -74,7 +74,7 @@ class DefaultController extends Controller
         }
 
         $currentUser = Yii::$app->user->identity;
-        $post = $this->findPost($id);
+        $post = $this->findPost($post_id);
         $model = new CommentForm(null, $post, $currentUser);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -82,11 +82,35 @@ class DefaultController extends Controller
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('success', 'Comment created!');
-                return $this->redirect(['view', 'id' => $id]);
+                return $this->redirect(['view', 'id' => $post_id]);
             }
         }
 
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->redirect(['view', 'id' => $post_id]);
+    }
+
+    /**
+     * create new comment
+     */
+    public function actionDeleteComment($id)
+    {
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        $comment = Comment::findIdentity($id);
+
+        $currentUser = Yii::$app->user->identity;
+//we check to delete yours post comment
+        if (Post::findIdentity($comment->post_id)->user_id == $currentUser->getId()){
+
+            if ($comment->delete()) {
+                Yii::$app->session->setFlash('success', 'Comment deleted!');
+                return $this->redirect(['view', 'id' => $comment->post_id]);
+            }
+
+        }
     }
 
     /**

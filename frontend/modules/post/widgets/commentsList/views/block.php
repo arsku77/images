@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use frontend\models\User;
+use frontend\models\Post;
 use yii\bootstrap\ActiveForm;
 ?>
 
@@ -43,6 +44,19 @@ use yii\bootstrap\ActiveForm;
 
 
         </p>
+
+
+        <?php if (User::findIdentity(Post::findIdentity($item['post_id'])->user_id)->equals(Yii::$app->user->identity)): ?>
+
+            <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this comment?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+
+        <?php endif; ?>
         <hr>
 
 
