@@ -31,7 +31,7 @@ class CommentForm extends Model
     {
         return [
 //            [['parent_id', 'post_id', 'author_id'], 'integer'],
-            [['parent_id'], 'integer'],
+          //  [['parent_id'], 'integer'],
           //  [['post_id', 'author_id'], 'required'],
             [['text'], 'string', 'max' => Yii::$app->params['maxCommentLenghtInPost']],
 
@@ -59,7 +59,8 @@ class CommentForm extends Model
 
             $comment = new Comment();//sukuriam naują egzempliorių
 
-            $comment->parent_id = $this->parent_id;
+//            $comment->parent_id = $this->parent_id;
+            $comment->parent_id = 0;
             $comment->post_id = $this->post->getId();
             $comment->author_id = $this->user->getId();
             $comment->text = $this->text;
