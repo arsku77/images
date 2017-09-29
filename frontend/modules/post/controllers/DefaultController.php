@@ -66,7 +66,7 @@ class DefaultController extends Controller
     /**
      * create new comment
      */
-    public function actionCreateComment($post_id)
+    public function actionCreateComment($id)
     {
 
         if (Yii::$app->user->isGuest) {
@@ -74,7 +74,7 @@ class DefaultController extends Controller
         }
 
         $currentUser = Yii::$app->user->identity;
-        $post = $this->findPost($post_id);
+        $post = $this->findPost($id);
         $model = new CommentForm(null, $post, $currentUser);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -82,11 +82,11 @@ class DefaultController extends Controller
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('success', 'Comment created!');
-                return $this->redirect(['view', 'id' => $post_id]);
+                return $this->redirect(['view', 'id' => $id]);
             }
         }
 
-        return $this->redirect(['view', 'id' => $post_id]);
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**
