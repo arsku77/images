@@ -8,6 +8,7 @@ use yii\web\Response;
 use yii\web\UploadedFile;
 use frontend\models\Post;
 use frontend\modules\post\models\forms\PostForm;
+use frontend\modules\post\models\forms\CommentForm;
 //use frontend\models\User;
 
 /**
@@ -51,11 +52,45 @@ class DefaultController extends Controller
     {
         /* @var $currentUser User */
         $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+        $modelComment = new CommentForm($post, $currentUser);
 
         return $this->render('view', [
-            'post' => $this->findPost($id),
+            'post' => $post,
             'currentUser' => $currentUser,
+            'modelComment' => $modelComment
+
         ]);
+    }
+
+    /**
+     *
+     */
+    public function actionCreateComment($id)
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+        $model = new CommentForm($post, $currentUser);
+
+//        echo '<pre>';
+//        print_r($model);
+//        echo '<pre>';die;
+
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->save()) {
+
+                Yii::$app->session->setFlash('success', 'Comment created!');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     public function actionLike()

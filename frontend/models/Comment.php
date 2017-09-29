@@ -33,17 +33,6 @@ class Comment extends \yii\db\ActiveRecord
         return 'comment';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['parent_id', 'post_id', 'author_id', 'created_at', 'updated_at'], 'integer'],
-            [['post_id', 'author_id', 'created_at', 'updated_at'], 'required'],
-            [['text'], 'string'],
-        ];
-    }
 
     /**
      * @inheritdoc
@@ -60,10 +49,44 @@ class Comment extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+    /**
+     * @inheritdoc
+     */
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
+
+    /**
+     * Get author of the comments
+     * @return User|null
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+    /**
+     * Get post about the comments
+     * @return Post|null
+     */
+    public function getPost()
+    {
+        return $this->hasOne(Post::className(), ['id' => 'post_id']);
+    }
+
+    /**
+     * @param $max integer
+     * @param $post_id integer
+     * @return array|\yii\db\ActiveRecord[] or null
+     */
+
     public static function getCommentsList($max, $post_id)
     {
         $order = ['created_at' => SORT_DESC];
         return self::find()->where(['post_id' => $post_id])->orderby($order)->limit($max)->all();
 
     }
+
 }

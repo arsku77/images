@@ -21,14 +21,11 @@ class CommentsList extends Widget
     {
         $max = Yii::$app->params['maxCommentsInOnePost'];
 
-        ($this->post_id) ? $post_id=$this->post_id : $post_id = 16;
-
-
         if ($this->showLimit) {
             $max = $this->showLimit;
         }
 
-        $list = Comment::getCommentsList($max, $post_id);
+        $list = Comment::getCommentsList($max, $this->post_id);
 
         return $this->render('block', [
             'list' => $list,
