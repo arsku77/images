@@ -53,7 +53,7 @@ class DefaultController extends Controller
         /* @var $currentUser User */
         $currentUser = Yii::$app->user->identity;
         $post = $this->findPost($id);
-        $modelComment = new CommentForm($post, $currentUser);
+        $modelComment = new CommentForm(null, $post, $currentUser);
 
         return $this->render('view', [
             'post' => $post,
@@ -64,7 +64,7 @@ class DefaultController extends Controller
     }
 
     /**
-     *
+     * create new comment
      */
     public function actionCreateComment($id)
     {
@@ -75,17 +75,41 @@ class DefaultController extends Controller
 
         $currentUser = Yii::$app->user->identity;
         $post = $this->findPost($id);
-        $model = new CommentForm($post, $currentUser);
+        $model = new CommentForm(null, $post, $currentUser);
 
         if ($model->load(Yii::$app->request->post())) {
-//            echo '<pre>';
-//            print_r($model);
-//            echo '<pre>';die;
 
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('success', 'Comment created!');
                 return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    /**
+     * update comment
+     */
+    public function actionUpdateComment($id, $post_id)
+    {
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($post_id);
+
+        $model = new CommentForm($id, $post, $currentUser);
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->save()) {
+
+                Yii::$app->session->setFlash('success', 'Comment updated!');
+                return $this->redirect(['view', 'id' => $post_id]);
             }
         }
 

@@ -16,6 +16,7 @@ use frontend\models\User;
 
 class CommentForm extends Model
 {
+    public $id;
     public $parent_id;
     public $post_id;
     public $author_id;
@@ -42,8 +43,9 @@ class CommentForm extends Model
      * CommentForm constructor.
      * @param Post $post, User $user
      */
-    public function __construct(Post $post, User $user)
+    public function __construct($id = null, Post $post, User $user)
     {
+        $this->id = $id;
         $this->post = $post;
         $this->user = $user;
     }
@@ -56,8 +58,7 @@ class CommentForm extends Model
     {
 
         if ($this->validate()) {
-
-            $comment = new Comment();//sukuriam naują egzempliorių
+       (!$this->id) ? $comment = new Comment() : $comment = Comment::findIdentity($this->id);
 
 //            $comment->parent_id = $this->parent_id;
             $comment->parent_id = 0;

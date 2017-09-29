@@ -52,6 +52,15 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function getId()
     {
         return $this->getPrimaryKey();
