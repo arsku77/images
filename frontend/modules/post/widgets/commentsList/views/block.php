@@ -10,12 +10,13 @@ use yii\bootstrap\ActiveForm;
 
 
     <?php foreach ($list as $item): ?>
-        <p>Author:
-        <?php echo Html::encode(User::getNickNameById($item['author_id'])); ?>
+        <div class="row">
+            <p>Author:
+                <b><?php echo Html::encode(User::getNickNameById($item['author_id'])); ?></b>
         <br>
         <?php if (User::findIdentity($item['author_id'])->equals(Yii::$app->user->identity)): ?>
 
-            <div class="col-lg-5">
+            <div class="col-lg-6">
                 <?php $form = ActiveForm::begin([
                     'id' => 'comment-update-form' . $item['id'],
                     'action' => [
@@ -43,7 +44,7 @@ use yii\bootstrap\ActiveForm;
         <?php endif; ?>
 
 
-        </p>
+
 
 
         <?php if (User::findIdentity(Post::findIdentity($item['post_id'])->user_id)->equals(Yii::$app->user->identity)): ?>
@@ -58,7 +59,8 @@ use yii\bootstrap\ActiveForm;
 
         <?php endif; ?>
         <hr>
-
+        </p>
+        </div>
 
 
     <?php endforeach; ?>
