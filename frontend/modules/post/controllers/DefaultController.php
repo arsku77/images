@@ -99,13 +99,13 @@ class DefaultController extends Controller
             return $this->redirect(['/user/default/login']);
         }
 
-        $comment = Comment::findIdentity($id);
+        $comment = Comment::findOne($id);
 
         $post = $this->findPost($comment->post_id);
 
         $currentUser = Yii::$app->user->identity;
 
-        if ($comment->author_id == $currentUser->getId()||$post->isAuthor($currentUser)){
+        if ($comment->isAuthor($currentUser)||$post->isAuthor($currentUser)){
 
             if ($comment->delete()) {
                 Yii::$app->session->setFlash('success', 'Comment deleted!');
@@ -126,6 +126,7 @@ class DefaultController extends Controller
         }
 
         $currentUser = Yii::$app->user->identity;
+
         $post = $this->findPost($postId);
 
         $model = new CommentForm($id, $post, $currentUser);
