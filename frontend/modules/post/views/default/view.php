@@ -44,11 +44,11 @@ use frontend\modules\post\widgets\commentsList\CommentsList;
                                     <h3 class="post-title">comments list</h3>
                     <?php echo CommentsList::widget([
                         'showLimit' => Yii::$app->params['maxCommentsInOnePost'],
-                        'post_id' => $post->id,
+                        'postId' => $post->id,
                     ]); ?>
                     <?= $this->render('comment/_create', [
                         'model' => $modelComment,
-                        'post_id' => $post->id,
+                        'postId' => $post->id,
                     ]) ?>
                 </div>
 

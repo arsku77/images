@@ -1,8 +1,6 @@
 <?php
 use yii\helpers\Html;
 use frontend\models\User;
-use frontend\models\Post;
-use frontend\models\Comment;
 use yii\bootstrap\ActiveForm;
 ?>
 
@@ -23,7 +21,8 @@ use yii\bootstrap\ActiveForm;
                     'method' => 'post',
                     'action' => [
                         'default/update-comment',
-                        'id' => $item['id'], 'post_id' => $item['post_id']]
+                        'id' => $item['id'],
+                        'postId' => $item['post_id']]
                 ]); ?>
 
                 <?= $form->field($model, 'text')

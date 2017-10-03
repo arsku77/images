@@ -118,7 +118,7 @@ class DefaultController extends Controller
     /**
      * update comment
      */
-    public function actionUpdateComment($id, $post_id)
+    public function actionUpdateComment($id, $postId)
     {
 
         if (Yii::$app->user->isGuest) {
@@ -126,17 +126,14 @@ class DefaultController extends Controller
         }
 
         $currentUser = Yii::$app->user->identity;
-        $post = $this->findPost($post_id);
+        $post = $this->findPost($postId);
 
         $model = new CommentForm($id, $post, $currentUser);
 
-        if ($model->load(Yii::$app->request->post())) {
-
-            if ($model->save()) {
+        if ($model->load(Yii::$app->request->post())&&$model->save()) {
 
                 Yii::$app->session->setFlash('success', 'Comment updated!');
-                return $this->redirect(['view', 'id' => $post_id]);
-            }
+                return $this->redirect(['view', 'id' => $postId]);
         }
 
         return $this->redirect(['view', 'id' => $id]);

@@ -16,7 +16,7 @@ class CommentsList extends Widget
 
     
     public $showLimit = null;
-    public $post_id = null;
+    public $postId = null;
 
     
     public function run()
@@ -27,9 +27,9 @@ class CommentsList extends Widget
             $max = $this->showLimit;
         }
 
-        $list = Comment::getCommentsList($max, $this->post_id);
+        $list = Comment::getCommentsList($max, $this->postId);
         $currentUser = Yii::$app->user->identity;
-        $post = Post::findIdentity($this->post_id);
+        $post = Post::findIdentity($this->postId);
 
         $model = new CommentForm(null, $post, $currentUser);
 
