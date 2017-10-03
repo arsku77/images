@@ -59,7 +59,7 @@ class CommentForm extends Model
 
         if ($this->validate()) {
             //if parameter $id null, so object model comment new, else update concrete model
-       (!$this->id) ? $comment = new Comment() : $comment = Comment::findIdentity($this->id);
+       $comment = $this->findComment($this->id);
 
 //            $comment->parent_id = $this->parent_id;
             $comment->parent_id = 0;
@@ -72,6 +72,14 @@ class CommentForm extends Model
             }
             return false;
         }
+    }
+
+    private function findComment($id = null)
+    {
+        if ($id) {
+            return $comment = Comment::findOne($id);//update
+        }
+        return $comment = new Comment();//add new comment
     }
 
 }
