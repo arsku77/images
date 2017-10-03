@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use frontend\models\User;
 use frontend\models\Post;
+use frontend\models\Comment;
 use yii\bootstrap\ActiveForm;
 ?>
 
@@ -13,8 +14,8 @@ use yii\bootstrap\ActiveForm;
         <div class="row">
             <p>Author:
                 <b><?php echo Html::encode(User::getNickNameById($item['author_id'])); ?></b>
-        <br>
-        <?php if (User::findIdentity($item['author_id'])->equals(Yii::$app->user->identity)): ?>
+                <br>
+                <?php if ($item->isAuthor(Yii::$app->user->identity)): ?>
 
             <div class="col-lg-6">
                 <?php $form = ActiveForm::begin([
@@ -45,30 +46,33 @@ use yii\bootstrap\ActiveForm;
             </div>
 
 
-        <?php else: ?>
+            <?php else: ?>
 
-            <?php echo Html::encode($item['text']); ?>
-
-
-        <?php endif; ?>
+                <?php echo Html::encode($item['text']); ?>
 
 
+            <?php endif; ?>
 
 
+            <?php if ($post->isAuthor(Yii::$app->user->identity)): ?>
 
-        <?php if (User::findIdentity(Post::findIdentity($item['post_id'])->user_id)->equals(Yii::$app->user->identity)): ?>
+                <?php if (!$item->isAuthor(Yii::$app->user->identity)): ?>
 
-            <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete this comment?',
-                    'method' => 'post',
-                ],
-            ]) ?>
 
-        <?php endif; ?>
-        <hr>
-        </p>
+                    <div>
+                    <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
+                        'class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to delete this comment?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+                </div>
+                <?php endif; ?>
+
+            <?php endif; ?>
+            <hr>
+            </p>
         </div>
 
 

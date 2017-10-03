@@ -101,9 +101,11 @@ class DefaultController extends Controller
 
         $comment = Comment::findIdentity($id);
 
+        $post = $this->findPost($comment->post_id);
+
         $currentUser = Yii::$app->user->identity;
-//we check to delete yours post comment
-        if (Post::findIdentity($comment->post_id)->user_id == $currentUser->getId()){
+
+        if ($comment->author_id == $currentUser->getId()||$post->isAuthor($currentUser)){
 
             if ($comment->delete()) {
                 Yii::$app->session->setFlash('success', 'Comment deleted!');

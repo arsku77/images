@@ -33,7 +33,7 @@ class CommentForm extends Model
         return [
 //            [['parent_id', 'post_id', 'author_id'], 'integer'],
           //  [['parent_id'], 'integer'],
-          //  [['post_id', 'author_id'], 'required'],
+            [['text'], 'required'],
             [['text'], 'string', 'max' => Yii::$app->params['maxCommentLenghtInPost']],
 
         ];

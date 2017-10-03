@@ -66,6 +66,15 @@ class Comment extends \yii\db\ActiveRecord
         return $this->getPrimaryKey();
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isAuthor(User $user): bool
+    {
+        return $user->getId() == $this->author_id;
+
+    }
 
     /**
      * Get author of the comments

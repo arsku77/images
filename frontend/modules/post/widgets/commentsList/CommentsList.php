@@ -36,6 +36,7 @@ class CommentsList extends Widget
         return $this->render('block', [
             'list' => $list,
             'model' => $model,
+            'post' => $post,
         ]);
     }
 }

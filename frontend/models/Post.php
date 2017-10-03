@@ -4,7 +4,6 @@ namespace frontend\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-
 /**
  * This is the model class for table "post".
  *
@@ -57,14 +56,35 @@ class Post extends \yii\db\ActiveRecord
     {
         return Yii::$app->storage->getFile($this->filename);
     }
+
     /**
-     * Get author of the post
+     * Get user of the post
      * @return User|null
      */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isAuthor(User $user): bool
+    {
+        return $user->getId() == $this->user_id;
+
+    }
+
+    /**
+     * Get author of the post
+     * @return User|null
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
     /**
      * Like current post by given user
      * @param \frontend\models\User $user
