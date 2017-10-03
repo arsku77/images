@@ -19,6 +19,7 @@ use yii\bootstrap\ActiveForm;
             <div class="col-lg-6">
                 <?php $form = ActiveForm::begin([
                     'id' => 'comment-update-form' . $item['id'],
+                    'method' => 'post',
                     'action' => [
                         'default/update-comment',
                         'id' => $item['id'], 'post_id' => $item['post_id']]
@@ -30,6 +31,14 @@ use yii\bootstrap\ActiveForm;
 
                 <div class="form-group col-xs-12 floating-label-form-group controls">
                     <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'comment-update-button']) ?>
+                    <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
+                        'class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to delete this comment?',
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+
                 </div>
 
                 <?php ActiveForm::end(); ?>
