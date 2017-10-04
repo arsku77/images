@@ -32,7 +32,7 @@ class CommentForm extends Model
     {
         return [
 //            [['parent_id', 'post_id', 'author_id'], 'integer'],
-          //  [['parent_id'], 'integer'],
+            //  [['parent_id'], 'integer'],
             [['text'], 'required'],
             [['text'], 'string', 'max' => Yii::$app->params['maxCommentLenghtInPost']],
 
@@ -58,10 +58,9 @@ class CommentForm extends Model
     {
 
         if ($this->validate()) {
-            //if parameter $id null, so object model comment new, else update concrete model
-       $comment = $this->findComment($this->id);
 
-//            $comment->parent_id = $this->parent_id;
+            $comment = $this->findComment($this->id);
+
             $comment->parent_id = 0;
             $comment->post_id = $this->post->getId();
             $comment->author_id = $this->user->getId();
@@ -74,12 +73,16 @@ class CommentForm extends Model
         }
     }
 
+    /**
+     * @param null $id
+     * @return Comment models empty|Comment models by id static
+     */
     private function findComment($id = null)
     {
         if ($id) {
-            return $comment = Comment::findOne($id);//update
+            return $comment = Comment::findOne($id);//for update
         }
-        return $comment = new Comment();//add new comment
+        return $comment = new Comment();//for add new comment
     }
 
 }

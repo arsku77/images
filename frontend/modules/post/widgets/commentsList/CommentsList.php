@@ -29,7 +29,7 @@ class CommentsList extends Widget
 
         $list = Comment::getCommentsList($max, $this->postId);
         $currentUser = Yii::$app->user->identity;
-        $post = Post::findIdentity($this->postId);
+        $post = Post::findOne($this->postId);
 
         $model = new CommentForm(null, $post, $currentUser);
 

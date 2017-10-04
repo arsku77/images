@@ -6,8 +6,6 @@ use yii\bootstrap\ActiveForm;
 
 <?php if ($list): ?>
 
-
-
     <?php foreach ($list as $item): ?>
         <div class="row">
             <p>Author:
@@ -49,14 +47,9 @@ use yii\bootstrap\ActiveForm;
 
                 <?php echo Html::encode($item['text']); ?>
 
-
             <?php endif; ?>
 
-
-            <?php if ($post->isAuthor(Yii::$app->user->identity)): ?>
-
-                <?php if (!$item->isAuthor(Yii::$app->user->identity)): ?>
-
+            <?php if ($post->isAuthor(Yii::$app->user->identity)&&!$item->isAuthor(Yii::$app->user->identity)): ?>
 
                     <div>
                     <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
@@ -67,13 +60,11 @@ use yii\bootstrap\ActiveForm;
                         ],
                     ]) ?>
                 </div>
-                <?php endif; ?>
 
             <?php endif; ?>
             <hr>
             </p>
         </div>
-
 
     <?php endforeach; ?>
 <?php endif; ?>

@@ -66,7 +66,7 @@ class DefaultController extends Controller
     /**
      * create new comment
      */
-    public function actionCreateComment($id)
+    public function actionCreateComment($postId)
     {
 
         if (Yii::$app->user->isGuest) {
@@ -74,7 +74,7 @@ class DefaultController extends Controller
         }
 
         $currentUser = Yii::$app->user->identity;
-        $post = $this->findPost($id);
+        $post = $this->findPost($postId);
         $model = new CommentForm(null, $post, $currentUser);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -82,39 +82,12 @@ class DefaultController extends Controller
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('success', 'Comment created!');
-                return $this->redirect(['view', 'id' => $id]);
+                return $this->redirect(['view', 'id' => $postId]);
             }
         }
 
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->redirect(['view', 'id' => $postId]);
     }
-
-    /**
-     * create new comment
-     */
-    public function actionDeleteComment($id)
-    {
-
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/user/default/login']);
-        }
-
-        $comment = Comment::findOne($id);
-
-        $post = $this->findPost($comment->post_id);
-
-        $currentUser = Yii::$app->user->identity;
-
-        if ($comment->isAuthor($currentUser)||$post->isAuthor($currentUser)){
-
-            if ($comment->delete()) {
-                Yii::$app->session->setFlash('success', 'Comment deleted!');
-                return $this->redirect(['view', 'id' => $comment->post_id]);
-            }
-
-        }
-    }
-
     /**
      * update comment
      */
@@ -139,6 +112,33 @@ class DefaultController extends Controller
 
         return $this->redirect(['view', 'id' => $id]);
     }
+
+    /**
+     * delete comment by id
+     */
+    public function actionDeleteComment($id)
+    {
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        $comment = Comment::findOne($id);
+
+        $post = $this->findPost($comment->post_id);
+
+        $currentUser = Yii::$app->user->identity;
+
+        if ($comment->isAuthor($currentUser)||$post->isAuthor($currentUser)){
+
+            if ($comment->delete()) {
+                Yii::$app->session->setFlash('success', 'Comment deleted!');
+                return $this->redirect(['view', 'id' => $comment->post_id]);
+            }
+
+        }
+    }
+
 
 
     public function actionLike()

@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
     <div class="col-lg-5">
                 <?php $form = ActiveForm::begin([
             'id' => 'comment-form',
-            'action' => ['default/create-comment', 'id' => $postId]
+            'action' => ['default/create-comment', 'postId' => $postId]
         ]); ?>
 
         <?= $form->field($model, 'text')->textarea(['rows' => 6])->label('Comment') ?>
