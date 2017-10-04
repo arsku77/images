@@ -88,9 +88,9 @@ class PostForm extends Model
             $post->filename = Yii::$app->storage->saveUploadedFile($this->picture);//apdorojam ir irasom
             $post->user_id = $this->user->getId();
             if ($post->save(false)) {
-                $event = new PostCreatedEvent();//pakraunam duomenimis
+                $event = new PostCreatedEvent();
                 $event->user = $this->user;//is post creator
-                $event->post = $post;
+                $event->post = $post;//pakraunam duomenimis
 
                 $this->trigger(self::EVENT_POST_CREATED, $event);
                 return  true;
