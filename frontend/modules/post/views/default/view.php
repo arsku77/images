@@ -3,18 +3,23 @@
 /* @var $post frontend\models\Post */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\JqueryAsset;
 use frontend\modules\post\widgets\commentsList\CommentsList;
 ?>
     <div class="post-default-index">
 
         <div class="row">
+
             <div class="col-md-12">
                 <?php if ($post->user): ?>
-                    <img src="<?php echo $post->user->getPicture(); ?>" height="30" />
-                    <?php echo $post->user->username; ?>
+                    <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $post->user->getNickname()]); ?>">
+                        <img src="<?php echo $post->user->getPicture(); ?>" height="30" />
+                        <?php echo Html::encode($post->user->username); ?>
+                    </a>
                 <?php endif; ?>
             </div>
+
             <br>
             <br>
             <div class="col-md-12">
@@ -41,7 +46,7 @@ use frontend\modules\post\widgets\commentsList\CommentsList;
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
                 <div class="comment">
-                                    <h3 class="post-title">comments list</h3>
+                    <h3 class="post-title">comments list</h3>
                     <?php echo CommentsList::widget([
                         'showLimit' => Yii::$app->params['maxCommentsInOnePost'],
                         'postId' => $post->id,
