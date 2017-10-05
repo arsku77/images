@@ -17,4 +17,5 @@ return [
     'feedPostLimit' => 200,
     'maxCommentsInOnePost' => 6,
     'maxCommentLenghtInPost' => 1000,
+    'limitPostsInProfile' => 20,
 ];

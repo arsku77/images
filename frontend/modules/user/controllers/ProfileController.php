@@ -9,20 +9,34 @@ use yii\web\NotFoundHttpException;
 use frontend\modules\user\models\forms\PictureForm;
 use yii\web\UploadedFile;
 use yii\web\Response;
+use frontend\models\Post;
+use frontend\modules\post\models\forms\PostForm;
+
 
 class ProfileController extends Controller
 {
 
     public function actionView($nickname)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
         /* @var $currentUser User */
+        $limitPosts = Yii::$app->params['limitPostsInProfile'];
         $currentUser = Yii::$app->user->identity;
+        $user = $this->findUser($nickname);
+        $postList = $user->getPostList($limitPosts);
         $modelPicture = new PictureForm();
+//        echo '<pre>';
+//        print_r($postItems);
+//        echo '<pre>';die;
 
         return $this->render('view', [
-            'user' => $this->findUser($nickname),
+            'user' => $user,
             'currentUser' => $currentUser,
             'modelPicture' => $modelPicture,
+            'postList' => $postList,
         ]);
     }
 

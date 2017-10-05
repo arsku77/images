@@ -11,7 +11,7 @@ use frontend\modules\post\widgets\commentsList\CommentsList;
         <div class="row">
             <div class="col-md-12">
                 <?php if ($post->user): ?>
-                    <img src="<?php echo $post->user->getPicture(); ?>" width="30" height="30" />
+                    <img src="<?php echo $post->user->getPicture(); ?>" height="30" />
                     <?php echo $post->user->username; ?>
                 <?php endif; ?>
             </div>
