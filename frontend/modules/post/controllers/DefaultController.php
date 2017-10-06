@@ -132,6 +132,7 @@ class DefaultController extends Controller
         if ($comment->isAuthor($currentUser)||$post->isAuthor($currentUser)){
 
             if ($comment->delete()) {
+                $post->unCommentRemToRedis($comment);
                 Yii::$app->session->setFlash('success', 'Comment deleted!');
                 return $this->redirect(['view', 'id' => $comment->post_id]);
             }

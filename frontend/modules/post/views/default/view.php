@@ -40,6 +40,7 @@ use frontend\modules\post\widgets\commentsList\CommentsList;
             <a href="#" class="btn btn-primary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
                 Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
             </a>
+            Comments: <span class="likes-count"><?php echo $post->countCommentsToRedis(); ?></span>
         </div>
 
         <div class="row">

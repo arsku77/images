@@ -67,6 +67,7 @@ class CommentForm extends Model
             $comment->text = $this->text;
 
             if ($comment->save(false)) {
+                $this->post->commentAddToRedis($comment);
                 return true;
             }
             return false;

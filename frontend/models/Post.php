@@ -52,6 +52,15 @@ class Post extends \yii\db\ActiveRecord
         return static::findOne(['id' => $id]);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
+
     public function getImage()
     {
         return Yii::$app->storage->getFile($this->filename);
@@ -109,11 +118,6 @@ class Post extends \yii\db\ActiveRecord
         $redis->srem("user:{$user->getId()}:likes", $this->getId());
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     /**
      * @return mixed
      */
@@ -135,5 +139,51 @@ class Post extends \yii\db\ActiveRecord
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->getId()}:likes", $user->getId());
     }
+
+    /**
+     * comment current post by given comment
+     * @param \frontend\models\Comment $comment
+     */
+    public function commentAddToRedis(Comment $comment)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->sadd("post:{$this->getId()}:comments", $comment->getId());
+    }
+
+    /**
+     * uncomment current post by given comment
+     * @param \frontend\models\Comment $comment
+     */
+    public function unCommentRemToRedis(Comment $comment)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->srem("post:{$this->getId()}:comments", $comment->getId());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countCommentsToRedis()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("post:{$this->getId()}:comments");
+    }
+
+    /**
+     * Check whether given commented current post
+     * @param \frontend\models\Comment $comment
+     * @return integer
+     */
+    public function isCommentedBy(Comment $comment)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->sismember("post:{$this->getId()}:comments", $comment->getId());
+    }
+
+
 
 }

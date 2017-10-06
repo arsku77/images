@@ -98,7 +98,7 @@ use dosamigos\fileupload\FileUpload;
 <!-- list posts -->
 <?php if($postList): ?>
     <div class="row">
-        <h4>This User: <?php echo Html::encode($user->username); ?> Posted yet! </h4>
+        This User:<h4> <?php echo Html::encode($user->username); ?> </h4>Posted yet!
         <?php foreach ($postList as $itemPost): ?>
             <div class="col-md-12">
                 <a href="<?php echo Url::to(['/post/default/view', 'id' => $itemPost['id']]); ?>">
@@ -113,7 +113,7 @@ use dosamigos\fileupload\FileUpload;
         <h5>This User: <?php echo Html::encode($user->username); ?> Nobody posted yet! </h5>
     </div>
 <?php endif; ?>
-
+<!-- list posts end -->
 
 
 
