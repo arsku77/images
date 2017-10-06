@@ -36,7 +36,7 @@ $this->title = 'My Yii Application';
 
         <div class="col-md-12">
             <?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?>
-            Comments: <span class="likes-count"><?php echo Post::findIdentity($feedItem->post_id)->countCommentsToRedis(); ?></span>
+            Comments: <span class="likes-count"><?php echo $post->findIdentity($feedItem->post_id)->countCommentsToRedis(); ?></span>
         </div>
 
         <div class="col-md-12">

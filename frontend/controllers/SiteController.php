@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\Post;
 use yii\web\Controller;
 use frontend\models\User;
 use Yii;
@@ -37,10 +38,11 @@ class SiteController extends Controller
 
         $limit = Yii::$app->params['feedPostLimit'];
         $feedItems = $currentUser->getFeed($limit);
-
+        $post = new Post();
         return $this->render('index', [
             'feedItems' => $feedItems,
             'currentUser' => $currentUser,
+            'post' => $post,
         ]);
     }
 
