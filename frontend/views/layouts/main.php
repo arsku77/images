@@ -9,8 +9,10 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use frontend\assets\FontAwesomeAsset;
 
 AppAsset::register($this);
+FontAwesomeAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -23,18 +25,84 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
-<?php $this->beginBody() ?>
 
-<div class="wrap">
+<?php $this->beginBody() ?>
+<body class="home page">
+
+<div class="wrapper">
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4 brand-logo">
+                    <h1>
+                        <a href="#">
+                            <img src="img/logo.png" alt="">
+                        </a>
+                    </h1>
+                </div>
+                <div class="col-md-4 col-sm-4 navicons-topbar">
+                    <ul>
+                        <li class="blog-search">
+                            <a href="#" title="Search"><i class="fa fa-search"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="header-main-nav">
+            <div class="container">
+                <div class="main-nav-wrapper">
+                    <nav class="main-menu">
+                        <ul class="menu">
+                            <li>
+                                <a href="#">Newsfeed</a>
+                            </li>
+                            <li>
+                                <a href="#">My page</a>
+                            </li>
+                            <li>
+                                <a href="#">Logout <i class="fa fa-sign-out"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <div class="container full">
+
+        <?= Alert::widget() ?>
+        <?= $content ?>
+
+    </div>
+    <footer>
+        <div class="footer">
+            <div class="back-to-top-page">
+                <a class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
+            </div>
+            <p class="text">Images | 2017</p>
+        </div>
+    </footer>
+</div>
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>
+
+
+
     <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
+//    NavBar::begin([
+//        'brandLabel' => 'My Company',
+//        'brandUrl' => Yii::$app->homeUrl,
+//        'options' => [
+//            'class' => 'navbar-inverse navbar-fixed-top',
+//        ],
+//    ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
     ];
@@ -53,31 +121,13 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
+//    echo Nav::widget([
+//        'options' => ['class' => 'navbar-nav navbar-right'],
+//        'items' => $menuItems,
+//    ]);
+//    NavBar::end();
     ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
-</body>
-</html>
-<?php $this->endPage() ?>
