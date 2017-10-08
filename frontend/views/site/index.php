@@ -22,80 +22,58 @@ $this->title = 'My Yii Application';
 
                         <?php if ($feedItems): ?>
                         <?php foreach ($feedItems as $feedItem): ?>
-                        <?php /* @var $feedItem Feed */ ?>
+                            <?php /* @var $feedItem Feed */ ?>
 
-                        <article class="post col-sm-12 col-xs-12">
-                            <div class="post-meta">
-                                <div class="post-title">
-                                    <img src="img/demo/avatar.jpg" class="author-image" />
-                                    <div class="author-name"><a href="#">Firstname Lastname</a></div>
+                            <article class="post col-sm-12 col-xs-12">
+                                <div class="post-meta">
+                                    <div class="post-title">
+                                        <img src="<?php echo $feedItem->author_picture; ?>" class="author-image" />
+                                        <div class="author-name">
+                                            <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($feedItem->author_nickname) ? $feedItem->author_nickname : $feedItem->author_id]); ?>">
+                                                <?php echo Html::encode($feedItem->author_name); ?>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="post-type-image">
-                                <a href="#">
-                                    <img src="img/demo/car.jpg" alt="">
-                                </a>
-                            </div>
-                            <div class="post-description">
-                                <p>Lorem ipsum dolor sit amet, iisque bonorum consequat an vis, ea dico sonet dolorum eam,
-                                    oblique lucilius consequat mel ei.</p>
-                            </div>
-                            <div class="post-bottom">
-                                <div class="post-likes">
-                                    <a href="#" class="btn btn-secondary"><i class="fa fa-lg fa-heart-o"></i></a>
-                                    <span>6 Likes</span>
+                                <div class="post-type-image">
+                                    <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
+                                        <img src="<?php echo Yii::$app->storage->getFile($feedItem->post_filename); ?>" alt="" />
+                                    </a>
                                 </div>
-                                <div class="post-comments">
-                                    <a href="#">6 Comments</a>
+                                <div class="post-description">
+                                    <p><?php echo HtmlPurifier::process($feedItem->post_description); ?></p>
+                                </div>
+                                <div class="post-bottom">
+
+                                    <div class="post-likes">
+                                        <a href="#" class="btn btn-secondary"><i class="fa fa-lg fa-heart-o"></i></a>
+                                        Likes: <span><?php echo $feedItem->countLikes(); ?></span>
+                                        <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "" : "display-none"; ?>" data-id="<?php echo $feedItem->post_id; ?>">
+                                            Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
+                                        </a>
+                                        <a href="#" class="btn btn-primary button-like <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "display-none" : ""; ?>" data-id="<?php echo $feedItem->post_id; ?>">
+                                            Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+                                        </a>
+                                    </div>
+
+                                    <div class="post-comments">
+                                        <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
+                                            <?php echo $feedItem->countCommentsToRedis($feedItem->post_id); ?>
+                                            &nbsp;comments
+                                        </a>
+                                    </div>
+
+                                    <div class="post-date">
+                                        <span><?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?></span>
+                                    </div>
+                                    <div class="post-report">
+                                        <a href="#">Report post</a>
+                                    </div>
 
                                 </div>
-                                <div class="post-date">
-                                    <span>Jan 14, 2016</span>
-                                </div>
-                                <div class="post-report">
-                                    <a href="#">Report post</a>
-                                </div>
-                            </div>
-                        </article>
+                            </article>
 
-                        <a class="col-md-12">
-
-                            <div class="col-md-12">
-                                <img src="<?php echo $feedItem->author_picture; ?>" width="30" height="30" />
-                                <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($feedItem->author_nickname) ? $feedItem->author_nickname : $feedItem->author_id]); ?>">
-                                    <?php echo Html::encode($feedItem->author_name); ?>
-                                </a>
-                            </div>
-
-
-                            <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
-                                <img src="<?php echo Yii::$app->storage->getFile($feedItem->post_filename); ?>" />
-                            </a>
-
-                            <div class="col-md-12">
-                                <?php echo HtmlPurifier::process($feedItem->post_description); ?>
-                            </div>
-
-                            <div class="col-md-12">
-                                <?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?>
-                                Comments: <span class="likes-count"><?php echo $feedItem->countCommentsToRedis($feedItem->post_id); ?></span>
-                            </div>
-
-                            <div class="col-md-12">
-                                Likes: <span class="likes-count"><?php echo $feedItem->countLikes(); ?></span>
-
-                                <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "" : "display-none"; ?>" data-id="<?php echo $feedItem->post_id; ?>">
-                                    Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
-                                </a>
-                                <a href="#" class="btn btn-primary button-like <?php echo ($currentUser->likesPost($feedItem->post_id)) ? "display-none" : ""; ?>" data-id="<?php echo $feedItem->post_id; ?>">
-                                    Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
-                                </a>
-                            </div>
-
-
-
-                            <div class="col-md-12"><hr/></div>
-                            <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </div>
                     <?php else: ?>
                         <div class="col-md-12">

@@ -14,7 +14,7 @@ use frontend\modules\post\widgets\commentsList\CommentsList;
             <div class="col-md-12">
                 <?php if ($post->user): ?>
                     <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $post->user->getNickname()]); ?>">
-                        <img src="<?php echo $post->user->getPicture(); ?>" height="30" />
+                        <img src="<?php echo $post->user->getPicture(); ?>" width="30"  />
                         <?php echo Html::encode($post->user->username); ?>
                     </a>
                 <?php endif; ?>
