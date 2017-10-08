@@ -55,17 +55,32 @@ FontAwesomeAsset::register($this);
             <div class="container">
                 <div class="main-nav-wrapper">
                     <nav class="main-menu">
-                        <ul class="menu">
-                            <li>
-                                <a href="#">Newsfeed</a>
-                            </li>
-                            <li>
-                                <a href="#">My page</a>
-                            </li>
-                            <li>
-                                <a href="#">Logout <i class="fa fa-sign-out"></i></a>
-                            </li>
-                        </ul>
+
+                        <?php
+                        $menuItems = [
+                            ['label' => 'Newsfeed', 'url' => ['/site/index']],
+                        ];
+                        if (Yii::$app->user->isGuest) {
+                            $menuItems[] = ['label' => 'Signup', 'url' => ['/user/default/signup']];
+                            $menuItems[] = ['label' => 'Login', 'url' => ['/user/default/login']];
+                        } else {
+                            $menuItems[] = ['label' => 'My profile', 'url' => ['/user/profile/view', 'nickname' => Yii::$app->user->identity->getNickname()]];
+                            $menuItems[] = ['label' => 'Create post', 'url' => ['/post/default/create']];
+                            $menuItems[] = '<li>'
+                                . Html::beginForm(['/user/default/logout'], 'post')
+                                . Html::submitButton(
+                                    'Logout (' . Yii::$app->user->identity->username . ')',
+                                    ['class' => 'btn btn-link logout']
+                                )
+                                . Html::endForm()
+                                . '</li>';
+                        }
+                        echo Nav::widget([
+                            'options' => ['class' => 'menu navbar-nav navbar-right'],
+                            'items' => $menuItems,
+                        ]);
+                        ?>
+
                     </nav>
                 </div>
             </div>
@@ -95,7 +110,7 @@ FontAwesomeAsset::register($this);
 
 
 
-    <?php
+<?php
 //    NavBar::begin([
 //        'brandLabel' => 'My Company',
 //        'brandUrl' => Yii::$app->homeUrl,
@@ -103,30 +118,8 @@ FontAwesomeAsset::register($this);
 //            'class' => 'navbar-inverse navbar-fixed-top',
 //        ],
 //    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/user/default/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/user/default/login']];
-    } else {
-        $menuItems[] = ['label' => 'My profile', 'url' => ['/user/profile/view', 'nickname' => Yii::$app->user->identity->getNickname()]];
-        $menuItems[] = ['label' => 'Create post', 'url' => ['/post/default/create']];
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/user/default/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-//    echo Nav::widget([
-//        'options' => ['class' => 'navbar-nav navbar-right'],
-//        'items' => $menuItems,
-//    ]);
 //    NavBar::end();
-    ?>
+?>
 
 </div>
 
