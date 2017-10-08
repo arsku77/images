@@ -7,7 +7,7 @@ use yii\web\JqueryAsset;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
-use frontend\models\Post;
+
 $this->title = 'My Yii Application';
 ?>
     <div class="site-index">
@@ -36,7 +36,7 @@ $this->title = 'My Yii Application';
 
         <div class="col-md-12">
             <?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?>
-            Comments: <span class="likes-count"><?php echo Post::findIdentity($feedItem->post_id)->countCommentsToRedis(); ?></span>
+            Comments: <span class="likes-count"><?php echo $feedItem->countCommentsToRedis($feedItem->post_id); ?></span>
         </div>
 
         <div class="col-md-12">

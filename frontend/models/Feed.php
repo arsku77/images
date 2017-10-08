@@ -70,4 +70,14 @@ class Feed extends \yii\db\ActiveRecord
         return $redis->scard("post:{$this->post_id}:likes");
     }
 
+    /**
+     * @return mixed
+     */
+    public function countCommentsToRedis($postId)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("post:{$postId}:comments");
+    }
+
 }
