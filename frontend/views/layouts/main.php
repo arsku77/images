@@ -36,7 +36,7 @@ FontAwesomeAsset::register($this);
                 <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4 brand-logo">
                     <h1>
                         <a href="#">
-                            <img src="img/logo.png" alt="">
+                            <img src="/img/logo.png" alt="">
                         </a>
                     </h1>
                 </div>
@@ -93,15 +93,19 @@ FontAwesomeAsset::register($this);
         <?= $content ?>
 
     </div>
-    <footer>
-        <div class="footer">
-            <div class="back-to-top-page">
-                <a class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
-            </div>
-            <p class="text">Images | 2017</p>
-        </div>
-    </footer>
+    <div class="push"></div>
 </div>
+
+<footer>
+    <div class="footer">
+        <div class="back-to-top-page">
+            <a class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
+        </div>
+        <p class="text">Images | 2017</p>
+    </div>
+</footer>
+
+
 <?php $this->endBody() ?>
 </body>
 </html>
