@@ -69,8 +69,7 @@ FontAwesomeAsset::register($this);
                             $menuItems[] = '<li>'
                                 . Html::beginForm(['/user/default/logout'], 'post')
                                 . Html::submitButton(
-                                    'Logout (' . Yii::$app->user->identity->username . ')',
-                                    ['class' => 'btn btn-link logout']
+                                    'Logout (' . Yii::$app->user->identity->username . ') <i class="fa fa-sign-out"></i>', ['class' => 'btn btn-link logout']
                                 )
                                 . Html::endForm()
                                 . '</li>';

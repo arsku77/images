@@ -483,3 +483,33 @@ footer .footer p.text {
     margin-bottom: 25px;
 }
 /** profile **/
+
+.header-main-nav .main-nav-wrapper .main-menu ul li, .nav li > form > button.logout {
+    display: inline-block;
+    color: #000;
+}
+.nav li:hover {
+    background-color: #eee;
+}
+.nav li > form > button.logout {
+    position: relative;
+    display: inline-block;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 21px 22px;
+    cursor: pointer;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -80px; /* the bottom margin is the negative value of the footer's height */
+}
+footer, .push {
+    height: 80px; /* .push must be the same height as .footer */
+}
