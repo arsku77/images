@@ -5,6 +5,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
+use yii\helpers\Url;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
@@ -35,7 +36,7 @@ FontAwesomeAsset::register($this);
             <div class="container">
                 <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4 brand-logo">
                     <h1>
-                        <a href="#">
+                        <a href="<?php echo Url::to(['/site/index'])?>">
                             <img src="/img/logo.png" alt="">
                         </a>
                     </h1>
@@ -113,16 +114,6 @@ FontAwesomeAsset::register($this);
 
 
 
-<?php
-//    NavBar::begin([
-//        'brandLabel' => 'My Company',
-//        'brandUrl' => Yii::$app->homeUrl,
-//        'options' => [
-//            'class' => 'navbar-inverse navbar-fixed-top',
-//        ],
-//    ]);
-//    NavBar::end();
-?>
 
 </div>
 
