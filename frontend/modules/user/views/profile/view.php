@@ -22,12 +22,52 @@ use dosamigos\fileupload\FileUpload;
 
                     <!-- profile -->
                     <article class="profile col-sm-12 col-xs-12">
+
                         <div class="profile-title">
                             <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" class="author-image" />
                             <div class="author-name"><?php echo Html::encode($user->username); ?></div>
 
-                            <a href="#" class="btn btn-default">Upload profile image</a>
+                            <?php if ($currentUser->equals($user)): ?>
+                                <?= FileUpload::widget([
+                                    'model' => $modelPicture,
+                                    'attribute' => 'picture',
+                                    'url' => ['/user/profile/upload-picture'], // your url, this is just for demo purposes,
+                                    'options' => ['accept' => 'image/*'],
+                                    'clientEvents' => [
+                                        'fileuploaddone' => 'function(e, data) {
+                if (data.result.success) {
+                    $("#profile-image-success").show();
+                    $("#profile-image-fail").hide();
+                    $("#profile-picture").attr("src", data.result.pictureUri);
+                } else {
+                    $("#profile-image-fail").html(data.result.errors.picture).show();
+                    $("#profile-image-success").hide();
+                }               
+            }',
+                                    ],
+                                ]); ?>
+
+                                <?php if ($user->picture > ''): ?>
+                                    <?= Html::a('Delete', ['/user/profile/delete-picture', 'filename' => $user->picture], [
+                                        'class' => 'btn btn-danger',
+                                        'id' => 'btnDelete',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to delete this picture?',
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
+                                <?php endif; ?>
+                                <?= Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['/user/profile/view', 'nickname' => $user->nickname], ['class' => 'btn btn-info']) ?>
+
+
+                            <?php endif; ?>
+
+
+                            <!--                            <a href="#" class="btn btn-default">Upload profile image</a>-->
                             <a href="#" class="btn btn-default">Edit profile</a>
+                            <div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
+                            <div class="alert alert-danger display-none" id="profile-image-fail"></div>
+
 
                         </div>
 
@@ -46,6 +86,7 @@ use dosamigos\fileupload\FileUpload;
                             </div>
                         </div>
                     </article>
+                    <!-- profile end -->
 
                     <div class="col-sm-12 col-xs-12">
                         <div class="row profile-posts">
@@ -80,44 +121,7 @@ use dosamigos\fileupload\FileUpload;
 <hr>
 
 <br>
-<div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
-<div class="alert alert-danger display-none" id="profile-image-fail"></div>
 
-<?php if ($currentUser->equals($user)): ?>
-
-    <?= FileUpload::widget([
-        'model' => $modelPicture,
-        'attribute' => 'picture',
-        'url' => ['/user/profile/upload-picture'], // your url, this is just for demo purposes,
-        'options' => ['accept' => 'image/*'],
-        'clientEvents' => [
-            'fileuploaddone' => 'function(e, data) {
-                if (data.result.success) {
-                    $("#profile-image-success").show();
-                    $("#profile-image-fail").hide();
-                    $("#profile-picture").attr("src", data.result.pictureUri);
-                } else {
-                    $("#profile-image-fail").html(data.result.errors.picture).show();
-                    $("#profile-image-success").hide();
-                }               
-            }',
-        ],
-    ]); ?>
-
-    <?php if ($user->picture > ''): ?>
-        <?= Html::a('Delete', ['/user/profile/delete-picture', 'filename' => $user->picture], [
-            'class' => 'btn btn-danger',
-            'id' => 'btnDelete',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this picture?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    <?php endif; ?>
-    <?= Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['/user/profile/view', 'nickname' => $user->nickname], ['class' => 'btn btn-info']) ?>
-
-
-<?php endif; ?>
 
 
 <?php if(!($currentUser->equals($user))): ?>
@@ -167,7 +171,7 @@ use dosamigos\fileupload\FileUpload;
             <div class="col-md-12">
                 <a href="<?php echo Url::to(['/post/default/view', 'id' => $itemPost['id']]); ?>">
                     <h4>  <img src="<?php echo Yii::$app->storage->getFile($itemPost['filename']); ?>" height="30" />
-                    <?php echo Html::encode($itemPost['description']); ?></h4>
+                        <?php echo Html::encode($itemPost['description']); ?></h4>
                 </a>
             </div>
         <?php endforeach; ?>
