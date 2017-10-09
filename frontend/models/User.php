@@ -279,6 +279,18 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Check whether current user subscribe another user with given id
+     * @param integer $userId
+     * @return boolean
+     */
+    public function subscribedUser(int $userId)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return (bool) $redis->sismember("user:{$this->getId()}:subscriptions", $userId);
+    }
+
+    /**
      * @return mixed
      */
     public function countSubscriptions()

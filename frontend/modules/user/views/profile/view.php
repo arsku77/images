@@ -69,7 +69,25 @@ use dosamigos\fileupload\FileUpload;
                             <br/>
                             <div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
                             <div class="alert alert-danger display-none" id="profile-image-fail"></div>
-
+                            <?php if ($currentUser && !$currentUser->equals($user)): ?>
+                                <?php if($currentUser->subscribedUser($user->getId())): ?>
+                                    <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
+                                <?php else: ?>
+                                    <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
+                                <?php endif; ?>
+                                <hr>
+                                <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
+                                <div class="row">
+                                    <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
+                                        <div class="col-md-12">
+                                            <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($item['nickname']) ? $item['nickname'] : $item['id']]); ?>">
+                                                <?php echo Html::encode($item['username']); ?>
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <hr>
+                            <?php endif; ?>
 
                         </div>
 
@@ -123,37 +141,6 @@ use dosamigos\fileupload\FileUpload;
 
 
 <hr>
-
-<br>
-
-
-
-<?php if(!($currentUser->equals($user))): ?>
-    <?php if($currentUser->getFollowers($user)): ?>
-        <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
-    <?php else: ?>
-        <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
-    <?php endif; ?>
-<?php endif; ?>
-<hr>
-
-<?php if(!empty($currentUser->getMutualSubscriptionsTo($user))): ?>
-    <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
-<?php endif; ?>
-
-<div class="row">
-
-    <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
-        <div class="col-md-12">
-            <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($item['nickname']) ? $item['nickname'] : $item['id']]); ?>">
-                <?php echo Html::encode($item['username']); ?>
-            </a>
-        </div>
-    <?php endforeach; ?>
-
-
-</div>
-
 
 
 
