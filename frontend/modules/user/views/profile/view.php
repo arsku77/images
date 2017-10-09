@@ -11,10 +11,74 @@ use yii\helpers\HtmlPurifier;
 use dosamigos\fileupload\FileUpload;
 ?>
 
-<h3><?php echo Html::encode($user->username); ?></h3>
-<p><?php echo HtmlPurifier::process($user->about); ?></p>
+<div class="page-posts no-padding">
+    <div class="row">
+        <div class="page page-post col-sm-12 col-xs-12 post-82">
+
+
+            <div class="blog-posts blog-posts-large">
+
+                <div class="row">
+
+                    <!-- profile -->
+                    <article class="profile col-sm-12 col-xs-12">
+                        <div class="profile-title">
+                            <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" class="author-image" />
+                            <div class="author-name"><?php echo Html::encode($user->username); ?></div>
+
+                            <a href="#" class="btn btn-default">Upload profile image</a>
+                            <a href="#" class="btn btn-default">Edit profile</a>
+
+                        </div>
+
+                        <div class="profile-description">
+                            <p><?php echo HtmlPurifier::process($user->about); ?></p>
+                        </div>
+                        <div class="profile-bottom">
+                            <div class="profile-post-count">
+                                <span>16 posts</span>
+                            </div>
+                            <div class="profile-followers">
+                                <a href="#">752 followers</a>
+                            </div>
+                            <div class="profile-following">
+                                <a href="#">833 following</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="row profile-posts">
+                            <div class="col-md-4 profile-post">
+                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
+                            </div>
+                            <div class="col-md-4 profile-post">
+                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
+                            </div>
+                            <div class="col-md-4 profile-post">
+                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
+                            </div>
+                            <div class="col-md-4 profile-post">
+                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
+                            </div>
+                            <div class="col-md-4 profile-post">
+                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <hr>
-<img src="<?php echo $user->getPicture(); ?>" id="profile-picture" />
+
 <br>
 <div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
 <div class="alert alert-danger display-none" id="profile-image-fail"></div>
