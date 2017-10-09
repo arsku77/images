@@ -65,6 +65,8 @@ use dosamigos\fileupload\FileUpload;
 
                             <!--                            <a href="#" class="btn btn-default">Upload profile image</a>-->
                             <a href="#" class="btn btn-default">Edit profile</a>
+                            <br/>
+                            <br/>
                             <div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
                             <div class="alert alert-danger display-none" id="profile-image-fail"></div>
 
@@ -79,12 +81,14 @@ use dosamigos\fileupload\FileUpload;
                                 <span>16 posts</span>
                             </div>
                             <div class="profile-followers">
-                                <a href="#">752 followers</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal2"><?php echo $user->countFollowers(); ?> followers</a>
                             </div>
                             <div class="profile-following">
-                                <a href="#">833 following</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal1"><?php echo $user->countSubscriptions(); ?> following</a>
                             </div>
                         </div>
+
+
                     </article>
                     <!-- profile end -->
 
@@ -150,17 +154,7 @@ use dosamigos\fileupload\FileUpload;
 
 </div>
 
-<hr>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1">
-    Subscriptions: <?php echo $user->countSubscriptions(); ?>
-</button>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2">
-    Followers: <?php echo $user->countFollowers(); ?>
-</button>
 
 
 <!-- list posts -->
