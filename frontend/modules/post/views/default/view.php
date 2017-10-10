@@ -27,10 +27,9 @@ use frontend\modules\post\widgets\commentsList\CommentsList;
             </div>
 
             <div class="col-md-12">
-                <?php echo Html::encode($post->description); ?>
+                <p><?php echo Html::encode($post->description); ?></p>
             </div>
         </div>
-
         <div class="col-md-12">
             Likes: <span class="likes-count"><?php echo $post->countLikes(); ?></span>
 

@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use dosamigos\fileupload\FileUpload;
+$this->title = Html::encode($user->username);
 ?>
 
 <div class="page-posts no-padding">
@@ -90,13 +91,14 @@ use dosamigos\fileupload\FileUpload;
                             <?php endif; ?>
 
                         </div>
-
-                        <div class="profile-description">
-                            <p><?php echo HtmlPurifier::process($user->about); ?></p>
-                        </div>
+                        <?php if ($user->about): ?>
+                            <div class="profile-description">
+                                <p><?php echo HtmlPurifier::process($user->about); ?></p>
+                            </div>
+                        <?php endif;?>
                         <div class="profile-bottom">
                             <div class="profile-post-count">
-                                <span>16 posts</span>
+                                <span><?php echo $user->getPostCount(); ?> posts</span>
                             </div>
                             <div class="profile-followers">
                                 <a href="#" data-toggle="modal" data-target="#myModal2"><?php echo $user->countFollowers(); ?> followers</a>
@@ -112,63 +114,32 @@ use dosamigos\fileupload\FileUpload;
 
                     <div class="col-sm-12 col-xs-12">
                         <div class="row profile-posts">
-                            <div class="col-md-4 profile-post">
-                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
-                            </div>
-                            <div class="col-md-4 profile-post">
-                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
-                            </div>
-                            <div class="col-md-4 profile-post">
-                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
-                            </div>
-                            <div class="col-md-4 profile-post">
-                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
-                            </div>
-                            <div class="col-md-4 profile-post">
-                                <a href="#"><img src="img/demo/car.jpg" class="author-image" /></a>
-                            </div>
+                            <!-- list posts -->
+                            <?php if($postList): ?>
+
+                                <p> This User:<?php echo Html::encode($user->username); ?> Posted yet!</p>
+                                <?php foreach ($postList as $itemPost): ?>
+                                    <div class="col-md-4 profile-post">
+                                        <a href="<?php echo Url::to(['/post/default/view', 'id' => $itemPost['id']]); ?>">
+                                            <img src="<?php echo Yii::$app->storage->getFile($itemPost['filename']); ?>" class="author-image" />
+                                        </a>
+                                    </div>
+                                <?php endforeach; ?>
+
+                            <?php else: ?>
+                                <div class="col-md-4 profile-post">
+                                    This User: <?php echo Html::encode($user->username); ?> Nobody posted yet!
+                                </div>
+                            <?php endif; ?>
+                            <!-- list posts end -->
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
-
     </div>
+
 </div>
-
-
-<hr>
-
-
-
-<!-- list posts -->
-<?php if($postList): ?>
-    <div class="row">
-        This User:<h4> <?php echo Html::encode($user->username); ?> </h4>Posted yet!
-        <?php foreach ($postList as $itemPost): ?>
-            <div class="col-md-12">
-                <a href="<?php echo Url::to(['/post/default/view', 'id' => $itemPost['id']]); ?>">
-                    <h4>  <img src="<?php echo Yii::$app->storage->getFile($itemPost['filename']); ?>" height="30" />
-                        <?php echo Html::encode($itemPost['description']); ?></h4>
-                </a>
-            </div>
-        <?php endforeach; ?>
-    </div>
-<?php else: ?>
-    <div class="col-md-12">
-        <h5>This User: <?php echo Html::encode($user->username); ?> Nobody posted yet! </h5>
-    </div>
-<?php endif; ?>
-<!-- list posts end -->
-
-
-
-
-
-
 
 
 
