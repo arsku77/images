@@ -28,6 +28,7 @@ class FeedService extends Component
 
         $followers = $user->getFollowers();
 
+
         foreach ($followers as $follower) {
             $feedItem = new Feed();
             $feedItem->user_id = $follower['id'];
@@ -39,6 +40,35 @@ class FeedService extends Component
             $feedItem->post_filename = $post->filename;
             $feedItem->post_description = $post->description;
             $feedItem->post_created_at = $post->created_at;
+//
+//            echo '<pre>';
+//            print_r($feedItem->user_id);
+//            echo '<pre>';
+//            print_r($feedItem->author_id);
+//            echo '<pre>';
+//            print_r($feedItem->author_name);
+//            echo '<pre>';
+//            print_r($feedItem->author_nickname);
+//            echo '<pre>';
+//            print_r($feedItem->author_picture);
+//            echo '<pre>';
+//            print_r($feedItem->post_id);
+//            echo '<pre>';
+//            print_r($feedItem->post_filename);
+//            echo '<pre>';
+//            print_r($feedItem->post_description);
+//            echo '<pre>';
+//            print_r($feedItem->post_created_at);
+//            echo '<pre>';
+//
+//
+//            if ($feedItem->save()){
+//             echo 'įrašė';}else{
+//                echo 'neįrašė';
+//            }
+//
+//            die;
+
             $feedItem->save();
         }
     }

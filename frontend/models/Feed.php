@@ -34,10 +34,10 @@ class Feed extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'author_id', 'author_nickname', 'post_id', 'post_created_at'], 'integer'],
+            [['user_id', 'author_id', 'post_id', 'post_created_at'], 'integer'],
             [['post_filename', 'post_created_at'], 'required'],
             [['post_description'], 'string'],
-            [['author_name', 'author_picture', 'post_filename'], 'string', 'max' => 255],
+            [['author_name', 'author_nickname', 'author_picture', 'post_filename'], 'string', 'max' => 255],
         ];
     }
 
