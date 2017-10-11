@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use frontend\models\User;
 use yii\bootstrap\ActiveForm;
+use Yii;
 ?>
 
 <?php if ($list): ?>

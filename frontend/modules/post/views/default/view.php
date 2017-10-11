@@ -37,14 +37,14 @@ use Yii;
                     <div class="post-likes">
                         <a href="#" class="btn btn-secondary"><i class="fa fa-lg fa-heart-o"></i></a>
                         <span><?php echo $post->countLikes(); ?> Likes</span>
-                            Likes: <span class="likes-count"></span>
+                        Likes: <span class="likes-count"></span>
 
-                            <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
-                                Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
-                            </a>
-                            <a href="#" class="btn btn-primary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
-                                Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
-                            </a>&nbsp; <span>Comments: </span>
+                        <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
+                            Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
+                        </a>
+                        <a href="#" class="btn btn-primary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
+                            Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+                        </a>&nbsp; <span>Comments: </span>
 
                     </div>
                     <div class="post-comments">
@@ -78,7 +78,7 @@ use Yii;
                 </div>
             </div>
 
-        <!--post form-->
+            <!--post form-->
 
             <div class="col-sm-12 col-xs-12">
                 <div class="comment-respond">
@@ -89,7 +89,7 @@ use Yii;
                     ]) ?>
                 </div>
             </div>
-<!--post form end-->
+            <!--post form end-->
 
 
 
