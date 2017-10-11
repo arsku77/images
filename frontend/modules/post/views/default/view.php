@@ -44,15 +44,15 @@ use Yii;
                             <div class="post-bottom">
                                 <div class="post-likes">
                                     <a href="#" class="btn btn-secondary"><i class="fa fa-lg fa-heart-o"></i></a>
-                                    <span><?php echo $post->countLikes(); ?> Likes</span>
-                                    Likes: <span class="likes-count"></span>
+                                    <span class="likes-count"><?php echo $post->countLikes(); ?></span><span>  Likes &nbsp;</span>
+
 
                                     <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
                                         Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
                                     </a>
                                     <a href="#" class="btn btn-primary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
                                         Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
-                                    </a>&nbsp; <span>Comments: </span>
+                                    </a>&nbsp;
 
                                 </div>
                                 <div class="post-comments">
