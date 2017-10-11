@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use frontend\models\User;
 use yii\bootstrap\ActiveForm;
 ?>
@@ -7,10 +8,19 @@ use yii\bootstrap\ActiveForm;
 <?php if ($list): ?>
 
     <?php foreach ($list as $item): ?>
-        <div class="row">
-            <p>Author:
-                <b><?php echo Html::encode(User::getNickNameById($item['author_id'])); ?></b>
-                <br>
+
+
+        <li class="comment">
+            <div class="comment-user-image">
+                <img src="<?php User::findIdentity($item['author_id'])->picture; ?>">
+            </div>
+
+            <div class="comment-info">
+                <h4 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => User::getNickNameById($item['author_id'])]); ?>">
+                        <?php echo Html::encode(User::getUserNameById($item['author_id'])); ?>
+                    </a>
+                    <span>(<?php echo Yii::$app->formatter->asDatetime($item['created_at']); ?>)</span></h4>
+
                 <?php if ($item->isAuthor(Yii::$app->user->identity)): ?>
 
             <div class="col-lg-6">
@@ -45,7 +55,7 @@ use yii\bootstrap\ActiveForm;
 
             <?php else: ?>
 
-                <?php echo Html::encode($item['text']); ?>
+                    <p><?php echo Html::encode($item['text']); ?></p>
 
             <?php endif; ?>
 
@@ -63,8 +73,10 @@ use yii\bootstrap\ActiveForm;
 
             <?php endif; ?>
             <hr>
-            </p>
-        </div>
+            </div>>
+        </li>>
+
 
     <?php endforeach; ?>
+
 <?php endif; ?>

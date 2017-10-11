@@ -221,6 +221,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @param $id
+     * @return string
+     */
+    public static function getUserNameById($id)
+    {
+        return self::findIdentity($id)->username;
+    }
+
+    /**
      * Subscribe current user to given user
      * @param \frontend\models\User $user
      */

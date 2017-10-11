@@ -10,15 +10,21 @@ use yii\bootstrap\ActiveForm;
     <div class="col-lg-5">
                 <?php $form = ActiveForm::begin([
             'id' => 'comment-form',
+            'method' => 'post',
             'action' => ['default/create-comment', 'postId' => $postId]
         ]); ?>
-
-        <?= $form->field($model, 'text')->textarea(['rows' => 6])->label('Comment') ?>
-
-        <div class="form-group col-xs-12 floating-label-form-group controls">
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
-        </div>
-
+        <p class="comment-form-comment">
+        <?= $form->field($model, 'text')->textarea([
+                'rows' => 6,
+                'name' => 'comment',
+                'class' => 'form-control',
+                'placeholder' => 'Text',
+                'aria-required' => 'true',
+            ])->label('Comment') ?>
+        </p>
+        <p class="form-submit">
+            <?= Html::submitButton('Send', ['class' => 'btn btn-secondary', 'name' => 'comment-button']) ?>
+        </p>
         <?php ActiveForm::end(); ?>
     </div>
 </div>
