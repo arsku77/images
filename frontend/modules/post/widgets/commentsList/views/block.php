@@ -74,8 +74,8 @@ use Yii;
 
             <?php endif; ?>
             <hr>
-            </div>>
-        </li>>
+            </div>
+        </li>
 
 
     <?php endforeach; ?>
