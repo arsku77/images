@@ -91,7 +91,7 @@ use Yii;
                         <div class="col-sm-12 col-xs-12">
                             <div class="comment-respond">
                                 <h4>Leave a Reply</h4>
-                                <?php $this->render('comment/_create', [
+                                <?= $this->render('comment/_create', [
                                     'model' => $modelComment,
                                     'postId' => $post->id,
                                 ]) ?>

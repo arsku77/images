@@ -33,13 +33,16 @@ use Yii;
                         'id' => $item['id'],
                         'postId' => $item['post_id']]
                 ]); ?>
-
+                <p class="comment-form-comment">
                 <?= $form->field($model, 'text')
-                    ->textarea(['rows' => 4, 'value' => Html::encode($item['text'])])
-                    ->label('Comment') ?>
-
-                <div class="form-group col-xs-12 floating-label-form-group controls">
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'name' => 'comment-update-button']) ?>
+                    ->textarea(['rows' => 4,
+                        'value' => Html::encode($item['text']),
+                        'class' => 'form-control',
+                        ])
+                    ->label('Comment respectfully comment. Thank you.') ?>
+                </p>
+                <p class="form-submit">
+                    <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
                     <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
                         'class' => 'btn btn-danger',
                         'data' => [
@@ -48,7 +51,7 @@ use Yii;
                         ],
                     ]) ?>
 
-                </div>
+                </p>
 
                 <?php ActiveForm::end(); ?>
             </div>
