@@ -2,25 +2,23 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 ?>
-<p>
-    Comment respectfully comment. Thank you.
-</p>
+    <?php $form = ActiveForm::begin([
+        'id' => 'comment-form-in-post',
+        'method' => 'post',
+        'action' => ['default/create-comment', 'postId' => $postId]
+    ]); ?>
+    <p class="comment-form-comment">
 
-<div class="row">
-    <div class="col-lg-5">
-        <?php $form = ActiveForm::begin([
-            'id' => 'comment-form',
-            'action' => ['default/create-comment', 'postId' => $postId]
-        ]); ?>
+        <?= $form->field($model, 'text')
+            ->textarea([
+                'id' => 'comment',
+                'rows' => 6,
+                'class' => 'form-control',
+                'placeholder' => 'Text write here',
+            ])->label('Comment respectfully comment. Thank you.') ?>
+    </p>
+    <p class="form-submit">
+        <?= Html::submitButton('Comment', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
+    </p>
 
-        <?= $form->field($model, 'text')->textarea(['rows' => 6])->label('Comment') ?>
-
-        <div class="form-group col-xs-12 floating-label-form-group controls">
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'comment-button']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
-    </div>
-</div>
-
-</div>
+    <?php ActiveForm::end(); ?>
