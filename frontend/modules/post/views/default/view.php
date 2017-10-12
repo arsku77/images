@@ -47,10 +47,10 @@ use Yii;
                                     <span class="likes-count"><?php echo $post->countLikes(); ?></span><span>  Likes &nbsp;</span>
 
 
-                                    <a href="#" class="btn btn-primary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
+                                    <a href="#" class="btn btn-secondary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
                                         Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
                                     </a>
-                                    <a href="#" class="btn btn-primary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
+                                    <a href="#" class="btn btn-secondary button-like <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "display-none" : ""; ?>" data-id="<?php echo $post->id; ?>">
                                         Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
                                     </a>&nbsp;
 
@@ -69,10 +69,10 @@ use Yii;
                         </article>
                         <!-- feed item -->
 
+                        <!-- comment item -->
                         <div class="col-sm-12 col-xs-12">
                             <h4><?php echo $post->countCommentsToRedis(); ?> comments</h4>
                             <div class="comments-post">
-
                                 <div class="single-item-title"></div>
                                 <div class="row">
                                     <ul class="comment-list">
@@ -82,12 +82,11 @@ use Yii;
                                         ]); ?>
                                     </ul>
                                 </div>
-
                             </div>
                         </div>
+                        <!-- comment item end -->
 
                         <!--post form-->
-
                         <div class="col-sm-12 col-xs-12">
                             <div class="comment-respond">
                                 <h4>Leave a Reply</h4>
@@ -98,18 +97,11 @@ use Yii;
                             </div>
                         </div>
                         <!--post form end-->
-
-
                     </div>
                 </div>
             </div>
 
-
-
         </div>   <!-- row-->
-
-
-
 
     </div>
 

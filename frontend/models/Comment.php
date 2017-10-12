@@ -86,6 +86,16 @@ class Comment extends \yii\db\ActiveRecord
     }
 
     /**
+     * Get user of the post
+     * @return User|null
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+
+    /**
      * Get post about the comments
      * @return Post|null
      */

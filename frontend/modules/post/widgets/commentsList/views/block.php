@@ -13,7 +13,7 @@ use Yii;
 
         <li class="comment">
             <div class="comment-user-image">
-                <img src="<?php User::findIdentity($item['author_id'])->picture; ?>">
+                <img src="<?php echo $item->user->getPicture(); ?>" width="50px"/>
             </div>
 
             <div class="comment-info">
@@ -40,8 +40,8 @@ use Yii;
                         'class' => 'form-control',
                         ])
                     ->label('Comment respectfully comment. Thank you.') ?>
-                </p>
-                <p class="form-submit">
+
+
                     <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
                     <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
                         'class' => 'btn btn-danger',
@@ -50,8 +50,8 @@ use Yii;
                             'method' => 'post',
                         ],
                     ]) ?>
-
                 </p>
+
 
                 <?php ActiveForm::end(); ?>
             </div>
