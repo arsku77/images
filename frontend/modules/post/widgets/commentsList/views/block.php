@@ -1,7 +1,6 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
-use frontend\models\User;
 use yii\bootstrap\ActiveForm;
 use Yii;
 ?>
@@ -17,8 +16,8 @@ use Yii;
             </div>
 
             <div class="comment-info">
-                <h4 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => User::getNickNameById($item['author_id'])]); ?>">
-                        <?php echo Html::encode(User::getUserNameById($item['author_id'])); ?>
+                <h4 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $item->user->getNickNameById($item['author_id'])]); ?>">
+                        <?php echo Html::encode($item->user->getUserNameById($item['author_id'])); ?>
                     </a>
                     <span>(<?php echo Yii::$app->formatter->asDatetime($item['created_at']); ?>)</span></h4>
 
