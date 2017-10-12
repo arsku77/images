@@ -78,9 +78,9 @@ class DefaultController extends Controller
         $model = new CommentForm(null, $post, $currentUser);
 
         if ($model->load(Yii::$app->request->post())) {
-            echo '<pre>';
-            print_r($model);
-            echo '<pre>';die;
+//            echo '<pre>';
+//            print_r($model);
+//            echo '<pre>';die;
 
             if ($model->save()) {
 
