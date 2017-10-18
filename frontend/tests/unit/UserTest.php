@@ -32,16 +32,21 @@ class UserTest extends \Codeception\Test\Unit
     // next tests
     public function testGetNickNameOnNicknameEmpty()
     {
-    $user = $this->tester->grabFixture('users','user1');
-    expect($user->getNickname())->equals(1);
+        $user = $this->tester->grabFixture('users','user1');
+        expect($user->getNickname())->equals(1);
     }
 
     public function testGetNickNameOnNicknameNotEmpty()
     {
-    $user = $this->tester->grabFixture('users','user2');
-    expect($user->getNickname())->equals('catelyn');
+        $user = $this->tester->grabFixture('users','user2');
+        expect($user->getNickname())->equals('catelyn');
     }
 
+    public function testGetPostCount()
+    {
+        $user = $this->tester->grabFixture('users','user2');
+        expect($user->getPostCount())->equals(3);
+    }
 //    public function example()
 //    {
 //

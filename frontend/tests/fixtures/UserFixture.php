@@ -8,8 +8,8 @@ class UserFixture extends ActiveFixture
 {
 
     public $modelClass = 'frontend\models\User';
-//    public $depends = [
-//        'frontend\tests\fixtures\PostFixture'
-//    ];
+    public $depends = [
+        'frontend\tests\fixtures\PostFixture'
+    ];
 
 }
