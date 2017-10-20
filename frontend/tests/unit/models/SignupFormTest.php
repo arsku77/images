@@ -25,4 +25,19 @@ class SignupFormTest extends \Codeception\Test\Unit
             ->equals('some_username');
 //        sleep(15);
     }
+
+    public function testUsernameRequired()
+    {
+        $model = new SignupForm([
+            'username' => '',
+            'email' => 'some_email@example.com',
+            'password' => 'some_password',
+        ]);
+
+        $model->signup();
+
+        expect($model->getFirstError('username'))
+            ->equals('Username cannot be blank.');
+    }
+
 }
