@@ -40,4 +40,19 @@ class SignupFormTest extends \Codeception\Test\Unit
             ->equals('Username cannot be blank.');
     }
 
+    public function testUsernameTooShort()
+    {
+        $model = new SignupForm([
+            'username' => 's',
+            'email' => 'some_email@example.com',
+            'password' => 'some_password',
+        ]);
+
+        $model->signup();
+
+        expect($model->getFirstError('username'))
+            ->equals('Username should contain at least 2 characters.');
+    }
+
+
 }
