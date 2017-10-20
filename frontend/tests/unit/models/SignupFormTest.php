@@ -54,5 +54,18 @@ class SignupFormTest extends \Codeception\Test\Unit
             ->equals('Username should contain at least 2 characters.');
     }
 
+    public function testPasswordRequired()
+    {
+        $model = new SignupForm([
+            'username' => 'some_username',
+            'email' => 'some_email@example.com',
+            'password' => '',
+        ]);
+
+        $model->signup();
+
+        expect($model->getFirstError('password'))
+            ->equals('Password cannot be blank.');
+    }
 
 }
