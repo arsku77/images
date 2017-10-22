@@ -61,7 +61,7 @@ class UserTest extends \Codeception\Test\Unit
         $user1 = $this->tester->grabFixture('users','user1');
         $user3 = $this->tester->grabFixture('users','user3');
 
-        $user3 -> followUser($user1);//usris 3 seka, prenumeruoja userį 1
+        $user3 -> followUser($user1);//useris 3 seka, prenumeruoja userį 1
 
         $this->tester->seeRedisKeyContains('user:1:followers', 3);
         $this->tester->seeRedisKeyContains('user:3:subscriptions', 1);
@@ -71,8 +71,28 @@ class UserTest extends \Codeception\Test\Unit
         $this->tester->sendCommandToRedis('del', 'user:3:subscriptions');
 
     }
-//    public function example()
-//    {
-//
-//    }
+
+    
+    public function testUnfollowUser()
+    {
+        $user1 = $this->tester->grabFixture('users', 'user1');
+        $user3 = $this->tester->grabFixture('users', 'user3');
+        //write Redis
+        $this->tester->sendCommandToRedis('sadd', 'user:3:subscriptions', 1);
+        $this->tester->sendCommandToRedis('sadd', 'user:1:followers', 3);
+//sleep (15);
+        //Check user3 subscribe user1 and user1 have follower user3
+        $this->tester->seeRedisKeyContains('user:1:followers', 3);
+        $this->tester->seeRedisKeyContains('user:3:subscriptions', 1);
+
+        $user3->unfollowUser($user1);//user3 unfollow user1
+
+        expect($this->tester->sendCommandToRedis('scard', 'user:1:followers'))->
+        equals(0);
+
+        expect($this->tester->sendCommandToRedis('scard', 'user:3:subscriptions'))->
+        equals(0);
+
+
+    }
 }
