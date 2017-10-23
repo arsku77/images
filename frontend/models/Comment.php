@@ -85,6 +85,25 @@ class Comment extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
 
+
+    /**
+     * Get author name of relate table
+     * @return string username|null
+     */
+    public function getAuthorName()
+    {
+        return $this->user->username;
+    }
+
+    /**
+     * Get author name of relate table
+     * @return string nickname|id
+     */
+    public function getAuthorNickName()
+    {
+        return ($this->user->nickname) ? $this->user->nickname : $this->user->id;
+    }
+
     /**
      * Get user of the post
      * @return User|null
@@ -113,7 +132,7 @@ class Comment extends \yii\db\ActiveRecord
     public static function getCommentsList($max, $post_id)
     {
         $order = ['created_at' => SORT_DESC];
-        return self::find()->where(['post_id' => $post_id])->orderby($order)->limit($max)->all();
+        return self::find()->with('user')->where(['post_id' => $post_id])->orderby($order)->limit($max)->all();
 
     }
 

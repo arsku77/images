@@ -16,8 +16,8 @@ use Yii;
             </div>
 
             <div class="comment-info">
-                <h4 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $item->user->getNickNameById($item['author_id'])]); ?>">
-                        <?php echo Html::encode($item->user->getUserNameById($item['author_id'])); ?>
+                <h4 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $item->getAuthorNickName()]); ?>">
+                        <?php echo Html::encode($item->getAuthorName()); ?>
                     </a>
                     <span>(<?php echo Yii::$app->formatter->asDatetime($item['created_at']); ?>)</span></h4>
 
