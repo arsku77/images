@@ -41,6 +41,7 @@ class UserTest extends \Codeception\Test\Unit
     public function testGetNickNameOnNicknameEmpty()
     {
         $user = $this->tester->grabFixture('users','user1');
+
         expect($user->getNickname())->equals(1);
     }
 
