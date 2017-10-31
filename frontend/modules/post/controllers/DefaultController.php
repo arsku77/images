@@ -204,26 +204,31 @@ class DefaultController extends Controller
         throw new NotFoundHttpException();
     }
 
-//    public function actionComments($id)
-//    {
-//        $model = new Comment();
-//        $model->scenario = Comment::SCENARIO_COMMENT_REGISTER;
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            if ($model->save()) {
-//                Yii::$app->session->setFlash('comment saved', 'Thank you for contacting us. We will respond to you as soon as possible.');
-//            } else {
-//                Yii::$app->session->setFlash('error', 'There was an error saving your comment.');
-//            }
-//
-//            return $this->refresh();
-//
-//        } else {
-//            return $this->render('comment', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
+    public function actionComplain()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+
+        if ($post->complain($currentUser)) {
+            return [
+                'success' => true,
+                'text' => 'Post reported'
+            ];
+        }
+        return [
+            'success' => false,
+            'text' => 'Error',
+        ];
+    }
 
 
 
