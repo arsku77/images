@@ -41,7 +41,16 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'updated_at',
             'complaints',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}&nbsp;&nbsp;&nbsp;{approve}&nbsp;&nbsp;&nbsp;{delete}',
+                'buttons' => [
+                    'approve' => function ($url, $post) {
+                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', ['approve', 'id' => $post->id]);
+                    },
+                ],
+
+            ],
         ],
     ]); ?>
 </div>

@@ -58,5 +58,21 @@ class Post extends \yii\db\ActiveRecord
         return Yii::$app->storage->getFile($this->filename);
     }
 
+    /**
+     * Approve post (delete complaints) if it looks ok
+     * @return boolean
+     */
+
+    public function approve()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $key = "post:{$this->id}:complaints";
+        $redis->del($key);
+
+        $this->complaints = 0;
+        return $this->save(false, ['complaints']);
+    }
+
 
 }

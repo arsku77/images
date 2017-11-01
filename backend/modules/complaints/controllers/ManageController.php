@@ -70,6 +70,22 @@ class ManageController extends Controller
         return $this->redirect(['index']);
     }
 
+
+    /**
+     * Approve post action if it looks ok
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionApprove($id)
+    {
+        $post = $this->findModel($id);
+        if ($post->approve()) {
+            Yii::$app->session->setFlash('success', 'Post marked as appropriate');
+            return $this->redirect(['index']);
+        }
+    }
+
+
     /**
      * Finds the Post model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
