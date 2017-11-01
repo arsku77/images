@@ -41,4 +41,22 @@ class Post extends \yii\db\ActiveRecord
             'complaints' => 'Complaints',
         ];
     }
+
+    /**
+     * @return $this
+     */
+    public static function findComplaints()
+    {
+        return Post::find()->where('complaints > 0')->orderBy('complaints DESC');
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return Yii::$app->storage->getFile($this->filename);
+    }
+
+
 }

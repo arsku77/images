@@ -1,5 +1,6 @@
 <?php
 
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -13,21 +14,32 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Post', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            [
+                'attribute' => 'id',
+                'format' => 'raw',
+                'value' => function ($post) {
+                    /* @var $post \backend\models\Post */
+                    return Html::a($post->id, ['view', 'id' => $post->id]);
+                },
+            ],
             'user_id',
-            'filename',
+            [
+                'attribute' => 'filename',
+                'format' => 'raw',
+                'value' => function ($post) {
+                    /* @var $post \backend\models\Post */
+                    return Html::img($post->getImage(), ['width' => '130px']);
+                },
+            ],
             'description:ntext',
-            'created_at',
+            'created_at:datetime',
             // 'updated_at',
-            // 'complaints',
+            'complaints',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
