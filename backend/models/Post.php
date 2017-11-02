@@ -25,6 +25,18 @@ class Post extends \yii\db\ActiveRecord
         return 'post';
     }
 
+    public function beforeDelete()
+    {
+//        echo '<pre>';
+//        print_r($this);
+//        echo '<pre>';die;
+
+        $this->deleteCommentsToRedis();
+        $this->deleteComplaintsToRedis();
+        $this->deleteLikesToRedis();
+        return parent::beforeDelete();//really delete $this
+    }
+
 
     /**
      * @inheritdoc
@@ -63,6 +75,16 @@ class Post extends \yii\db\ActiveRecord
      * @return boolean
      */
 
+    /**
+     * Get user of the post
+     * @return User|null
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+
     public function approve()
     {
         /* @var $redis Connection */
@@ -72,6 +94,52 @@ class Post extends \yii\db\ActiveRecord
 
         $this->complaints = 0;
         return $this->save(false, ['complaints']);
+    }
+
+
+    /**
+     * delete all comments ene post in Redis
+     *
+     */
+    public function deleteCommentsToRedis():void
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $keyComments = "post:{$this->id}:comments";
+        $redis->del($keyComments);
+    }
+
+
+    /**
+     * delete all comments ene post in Redis
+     *
+     */
+    public function deleteComplaintsToRedis():void
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $keyComplaints = "post:{$this->id}:complaints";
+        $redis->del($keyComplaints);
+    }
+
+    /**
+     * get all likes users ids one post
+     * remove all post id from user likes in Redis
+     * delete post record from redis
+     *
+     */
+    public function deleteLikesToRedis():void
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+
+        $keyLikes = "post:{$this->id}:likes";
+        if ($idsUsers = $redis->smembers($keyLikes)) {
+            foreach ($idsUsers as $idUser) {
+                $redis->srem("user:{$idUser}:likes", $this->id);
+            }
+            $redis->del($keyLikes);
+        }
     }
 
 
