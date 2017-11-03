@@ -46,6 +46,12 @@ FontAwesomeAsset::register($this);
                         <li class="blog-search">
                             <a href="#" title="Search"><i class="fa fa-search"></i></a>
                         </li>
+                        <li>
+                            <?= Html::beginForm(['/site/language']) ?>
+                            <?= Html::dropDownList('language', Yii::$app->language, ['en-US' => 'English', 'ru-RU' => 'Русский', 'lt-LT' => 'Lietuvių']) ?>
+                            <?= Html::submitButton('Change') ?>
+                            <?= Html::endForm() ?>
+                        </li>
                     </ul>
                 </div>
             </div>

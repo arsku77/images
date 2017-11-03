@@ -5,6 +5,7 @@ use frontend\models\Post;
 use yii\web\Controller;
 use frontend\models\User;
 use Yii;
+use yii\web\Cookie;
 /**
  * Site controller
  */
@@ -52,6 +53,24 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    /**
+     * Change language
+     * @return mixed
+     */
+    public function actionLanguage()
+    {
+        // Hometask: check if language is supported
+        $language = Yii::$app->request->post('language');
+        Yii::$app->language = $language;
+
+        $languageCookie = new Cookie([
+            'name' => 'language',
+            'value' => $language,
+            'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+        ]);
+        Yii::$app->response->cookies->add($languageCookie);
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 
 
 }
