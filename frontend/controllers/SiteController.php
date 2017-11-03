@@ -60,7 +60,12 @@ class SiteController extends Controller
     public function actionLanguage()
     {
         // Hometask: check if language is supported
+
         $language = Yii::$app->request->post('language');
+        $arraySupportedLanguage = Yii::$app->params['supportedLanguages'];
+        if (!in_array($language, $arraySupportedLanguage)){
+            return $this->redirect(Yii::$app->request->referrer);
+        }
         Yii::$app->language = $language;
 
         $languageCookie = new Cookie([
