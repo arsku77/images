@@ -25,15 +25,15 @@ class Post extends \yii\db\ActiveRecord
         return 'post';
     }
 
+    /**
+     * @return bool
+     */
     public function beforeDelete()
     {
-//        echo '<pre>';
-//        print_r($this);
-//        echo '<pre>';die;
-
         $this->deleteCommentsToRedis();
         $this->deleteComplaintsToRedis();
         $this->deleteLikesToRedis();
+
         return parent::beforeDelete();//really delete $this
     }
 
@@ -98,7 +98,7 @@ class Post extends \yii\db\ActiveRecord
 
 
     /**
-     * delete all comments ene post in Redis
+     * delete all comments one post in Redis
      *
      */
     public function deleteCommentsToRedis():void
@@ -111,7 +111,7 @@ class Post extends \yii\db\ActiveRecord
 
 
     /**
-     * delete all comments ene post in Redis
+     * delete all comments one post in Redis
      *
      */
     public function deleteComplaintsToRedis():void
