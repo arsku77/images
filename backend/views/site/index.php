@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 use yii\helpers\Url;
-
+use yii;
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
@@ -44,6 +44,5 @@ $this->title = 'My Yii Application';
                 <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
         </div>
-
     </div>
 </div>
