@@ -28,7 +28,7 @@ use Yii;
                     'id' => 'comment-update-form' . $item['id'],
                     'method' => 'post',
                     'action' => [
-                        'default/update-comment',
+                        'comment/update',
                         'id' => $item['id'],
                         'postId' => $item['post_id']]
                 ]); ?>
@@ -42,7 +42,7 @@ use Yii;
 
 
                     <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
-                    <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
+                    <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
                         'class' => 'btn btn-danger',
                         'data' => [
                             'confirm' => 'Are you sure you want to delete this comment?',
@@ -65,7 +65,7 @@ use Yii;
             <?php if ($post->isAuthor(Yii::$app->user->identity)&&!$item->isAuthor(Yii::$app->user->identity)): ?>
 
                     <div>
-                    <?= Html::a('Delete comment', ['default/delete-comment', 'id' => $item['id']], [
+                    <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
                         'class' => 'btn btn-danger',
                         'data' => [
                             'confirm' => 'Are you sure you want to delete this comment?',

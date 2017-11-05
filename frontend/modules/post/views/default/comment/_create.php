@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
     <?php $form = ActiveForm::begin([
         'id' => 'comment-form-in-post',
         'method' => 'post',
-        'action' => ['default/create-comment', 'postId' => $postId]
+        'action' => ['comment/create', 'postId' => $postId]
     ]); ?>
     <p class="comment-form-comment">
 
