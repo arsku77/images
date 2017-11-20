@@ -17,7 +17,7 @@ class m170915_101654_create_post_table extends Migration
             'description' => $this->text(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
-        ]);
+        ],'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB');
     }
 
     /**

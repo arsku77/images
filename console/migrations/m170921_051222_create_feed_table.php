@@ -23,7 +23,7 @@ class m170921_051222_create_feed_table extends Migration
             'post_filename' => $this->string()->notNull(),
             'post_description' => $this->text(),
             'post_created_at' => $this->integer()->notNull(),
-        ]);
+        ],'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB');
     }
 
 

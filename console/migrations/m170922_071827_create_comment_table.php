@@ -20,7 +20,7 @@ class m170922_071827_create_comment_table extends Migration
             'text' => $this->text(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
-        ]);
+        ],'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB');
     }
 
     /**
