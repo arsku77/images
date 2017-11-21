@@ -4,7 +4,7 @@
 /* @var $currentUser frontend\models\User */
 /* @var $modelPicture frontend\modules\user\models\forms\PictureForm */
 
-
+use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
@@ -49,7 +49,7 @@ $this->title = Html::encode($user->username);
                                 ]); ?>
 
                                 <?php if ($user->picture > ''): ?>
-                                    <?= Html::a('Delete', ['/user/profile/delete-picture', 'filename' => $user->picture], [
+                                    <?= Html::a('Delete picture', ['/user/profile/delete-picture', 'filename' => $user->picture], [
                                         'class' => 'btn btn-danger',
                                         'id' => 'btnDelete',
                                         'data' => [
@@ -58,7 +58,11 @@ $this->title = Html::encode($user->username);
                                         ],
                                     ]) ?>
                                 <?php endif; ?>
-                                <?= Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['/user/profile/view', 'nickname' => $user->nickname], ['class' => 'btn btn-info']) ?>
+                                <?= Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['/user/profile/view', 'nickname' => ($user->nickname ? $user->nickname : $user->id)], ['class' => 'btn btn-info']) ?>
+
+
+
+
 
 
                             <?php endif; ?>
@@ -72,12 +76,12 @@ $this->title = Html::encode($user->username);
                             <div class="alert alert-danger display-none" id="profile-image-fail"></div>
                             <?php if ($currentUser && !$currentUser->equals($user)): ?>
                                 <?php if($currentUser->subscribedUser($user->getId())): ?>
-                                    <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
+                                    <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info"><?php echo Yii::t('profile', 'Unsubscribe'); ?></a>
                                 <?php else: ?>
-                                    <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
+                                    <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info"><?php echo Yii::t('profile', 'Subscribe'); ?></a>
                                 <?php endif; ?>
                                 <hr>
-                                <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
+                                <h5><?php echo Yii::t('profile','Friends, who are also following');  echo Html::encode($user->username); ?>: </h5>
                                 <div class="row">
                                     <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
                                         <div class="col-md-12">
@@ -93,7 +97,8 @@ $this->title = Html::encode($user->username);
                         </div>
                         <?php if ($user->about): ?>
                             <div class="profile-description">
-                                <p><?php echo HtmlPurifier::process($user->about); ?></p>
+                                <h5><p><?php echo HtmlPurifier::process($user->about); ?></p></h5>
+                                <hr>
                             </div>
                         <?php endif;?>
                         <div class="profile-bottom">
@@ -101,10 +106,10 @@ $this->title = Html::encode($user->username);
                                 <span><?php echo $user->getPostCount(); ?> posts</span>
                             </div>
                             <div class="profile-followers">
-                                <a href="#" data-toggle="modal" data-target="#myModal2"><?php echo $user->countFollowers(); ?> followers</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal2"><?php echo $user->countFollowers(); echo Yii::t('profile', 'followers'); ?></a>
                             </div>
                             <div class="profile-following">
-                                <a href="#" data-toggle="modal" data-target="#myModal1"><?php echo $user->countSubscriptions(); ?> following</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal1"><?php echo $user->countSubscriptions(); echo Yii::t('profile', 'following'); ?></a>
                             </div>
                         </div>
 
@@ -117,7 +122,7 @@ $this->title = Html::encode($user->username);
                             <!-- list posts -->
                             <?php if($postList): ?>
 
-                                <p> This User:<?php echo Html::encode($user->username); ?> Posted yet!</p>
+                                <p><?php echo Yii::t('profile', 'This User:'); echo Html::encode($user->username);  echo Yii::t('profile', 'Posted yet!'); ?></p>
                                 <?php foreach ($postList as $itemPost): ?>
                                     <div class="col-md-4 profile-post">
                                         <a href="<?php echo Url::to(['/post/default/view', 'id' => $itemPost['id']]); ?>">
@@ -128,7 +133,7 @@ $this->title = Html::encode($user->username);
 
                             <?php else: ?>
                                 <div class="col-md-4 profile-post">
-                                    This User: <?php echo Html::encode($user->username); ?> Nobody posted yet!
+                                    <?php echo Yii::t('profile', 'This User:'); echo Html::encode($user->username);  echo Yii::t('profile', 'Nobody posted yet!'); ?>
                                 </div>
                             <?php endif; ?>
                             <!-- list posts end -->
@@ -151,7 +156,7 @@ $this->title = Html::encode($user->username);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Subscriptions</h4>
+                <h4 class="modal-title" id="myModalLabel"><?php echo Yii::t('profile', 'Following'); ?></h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -178,7 +183,7 @@ $this->title = Html::encode($user->username);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Followers</h4>
+                <h4 class="modal-title" id="myModalLabel"><?php echo Yii::t('profile', 'Followers'); ?></h4>
             </div>
             <div class="modal-body">
                 <div class="row">
