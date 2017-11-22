@@ -9,13 +9,40 @@ use yii\web\UploadedFile;
 use frontend\models\Post;
 use frontend\modules\post\models\forms\PostForm;
 use frontend\modules\post\models\forms\CommentForm;
-use frontend\models\Comment;
 
 /**
  * Default controller for the `post` module
  */
 class DefaultController extends Controller
 {
+    /**
+     * Renders the create view list posts for the module
+     * @return string
+     */
+    public function actionIndex()
+    {
+
+    }
+
+    /**
+     * Renders the create view for the module
+     * @return string
+     */
+    public function actionView($id)
+    {
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+        $modelComment = new CommentForm(null, $post, $currentUser);
+
+        return $this->render('view', [
+            'post' => $post,
+            'currentUser' => $currentUser,
+            'modelComment' => $modelComment
+
+        ]);
+    }
+
     /**
      * Renders the create view for the module
      * @return string
@@ -43,107 +70,6 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
-
-    /**
-     * Renders the create view for the module
-     * @return string
-     */
-    public function actionView($id)
-    {
-        /* @var $currentUser User */
-        $currentUser = Yii::$app->user->identity;
-        $post = $this->findPost($id);
-        $modelComment = new CommentForm(null, $post, $currentUser);
-
-        return $this->render('view', [
-            'post' => $post,
-            'currentUser' => $currentUser,
-            'modelComment' => $modelComment
-
-        ]);
-    }
-
-    /**
-     * create new comment
-     */
-    public function actionCreateComment($postId)
-    {
-
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/user/default/login']);
-        }
-
-        $currentUser = Yii::$app->user->identity;
-        $post = $this->findPost($postId);
-        $model = new CommentForm(null, $post, $currentUser);
-
-        if ($model->load(Yii::$app->request->post())) {
-//            echo '<pre>';
-//            print_r($model);
-//            echo '<pre>';die;
-
-            if ($model->save()) {
-
-                Yii::$app->session->setFlash('success', 'Comment created!');
-                return $this->redirect(['view', 'id' => $postId]);
-            }
-        }
-
-        return $this->redirect(['view', 'id' => $postId]);
-    }
-    /**
-     * update comment
-     */
-    public function actionUpdateComment($id, $postId)
-    {
-
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/user/default/login']);
-        }
-
-        $currentUser = Yii::$app->user->identity;
-
-        $post = $this->findPost($postId);
-
-        $model = new CommentForm($id, $post, $currentUser);
-
-        if ($model->load(Yii::$app->request->post())&&$model->save()) {
-
-                Yii::$app->session->setFlash('success', 'Comment updated!');
-                return $this->redirect(['view', 'id' => $postId]);
-        }
-
-        return $this->redirect(['view', 'id' => $id]);
-    }
-
-    /**
-     * delete comment by id
-     */
-    public function actionDeleteComment($id)
-    {
-
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['/user/default/login']);
-        }
-
-        $comment = Comment::findOne($id);
-
-        $post = $this->findPost($comment->post_id);
-
-        $currentUser = Yii::$app->user->identity;
-
-        if ($comment->isAuthor($currentUser)||$post->isAuthor($currentUser)){
-
-            if ($comment->delete()) {
-                $post->unCommentRemToRedis($comment);
-                Yii::$app->session->setFlash('success', 'Comment deleted!');
-                return $this->redirect(['view', 'id' => $comment->post_id]);
-            }
-
-        }
-    }
-
-
 
     public function actionLike()
     {
