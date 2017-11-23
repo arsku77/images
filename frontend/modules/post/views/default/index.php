@@ -26,7 +26,7 @@ use Yii;
                             <div class="comments-post">
                                 <div class="single-item-title"></div>
                                 <div class="row">
-                                    <ul class="comment-list">
+                                    <ul class="comment-list" style="padding: 0px 10px 0px 10px">
                                         <?php echo PostsList::widget([
                                             'showLimit' => Yii::$app->params['limitPostsInPostList'],
                                             'posts' => $posts,

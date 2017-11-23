@@ -23,57 +23,64 @@ use Yii;
 
                 <?php if ($item->isAuthor(Yii::$app->user->identity)): ?>
 
-            <div class="col-lg-6">
-                <?php $form = ActiveForm::begin([
-                    'id' => 'comment-update-form' . $item['id'],
-                    'method' => 'post',
-                    'action' => [
-                        'comment/update',
-                        'id' => $item['id'],
-                        'postId' => $item['post_id']]
-                ]); ?>
-                <p class="comment-form-comment">
-                <?= $form->field($model, 'text')
-                    ->textarea(['rows' => 4,
-                        'value' => Html::encode($item['text']),
-                        'class' => 'form-control',
-                        ])
-                    ->label(Yii::t('post','Comment respectfully comment. Thank you.')) ?>
-
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
-
-                    <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
-                        'class' => 'btn btn-danger',
-                        'data' => [
-                            'confirm' => 'Are you sure you want to delete this comment?',
+                    <div class="col-lg-6">
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'comment-update-form' . $item['id'],
                             'method' => 'post',
-                        ],
-                    ]) ?>
-                </p>
-                <?php ActiveForm::end(); ?>
-            </div>
+                            'action' => [
+                                'comment/update',
+                                'id' => $item['id'],
+                                'postId' => $item['post_id']]
+                        ]); ?>
+                        <p class="comment-form-comment">
+                            <?= $form->field($model, 'text')
+                                ->textarea(['rows' => 4,
+                                    'value' => Html::encode($item['text']),
+                                    'class' => 'form-control',
+                                ])
+                                ->label(Yii::t('post','Comment respectfully comment. Thank you.'), [
+                                    'style' => 'font-weight:50;padding:0px 0px 0px 0px;margin: 10px 0px 0px 0px;width:60%',
+                                ]) ?>
+
+                            <?= Html::submitButton('Update', [
+                                'class' => 'btn btn-secondary',
+                                'style' => 'margin: -30px 0px 0px 0px;',
+                                'name' => 'comment-update-button',
+                            ]) ?>
+
+                            <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
+                                'class' => 'btn btn-danger',
+                                'style' => 'margin: -30px 0px 0px 0px;',
+                                'data' => [
+                                    'confirm' => 'Are you sure you want to delete this comment?',
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
+                        </p>
+                        <?php ActiveForm::end(); ?>
+                    </div>
 
 
-            <?php else: ?>
+                <?php else: ?>
 
                     <p><?php echo Html::encode($item['text']); ?></p>
 
-            <?php endif; ?>
+                <?php endif; ?>
 
-            <?php if ($post->isAuthor(Yii::$app->user->identity)&&!$item->isAuthor(Yii::$app->user->identity)): ?>
+                <?php if ($post->isAuthor(Yii::$app->user->identity)&&!$item->isAuthor(Yii::$app->user->identity)): ?>
 
                     <div>
-                    <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
-                        'class' => 'btn btn-danger',
-                        'data' => [
-                            'confirm' => 'Are you sure you want to delete this comment?',
-                            'method' => 'post',
-                        ],
-                    ]) ?>
-                </div>
+                        <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => 'Are you sure you want to delete this comment?',
+                                'method' => 'post',
+                            ],
+                        ]) ?>
+                    </div>
 
-            <?php endif; ?>
-            <hr>
+                <?php endif; ?>
+                <hr>
             </div>
         </li>
 
