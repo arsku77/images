@@ -9,13 +9,12 @@ use Yii;
 
     <?php foreach ($posts as $item): ?>
 
-
-        <li style="class:comment;padding:10px">
+        <li class="comment" style="padding:10px 10px 10px 10px;">
             <div class="comment-user-image" style="padding-right: 10px">
                 <img src="<?php echo $item->getImage(); ?>" style="width:100px;max-height:60px;"/>
             </div>
 
-            <div class="comment-info" style="padding-left: 10px">
+            <div class="comment-info" style="padding:10px 10px 10px 10px;margin-left:120px;">
                 <h4 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $item->getAuthorNickName()]); ?>">
                         <?php echo Html::encode($item->getAuthorName()); ?>
                     </a>
