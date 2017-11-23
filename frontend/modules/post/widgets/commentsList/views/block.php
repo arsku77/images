@@ -38,7 +38,7 @@ use Yii;
                         'value' => Html::encode($item['text']),
                         'class' => 'form-control',
                         ])
-                    ->label('Comment respectfully comment. Thank you.') ?>
+                    ->label(Yii::t('post','Comment respectfully comment. Thank you.')) ?>
 
 
                     <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>

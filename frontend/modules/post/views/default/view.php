@@ -34,9 +34,7 @@ use Yii;
                                 <?php endif; ?>
                             </div>
                             <div class="post-type-image">
-                                <a href="#">
-                                    <img src="<?php echo $post->getImage(); ?>" alt="">
-                                </a>
+                                <img src="<?php echo $post->getImage(); ?>" alt="">
                             </div>
                             <div class="post-description">
                                 <p><?php echo Html::encode($post->description); ?></p>
@@ -44,7 +42,7 @@ use Yii;
                             <div class="post-bottom">
                                 <div class="post-likes">
                                     <a href="#" class="btn btn-secondary"><i class="fa fa-lg fa-heart-o"></i></a>
-                                    <span class="likes-count"><?php echo $post->countLikes(); ?></span><span>  Likes &nbsp;</span>
+                                    <span class="likes-count"><?php echo $post->countLikes(); ?></span><span><?php echo Yii::t('post','Likes'); ?> &nbsp;</span>
 
 
                                     <a href="#" class="btn btn-secondary button-unlike <?php echo ($currentUser && $post->isLikedBy($currentUser)) ? "" : "display-none"; ?>" data-id="<?php echo $post->id; ?>">
@@ -56,14 +54,10 @@ use Yii;
 
                                 </div>
                                 <div class="post-comments">
-                                    <a href="#"><?php echo $post->countCommentsToRedis(); ?> comments</a>
-
+                                    <a href="#"><?php echo $post->countCommentsToRedis(); Yii::t('post','Comments'); ?></a>
                                 </div>
                                 <div class="post-date">
                                     <span><?php echo Yii::$app->formatter->asDatetime($post->created_at); ?></span>
-                                </div>
-                                <div class="post-report">
-                                    <a href="#">Report post</a>
                                 </div>
                             </div>
                         </article>
@@ -71,7 +65,7 @@ use Yii;
 
                         <!-- comment item -->
                         <div class="col-sm-12 col-xs-12">
-                            <h4><?php echo $post->countCommentsToRedis(); ?> comments</h4>
+                            <h4><?php echo $post->countCommentsToRedis(); Yii::t('post','Comments'); ?></h4>
                             <div class="comments-post">
                                 <div class="single-item-title"></div>
                                 <div class="row">
@@ -89,7 +83,7 @@ use Yii;
                         <!--post form-->
                         <div class="col-sm-12 col-xs-12">
                             <div class="comment-respond">
-                                <h4>Leave a Reply</h4>
+                                <h4><?php echo Yii::t('post','Leave a Reply'); ?></h4>
                                 <?= $this->render('comment/_create', [
                                     'model' => $modelComment,
                                     'postId' => $post->id,

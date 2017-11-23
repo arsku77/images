@@ -1,4 +1,5 @@
 <?php
+use Yii;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 ?>
@@ -15,7 +16,7 @@ use yii\bootstrap\ActiveForm;
                 'rows' => 6,
                 'class' => 'form-control',
                 'placeholder' => 'Text write here',
-            ])->label('Comment respectfully comment. Thank you.') ?>
+            ])->label(Yii::t('post','Comment respectfully comment. Thank you.')) ?>
     </p>
     <p class="form-submit">
         <?= Html::submitButton('Comment', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>

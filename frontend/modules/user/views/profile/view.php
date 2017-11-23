@@ -103,7 +103,7 @@ $this->title = Html::encode($user->username);
                         <?php endif;?>
                         <div class="profile-bottom">
                             <div class="profile-post-count">
-                                <span><?php echo $user->getPostCount(); ?> posts</span>
+                                <span><?php echo $user->getPostCount(); echo Yii::t('post', 'Posts'); ?></span>
                             </div>
                             <div class="profile-followers">
                                 <a href="#" data-toggle="modal" data-target="#myModal2"><?php echo $user->countFollowers(); echo Yii::t('profile', 'followers'); ?></a>

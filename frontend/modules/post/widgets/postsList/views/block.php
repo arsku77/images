@@ -11,7 +11,9 @@ use Yii;
 
         <li class="comment" style="padding:10px 10px 10px 10px;height:140px;">
             <div class="comment-user-image" style="padding-right: 10px">
-                <img src="<?php echo $item->getImage(); ?>" style="width:200px;max-height:120px;"/>
+                <a href="<?php echo Url::to(['/post/default/view', 'id' => $item->id]); ?>">
+                    <img src="<?php echo $item->getImage(); ?>" style="width:200px;max-height:120px;"/>
+                </a>
             </div>
 
             <div class="comment-info" style="padding:10px 10px 10px 10px;margin-left:220px;">
@@ -19,6 +21,12 @@ use Yii;
                         <?php echo Html::encode($item->getAuthorName()); ?>
                     </a>
                     <span>(<?php echo Yii::$app->formatter->asDatetime($item['created_at']); ?>)</span></h4>
+                <div class="post-comments">
+                    <a href="<?php echo Url::to(['/post/default/view', 'id' => $item->id]); ?>">
+                        <?php echo $item->countCommentsToRedis(); echo Yii::t('post', 'Comments'); ?>
+                        <?php echo $item->countLikes(); echo Yii::t('post', 'Likes'); ?>
+                    </a>
+                </div>
 
                 <?php if ($item->isAuthor(Yii::$app->user->identity)): ?>
 

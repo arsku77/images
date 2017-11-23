@@ -72,7 +72,6 @@ class Post extends \yii\db\ActiveRecord
 
     }
 
-
     public function getImage()
     {
         return Yii::$app->storage->getFile($this->filename);
