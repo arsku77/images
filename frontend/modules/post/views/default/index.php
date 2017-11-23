@@ -21,7 +21,7 @@ use Yii;
 
                         <!-- comment item -->
                         <div class="col-sm-12 col-xs-12">
-                            <h4><?php //echo $post->countCommentsToRedis(); ?> comments</h4>
+                            <h4><?php //echo $post->countCommentsToRedis(); ?> New POSTS</h4>
                             <div class="comments-post">
                                 <div class="single-item-title"></div>
                                 <div class="row">
