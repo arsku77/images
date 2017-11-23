@@ -32,20 +32,20 @@ use Yii;
 
                     <div class="col-lg-6">
                         <?php $form = ActiveForm::begin([
-                            'id' => 'comment-update-form' . $item['id'],
+                            'id' => 'post-update-form' . $item['id'],
                             'method' => 'post',
                             'action' => [
-                                'comment/update',
+                                'post/update',
                                 'id' => $item['id'],
-                                'postId' => $item['post_id']]
+                                ]
                         ]); ?>
                         <p class="comment-form-comment">
-                            <?= $form->field($model, 'text')
-                                ->textarea(['rows' => 4,
-                                    'value' => Html::encode($item['text']),
+                            <?= $form->field($model, 'description')
+                                ->textarea(['rows' => 3,
+                                    'value' => Html::encode($item['description']),
                                     'class' => 'form-control',
                                 ])
-                                ->label(Yii::t('post','Comment respectfully comment. Thank you.')) ?>
+                                ->label(Yii::t('post','News respectfully post. Thank you.')) ?>
 
                             <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
 

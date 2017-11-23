@@ -7,6 +7,7 @@ use yii\base\Widget;
 use frontend\models\Comment;
 use frontend\modules\post\models\forms\CommentForm;
 use frontend\models\Post;
+use frontend\modules\post\models\forms\PostForm;
 
 /**
  * @author admin
@@ -29,13 +30,14 @@ class PostsList extends Widget
 //        }
 
 //        $list = Comment::getCommentsList($max, $this->postId);
-//        $currentUser = Yii::$app->user->identity;
+//        $currentUserIdentity = Yii::$app->user->identity;
 //        $post = Post::findOne($this->postId);
 //
-//        $model = new CommentForm(null, $post, $currentUser);
+        $model = new PostForm(null, $this->currentUserIdentity);
 
         return $this->render('block', [
             '$currentUserIdentity' => $this->currentUserIdentity,
+            'model' => $model,
             'posts' => $this->posts,
         ]);
     }

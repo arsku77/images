@@ -86,6 +86,34 @@ class DefaultController extends Controller
         ]);
     }
 
+
+    /**
+     * @param $id
+     * @return Response
+     */
+    public function actionUpdate($id)
+    {
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        $currentUser = Yii::$app->user->identity;
+
+
+        $model = new PostForm($id, $currentUser);
+
+        if ($model->load(Yii::$app->request->post())&&$model->save()) {
+
+            Yii::$app->session->setFlash('success', 'Post updated!');
+            return $this->redirect(['default/index']);
+        }
+
+        return $this->redirect(['default/index']);
+    }
+
+
+
     public function actionLike()
     {
         if (Yii::$app->user->isGuest) {
