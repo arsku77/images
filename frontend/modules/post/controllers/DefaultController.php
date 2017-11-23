@@ -21,6 +21,17 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+        /* @var $currentUser User */
+        $max = Yii::$app->params['limitPostsInPostList'];
+        $currentUserIdentity = Yii::$app->user->identity;
+        $posts = Post::getPostsList($max);
+//        $modelComment = new CommentForm(null, $post, $currentUser);
+
+        return $this->render('index', [
+            'posts' => $posts,
+            'currentUserIdentity' => $currentUserIdentity,
+
+        ]);
 
     }
 

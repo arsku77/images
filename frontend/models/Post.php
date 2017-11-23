@@ -60,6 +60,18 @@ class Post extends \yii\db\ActiveRecord
         return $this->getPrimaryKey();
     }
 
+    /**
+     * @param $max integer
+     * @return array|\yii\db\ActiveRecord[] or null
+     */
+
+    public static function getPostsList($max)
+    {
+        $order = ['updated_at' => SORT_DESC];
+        return self::find()->orderby($order)->limit($max)->all();
+
+    }
+
 
     public function getImage()
     {
@@ -93,6 +105,25 @@ class Post extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * Get author name of relate table
+     * @return string nickname|id
+     */
+    public function getAuthorNickName()
+    {
+        return ($this->user->nickname) ? $this->user->nickname : $this->user->id;
+    }
+
+    /**
+     * Get author name of relate table
+     * @return string username|null
+     */
+    public function getAuthorName()
+    {
+        return $this->user->username;
+    }
+
 
     /**
      * Like current post by given user
