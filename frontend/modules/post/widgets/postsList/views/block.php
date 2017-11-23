@@ -17,16 +17,16 @@ use Yii;
             </div>
 
             <div class="comment-info" style="padding:10px 10px 10px 10px;margin-left:220px;">
-                <h4 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $item->getAuthorNickName()]); ?>">
+                <h5 class="author"><a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $item->getAuthorNickName()]); ?>">
                         <?php echo Html::encode($item->getAuthorName()); ?>
                     </a>
-                    <span>(<?php echo Yii::$app->formatter->asDatetime($item['created_at']); ?>)</span></h4>
-                <div class="post-comments">
+                    <span>(<?php echo Yii::$app->formatter->asDatetime($item['updated_at']); ?>)</span>
+<!--                <div class="post-comments">-->
                     <a href="<?php echo Url::to(['/post/default/view', 'id' => $item->id]); ?>">
                         <?php echo $item->countCommentsToRedis(); echo Yii::t('post', 'Comments'); ?>
                         <?php echo $item->countLikes(); echo Yii::t('post', 'Likes'); ?>
-                    </a>
-                </div>
+                    </a></h5>
+<!--                </div>-->
 
                 <?php if ($item->isAuthor(Yii::$app->user->identity)): ?>
 
