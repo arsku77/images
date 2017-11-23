@@ -41,7 +41,9 @@ class CommentForm extends Model
 
     /**
      * CommentForm constructor.
-     * @param Post $post, User $user
+     * @param integer $id = null,
+     * @param Post $post,
+     * @param User $user
      */
     public function __construct($id = null, Post $post, User $user)
     {

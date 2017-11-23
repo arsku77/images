@@ -16,6 +16,7 @@ class PostForm extends Model
     const MAX_DESCRIPTION_LENGHT = 1000;
     const EVENT_POST_CREATED = 'post_created';
 
+    public $id;
     public $picture;
     public $description;
 
@@ -39,12 +40,14 @@ class PostForm extends Model
     }
 
     /**
+     * @param integer $id = null,
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct($id = null, User $user)
     {
+        $this->id = $id;
         $this->user = $user;
-        $this->on(self::EVENT_AFTER_VALIDATE, [$this, 'resizePicture']);
+        $this->on(self::EVENT_AFTER_VALIDATE, [$this, 'resizePicture']);//po validacijos iskviecia si metoda
         $this->on(self::EVENT_POST_CREATED, [Yii::$app->feedService, 'addToFeeds']);
     }
 
@@ -53,6 +56,7 @@ class PostForm extends Model
      */
     public function resizePicture()
     {
+        if (!$this->picture) { return true;}//update form
         $width = Yii::$app->params['postPicture']['maxWidth'];
         $height = Yii::$app->params['postPicture']['maxHeight'];
 
@@ -80,19 +84,19 @@ class PostForm extends Model
 //            echo '<pre>';die;
 
 
-            $post = new Post();//sukuriam naują egzempliorių
+            $post = $this->findPost($this->id);//priklausomai nuo id, gauname Post - ar tuscia ar pilna
             $post->description = $this->description;//jo savybei suteikiam duomenį iš formos
 
 //            $post->created_at = time();// šiai naujo egzemplioriaus savybei priskiriam dabartinę datą
 
-            $post->filename = Yii::$app->storage->saveUploadedFile($this->picture);//apdorojam ir irasom
+            (!$this->id||$this->picture ? $post->filename = Yii::$app->storage->saveUploadedFile($this->picture) : null);//apdorojam ir irasom
             $post->user_id = $this->user->getId();
             if ($post->save(false)) {
                 $event = new PostCreatedEvent();
                 $event->user = $this->user;//is post creator
                 $event->post = $post;//pakraunam duomenimis
 
-                $this->trigger(self::EVENT_POST_CREATED, $event);
+                $this->trigger(self::EVENT_POST_CREATED, $event);//irasome i Redis
                 return  true;
             }
         }
@@ -107,5 +111,18 @@ class PostForm extends Model
     {
         return Yii::$app->params['maxFileSize'];
     }
+
+    /**
+     * @param null $id
+     * @return Post models empty|Post models by id static
+     */
+    private function findPost($id = null)
+    {
+        if ($id) {
+            return $post = Post::findOne($id);//for update
+        }
+        return $post = new Post();//for add new post
+    }
+
 
 }

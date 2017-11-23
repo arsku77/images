@@ -40,8 +40,8 @@ use Yii;
                         ])
                     ->label(Yii::t('post','Comment respectfully comment. Thank you.')) ?>
 
-
                     <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
+
                     <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
                         'class' => 'btn btn-danger',
                         'data' => [
@@ -50,8 +50,6 @@ use Yii;
                         ],
                     ]) ?>
                 </p>
-
-
                 <?php ActiveForm::end(); ?>
             </div>
 

@@ -68,7 +68,7 @@ class DefaultController extends Controller
             return $this->redirect(['/user/default/login']);
         }
 
-        $model = new PostForm(Yii::$app->user->identity);
+        $model = new PostForm(null,Yii::$app->user->identity);
 
         if ($model->load(Yii::$app->request->post())) {
 
