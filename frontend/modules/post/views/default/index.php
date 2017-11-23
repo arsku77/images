@@ -20,8 +20,9 @@ use Yii;
 
 
                         <!-- comment item -->
+                        <hr>
                         <div class="col-sm-12 col-xs-12">
-                            <h5><?php echo Yii::t('post','New POSTS'); ?></h5>
+                            <h4><?php echo Yii::t('post','New POSTS'); ?></h4>
                             <div class="comments-post">
                                 <div class="single-item-title"></div>
                                 <div class="row">
