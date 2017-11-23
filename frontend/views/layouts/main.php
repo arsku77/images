@@ -66,6 +66,7 @@ FontAwesomeAsset::register($this);
                         <?php
                         $menuItems = [
                             ['label' => Yii::t('menu', 'Newsfeed'), 'url' => ['/site/index']],
+                            ['label' => Yii::t('menu', 'Last News'), 'url' => ['/post/default/index']],
                         ];
                         if (Yii::$app->user->isGuest) {
                             $menuItems[] = ['label' => Yii::t('menu', 'Signup'), 'url' => ['/user/default/signup']];

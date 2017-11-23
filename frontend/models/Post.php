@@ -91,10 +91,12 @@ class Post extends \yii\db\ActiveRecord
      * @param User $user
      * @return bool
      */
-    public function isAuthor(User $user): bool
+    public function isAuthor(User $user = null): bool
     {
-        return $user->getId() == $this->user_id;
-
+        if ($user) {
+            return $user->getId() == $this->user_id;
+        }
+        return false;
     }
 
     /**
