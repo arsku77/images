@@ -9,7 +9,7 @@ use Yii;
 
     <?php foreach ($posts as $item): ?>
 
-        <li class="comment" style="padding:10px 10px 10px 10px;height:140px;">
+        <li class="comment" style="padding:10px 10px 10px 10px;height:160px;">
             <div class="comment-user-image" style="padding-right: 10px">
                 <a href="<?php echo Url::to(['/post/default/view', 'id' => $item->id]); ?>">
                     <img src="<?php echo $item->getImage(); ?>" style="width:200px;max-height:120px;"/>
@@ -37,7 +37,7 @@ use Yii;
                             'action' => [
                                 'post/update',
                                 'id' => $item['id'],
-                                ]
+                            ]
                         ]); ?>
                         <p class="comment-form-comment">
                             <?= $form->field($model, 'description')
@@ -45,7 +45,7 @@ use Yii;
                                     'value' => Html::encode($item['description']),
                                     'class' => 'form-control',
                                 ])
-                                ->label(Yii::t('post','News respectfully post. Thank you.')) ?>
+                                ->label(Yii::t('post','News respectfully post. Thank you.'), ['style' => 'font-weight:50',]) ?>
 
                             <?= Html::submitButton('Update', ['class' => 'btn btn-secondary', 'name' => 'comment-update-button']) ?>
 
