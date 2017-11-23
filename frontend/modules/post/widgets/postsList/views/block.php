@@ -21,21 +21,21 @@ use Yii;
                     </a>
                     <span>(<?php echo Yii::$app->formatter->asDatetime($item['created_at']); ?>)</span></h4>
 
-                <?php if ($item->isAuthor($currentUserIdentity)): ?>
+                <?php if ($item->isAuthor(Yii::$app->user->identity)): ?>
 
                     <div class="col-lg-6">
-                        <p>2ia bus detali forma</p>
+                        <p>cia bus detali forma</p>
                     </div>
 
 
                 <?php else: ?>
 
-                    <p><?php echo Html::encode($item['text']); ?></p>
+                    <p><?php echo Html::encode($item['description']); ?></p>
 
                 <?php endif; ?>
 
                     <div>
-                        <p>2ia bus  kazkokia forma</p>
+                        <p>cia bus  kazkokia forma</p>
                     </div>
 
                 <hr>
