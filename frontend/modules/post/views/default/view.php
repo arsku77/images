@@ -54,7 +54,7 @@ use Yii;
 
                                 </div>
                                 <div class="post-comments">
-                                    <a href="#"><?php echo $post->countCommentsToRedis(); Yii::t('post','Comments'); ?></a>
+                                    <a href="#"><?php echo $post->countCommentsToRedis(); echo Yii::t('post','Comments'); ?></a>
                                 </div>
                                 <div class="post-date">
                                     <span><?php echo Yii::$app->formatter->asDatetime($post->created_at); ?></span>
@@ -65,7 +65,7 @@ use Yii;
 
                         <!-- comment item -->
                         <div class="col-sm-12 col-xs-12">
-                            <h4><?php echo $post->countCommentsToRedis(); Yii::t('post','Comments'); ?></h4>
+                            <h4><?php echo $post->countCommentsToRedis(); echo Yii::t('post','Comments'); ?></h4>
                             <div class="comments-post">
                                 <div class="single-item-title"></div>
                                 <div class="row">

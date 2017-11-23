@@ -42,6 +42,10 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         /* @var $currentUser User */
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
         $currentUser = Yii::$app->user->identity;
         $post = $this->findPost($id);
         $modelComment = new CommentForm(null, $post, $currentUser);
