@@ -68,7 +68,7 @@ class Post extends \yii\db\ActiveRecord
     public static function getPostsList($max)
     {
         $order = ['updated_at' => SORT_DESC];
-        return self::find()->orderby($order)->limit($max)->all();
+        return self::find()->with('user')->orderby($order)->limit($max)->all();
 
     }
 
