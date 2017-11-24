@@ -2,6 +2,7 @@
 
 namespace frontend\modules\post\controllers;
 
+use frontend\modules\post\models\forms\PostFormForUpdate;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -101,7 +102,7 @@ class DefaultController extends Controller
         $currentUser = Yii::$app->user->identity;
 
 
-        $model = new PostForm($id, $currentUser);
+        $model = new PostFormForUpdate($id, $currentUser);
 
         if ($model->load(Yii::$app->request->post())&&$model->save()) {
 

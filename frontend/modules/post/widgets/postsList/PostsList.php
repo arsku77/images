@@ -2,6 +2,7 @@
 
 namespace frontend\modules\post\widgets\postsList;
 
+use frontend\modules\post\models\forms\PostFormForUpdate;
 use Yii;
 use yii\base\Widget;
 use frontend\models\Comment;
@@ -33,7 +34,7 @@ class PostsList extends Widget
 //        $currentUserIdentity = Yii::$app->user->identity;
 //        $post = Post::findOne($this->postId);
 //
-        $model = new PostForm(null, $this->currentUserIdentity);
+        $model = new PostFormForUpdate(null, $this->currentUserIdentity);
 
         return $this->render('block', [
             '$currentUserIdentity' => $this->currentUserIdentity,

@@ -35,7 +35,7 @@ use Yii;
                         'id' => 'post-update-form' . $item['id'],
                         'method' => 'post',
                         'action' => [
-                            'post/update',
+                            '/post/default/update',
                             'id' => $item['id'],
                         ]
                     ]); ?>

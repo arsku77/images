@@ -30,6 +30,7 @@ class PostForm extends Model
     public function rules()
     {
         return [
+
             [['picture'], 'file',
                 'skipOnEmpty' => false,
                 'extensions' => ['jpg', 'png'],
@@ -44,7 +45,7 @@ class PostForm extends Model
      * @param User $user
      */
     public function __construct($id = null, User $user = null)
-    {//$id = null if new form, if user Guest 
+    {//$id = null if new form, if user Guest
         $this->id = $id;
         $this->user = $user;
         $this->on(self::EVENT_AFTER_VALIDATE, [$this, 'resizePicture']);//po validacijos iskviecia si metoda
@@ -56,7 +57,6 @@ class PostForm extends Model
      */
     public function resizePicture()
     {
-        if (!$this->picture) { return true;}//update form
         $width = Yii::$app->params['postPicture']['maxWidth'];
         $height = Yii::$app->params['postPicture']['maxHeight'];
 
@@ -69,9 +69,6 @@ class PostForm extends Model
             $constraint->upsize();
         })->save();        //    /tmp/11ro51
     }
-
-
-
 
     /**
      * @return boolean
@@ -86,10 +83,7 @@ class PostForm extends Model
 
             $post = $this->findPost($this->id);//priklausomai nuo id, gauname Post - ar tuscia ar pilna
             $post->description = $this->description;//jo savybei suteikiam duomenį iš formos
-
-//            $post->created_at = time();// šiai naujo egzemplioriaus savybei priskiriam dabartinę datą
-
-            (!$this->id||$this->picture ? $post->filename = Yii::$app->storage->saveUploadedFile($this->picture) : null);//apdorojam ir irasom
+            $post->filename = Yii::$app->storage->saveUploadedFile($this->picture);//apdorojam ir irasom
             $post->user_id = $this->user->getId();
             if ($post->save(false)) {
                 $event = new PostCreatedEvent();
