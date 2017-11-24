@@ -79,18 +79,18 @@ $this->title = Yii::t('index','Subscribed');
                                             <?php echo Yii::t('post', 'Post has been reported'); ?>
                                         <?php endif; ?>
                                         <!--delete button if user is follover-->
+                                        <?php if ($feedItem->isFollower($currentUser)): ?>
+                                            <?php echo Html::a('Delete this item, no Post', ['/post/default/delete-feed', 'id' => $feedItem->getId()],
+                                                [
+                                                    'class' => 'btn btn-danger',
+                                                    'style' => 'margin: 0px 0px 0px 0px;',
+                                                    'data' => [
+                                                        'confirm' => 'Are you sure you want to delete this item?',
+                                                        'method' => 'post',
+                                                    ],
 
-                                        <?php echo Html::a('Delete this item, no Post', ['/post/default/delete-feed', 'id' => $feedItem->getId()],
-                                            [
-                                                'class' => 'btn btn-danger',
-                                                'style' => 'margin: 0px 0px 0px 0px;',
-                                                'data' => [
-                                                    'confirm' => 'Are you sure you want to delete this item?',
-                                                    'method' => 'post',
-                                                ],
-
-                                            ]); ?>
-
+                                                ]); ?>
+                                        <?php endif; ?>
                                         <!--delete button if user is follover-->
 
 

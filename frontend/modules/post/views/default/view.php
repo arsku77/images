@@ -60,6 +60,24 @@ $this->title = Yii::t('post','POST');
                                 <div class="post-date">
                                     <span><?php echo Yii::$app->formatter->asDatetime($post->created_at); ?></span>
                                 </div>
+
+                                <div class="post-comments">
+                                    <?php if ($post->isAuthor($currentUser)): ?>
+                                        <?php echo Html::a('Delete this Post', ['/post/default/delete', 'id' => $post->getId()],
+                                            [
+                                                'class' => 'btn btn-danger',
+                                                'style' => 'margin: 0px 0px 0px 0px;',
+                                                'data' => [
+                                                    'confirm' => 'Are you sure you want to delete Post?',
+                                                    'method' => 'post',
+                                                ],
+
+                                            ]); ?>
+                                    <?php endif; ?>
+                                </div>
+
+
+
                             </div>
                         </article>
                         <!-- feed item -->
