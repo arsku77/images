@@ -60,11 +60,6 @@ $this->title = Html::encode($user->username);
                                 <?php endif; ?>
                                 <?= Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['/user/profile/view', 'nickname' => ($user->nickname ? $user->nickname : $user->id)], ['class' => 'btn btn-info']) ?>
 
-
-
-
-
-
                             <?php endif; ?>
 
 
