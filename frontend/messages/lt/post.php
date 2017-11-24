@@ -13,5 +13,8 @@ return [
     'Create' => 'Sukurkite',
     'Create post' => 'Sukurkite naujieną',
     'upload picture < 2mb' => 'Įkelti paveiksliuką < 2mb',
+    'Post reported!' => 'Naujiena apskųsta!',
+    'Report post' => 'Apskųsti naujieną',
+    'Post has been reported' => 'Ši naujiena jau apskųsta.',
 
 ];

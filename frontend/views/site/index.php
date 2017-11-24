@@ -71,10 +71,10 @@ $this->title = Yii::t('index','Subscribed');
                                     <div class="post-report">
                                         <?php if (!$feedItem->isReported($currentUser)): ?>
                                             <a href="#" class="btn btn-default button-complain" data-id="<?php echo $feedItem->post_id; ?>">
-                                                Report post <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
+                                                <?php echo Yii::t('post', 'Report post'); ?> <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
                                             </a>
                                         <?php else: ?>
-                                            <p>Post has been reported</p>
+                                            <p><?php echo Yii::t('post', 'Post has been reported'); ?></p>
                                         <?php endif; ?>
                                     </div>
 
@@ -85,7 +85,7 @@ $this->title = Yii::t('index','Subscribed');
                     </div>
                     <?php else: ?>
                         <div class="col-md-12">
-                            Nobody posted yet!
+    <?php echo Yii::t('index','Nobody posted yet!'); ?>
                         </div>
                     <?php endif; ?>
 
