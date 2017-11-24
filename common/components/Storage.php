@@ -60,14 +60,22 @@ class Storage extends Component implements StorageInterface
                 if ($files = glob(substr($file,0,-41) . "/*")) {
                     return true;///var/www/project/frontend/web/uploads/75/18 not empty
                 } else {
-                    rmdir(substr($file,0,-41));//empty
-                    rmdir(substr($file,0,-44));
-                    return true;
+                    try {
+                        rmdir(substr($file,0,-41));//empty
+                        rmdir(substr($file,0,-44));
+                        return true;
+
+                    } catch (\DomainException $e) {
+                        Yii::$app->errorHandler->logException($e);
+                        Yii::$app->session->setFlash('error', $e->getMessage());
+                    }
+
+
                 }
             }
         }
-        return false;
-    }
+return false;
+}
 
 //    /**
 //     * @param string $filename
@@ -81,36 +89,36 @@ class Storage extends Component implements StorageInterface
 //        return $path = FileHelper::normalizePath($path);
 //    }
 
-    /**
-     * @param UploadedFile $file
-     * @return string
-     */
-    protected function getFilename(UploadedFile $file)
-    {
-        // $file->tempname   -   /tmp/qio93kf
-            $hash = sha1_file($file->tempName);// 0ca9277f91e40054767f69afeb0426711ca0fddd
+/**
+ * @param UploadedFile $file
+ * @return string
+ */
+protected function getFilename(UploadedFile $file)
+{
+    // $file->tempname   -   /tmp/qio93kf
+    $hash = sha1_file($file->tempName);// 0ca9277f91e40054767f69afeb0426711ca0fddd
 
 
-            $name = substr_replace($hash, '/', 2, 0);
-            $name = substr_replace($name, '/', 5, 0);  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd
-            return $name . '.' . $file->extension;  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
-    }
+    $name = substr_replace($hash, '/', 2, 0);
+    $name = substr_replace($name, '/', 5, 0);  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd
+    return $name . '.' . $file->extension;  // 0c/a9/277f91e40054767f69afeb0426711ca0fddd.jpg
+}
 
-    /**
-     * @return string
-     */
-    protected function getStoragePath()
-    {
-        return Yii::getAlias(Yii::$app->params['storagePath']);
-    }
+/**
+ * @return string
+ */
+protected function getStoragePath()
+{
+    return Yii::getAlias(Yii::$app->params['storagePath']);
+}
 
-    /**
-     *
-     * @param string $filename
-     * @return string
-     */
-    public function getFile(string $filename)
-    {
-        return Yii::$app->params['storageUri'].$filename;
-    }
+/**
+ *
+ * @param string $filename
+ * @return string
+ */
+public function getFile(string $filename)
+{
+    return Yii::$app->params['storageUri'].$filename;
+}
 }

@@ -52,7 +52,7 @@ class Post extends \yii\db\ActiveRecord
         $this->deleteCommentsToRedis();
         $this->deleteComplaintsToRedis();
         $this->deleteLikesToRedis();
-
+        $this->deletePicture();
         return parent::beforeDelete();//really delete $this
     }
 
