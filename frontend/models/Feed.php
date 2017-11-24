@@ -60,6 +60,13 @@ class Feed extends \yii\db\ActiveRecord
             'post_created_at' => 'Post Created At',
         ];
     }
+    /**
+     * @inheritdoc
+     */
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
 
     /**
      * @return mixed
@@ -88,6 +95,15 @@ class Feed extends \yii\db\ActiveRecord
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isFollower(User $user): bool
+    {
+            return $user->getId() == $this->user_id;
     }
 
 

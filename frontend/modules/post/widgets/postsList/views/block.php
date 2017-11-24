@@ -60,7 +60,7 @@ use Yii;
                         'class' => 'btn btn-danger',
                         'style' => 'margin: -30px 0px 0px 0px;',
                         'data' => [
-                            'confirm' => 'Are you sure you want to delete this comment?',
+                            'confirm' => 'Are you sure you want to delete this post?',
                             'method' => 'post',
                         ],
                     ]) ?>

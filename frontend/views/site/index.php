@@ -1,12 +1,14 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $currentUser frontend\models\User */
-/* @var $feedItems[] frontend\models\Feed */
+/* @var $feedItems frontend\models\Feed */
 
 use yii\web\JqueryAsset;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
+use yii\bootstrap\ActiveForm;
+
 
 $this->title = Yii::t('index','Subscribed');
 ?>
@@ -61,7 +63,7 @@ $this->title = Yii::t('index','Subscribed');
                                     <div class="post-comments">
                                         <a href="<?php echo Url::to(['/post/default/view', 'id' => $feedItem->post_id]); ?>">
                                             <?php echo $feedItem->countCommentsToRedis($feedItem->post_id); ?>
-                                            &nbsp;comments
+                                            &nbsp; <?php echo Yii::t('post', 'Сomments'); ?>
                                         </a>
                                     </div>
 
@@ -74,8 +76,25 @@ $this->title = Yii::t('index','Subscribed');
                                                 <?php echo Yii::t('post', 'Report post'); ?> <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
                                             </a>
                                         <?php else: ?>
-                                            <p><?php echo Yii::t('post', 'Post has been reported'); ?></p>
+                                            <?php echo Yii::t('post', 'Post has been reported'); ?>
                                         <?php endif; ?>
+<!--delete button if user is follover-->
+
+
+                                        <?php echo Html::a('Delete item, no Post', ['/post/default/delete-feed', 'id' => $feedItem->getId()], [
+                                            'class' => 'btn btn-danger',
+                                            'style' => 'margin: 0px 0px 0px 0px;',
+                                            'data' => [
+                                                'confirm' => 'Are you sure you want to delete this item?',
+                                                'method' => 'post',
+
+                                            ],
+                                            ['alt' => 'sdgsdgsdg'],
+                                        ]); ?>
+
+<!--delete button if user is follover-->
+
+
                                     </div>
 
                                 </div>
@@ -85,7 +104,7 @@ $this->title = Yii::t('index','Subscribed');
                     </div>
                     <?php else: ?>
                         <div class="col-md-12">
-    <?php echo Yii::t('index','Nobody posted yet!'); ?>
+                            <?php echo Yii::t('index','Nobody posted yet!'); ?>
                         </div>
                     <?php endif; ?>
 

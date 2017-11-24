@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\web\UploadedFile;
 use frontend\models\Post;
+use frontend\models\Feed;
 use frontend\modules\post\models\forms\PostForm;
 use frontend\modules\post\models\forms\CommentForm;
 
@@ -135,6 +136,28 @@ class DefaultController extends Controller
         return $this->redirect(['default/index']);
     }
 
+    /**
+     * Deletes an existing Feed model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDeleteFeed($id)
+    {
+        $currentUserLogged = Yii::$app->user->identity;
+        $feedModelForDelete = $this->findFeedModel($id);
+        if ($feedModelForDelete &&
+            $currentUserLogged->getId()==$feedModelForDelete->user_id) {
+            if ($feedModelForDelete->delete()) {
+                Yii::$app->session->setFlash('success', 'Items is deleted');
+            } else {
+                Yii::$app->session->setFlash('danger', 'Error occured');
+            }
+
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
 
     public function actionLike()
     {
@@ -231,6 +254,22 @@ class DefaultController extends Controller
     protected function findModel($id)
     {
         if (($model = Post::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Finds the Feed model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Feed the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findFeedModel($id)
+    {
+        if (($model = Feed::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
