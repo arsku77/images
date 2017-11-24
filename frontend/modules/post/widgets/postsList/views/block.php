@@ -47,7 +47,7 @@ use Yii;
                             'style' => 'font-weight:200;padding:0px 0px 0px 0px;margin: 0px 0px 0px 0px;width:60%',
                         ])
                         ->label(Yii::t('post','News respectfully post. Thank you.'), [
-                            'style' => 'font-weight:50;padding:0px 0px 0px 0px;margin: 10px 0px 0px 0px;width:60%',
+                            'style' => 'font-weight:100;padding:0px 0px 0px 0px;margin: 10px 0px 0px 0px;width:60%',
                         ]) ?>
 
                     <?= Html::submitButton('Update', [

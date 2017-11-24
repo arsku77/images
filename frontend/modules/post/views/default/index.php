@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\web\JqueryAsset;
 use frontend\modules\post\widgets\postsList\PostsList;
 use Yii;
+$this->title = Yii::t('post','New POSTS');
 ?>
     <div class="page-posts no-padding">
 

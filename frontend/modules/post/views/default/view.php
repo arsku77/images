@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\web\JqueryAsset;
 use frontend\modules\post\widgets\commentsList\CommentsList;
 use Yii;
+$this->title = Yii::t('post','POST');
 ?>
     <div class="page-posts no-padding">
 

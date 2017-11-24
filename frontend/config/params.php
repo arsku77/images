@@ -17,7 +17,7 @@ return [
     'maxCommentsInOnePost' => 6,
     'maxCommentLenghtInPost' => 1000,
     'limitPostsInProfile' => 20,
-    'limitPostsInPostList' => 40,
+    'limitPostsInPostList' => 50,
     'supportedLanguages' => [
         'en-US',
         'ru-RU',

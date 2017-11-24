@@ -8,12 +8,14 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
-$this->title = 'My Yii Application';
+$this->title = Yii::t('index','Subscribed');
 ?>
 
     <div class="page-posts no-padding">
         <div class="row">
             <div class="page page-post col-sm-12 col-xs-12">
+                <h4><?php echo Yii::t('index','Subscribed news'); ?></h4>
+
                 <div class="blog-posts blog-posts-large">
 
                     <div class="row">
