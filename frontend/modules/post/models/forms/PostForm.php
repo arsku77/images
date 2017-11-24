@@ -90,7 +90,7 @@ class PostForm extends Model
                 $event->user = $this->user;//is post creator
                 $event->post = $post;//pakraunam duomenimis
 
-                $this->trigger(self::EVENT_POST_CREATED, $event);//irasome i Redis
+                $this->trigger(self::EVENT_POST_CREATED, $event);//add to Feed
                 return  true;
             }
         }

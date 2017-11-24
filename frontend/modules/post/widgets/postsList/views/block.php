@@ -24,7 +24,7 @@ use Yii;
                     <span>(<?php echo Yii::$app->formatter->asDatetime($item['updated_at']); ?>)</span>
                     <a href="<?php echo Url::to(['/post/default/view', 'id' => $item->id]); ?>">
                         <?php echo $item->countCommentsToRedis(); echo Yii::t('post', 'Comments'); ?>
-                        <?php echo $item->countLikes(); echo Yii::t('post', 'Likes'); ?>
+                        &nbsp;  <?php echo $item->countLikes(); echo Yii::t('post', 'Likes'); ?>
                     </a>
                 </h5>
 

@@ -1,15 +1,18 @@
 <?php
 
 namespace frontend\modules\post\models\forms;
-
+use Yii;
 use yii\base\Model;
 use frontend\models\Post;
 use frontend\models\User;
+use frontend\models\events\PostCreatedEvent;
+
 
 class PostFormForUpdate extends Model
 {
 
     const MAX_DESCRIPTION_LENGHT = 1000;
+    const EVENT_POST_CREATED = 'post_created';
     public $id;
     public $description;
     private $user;
@@ -32,6 +35,8 @@ class PostFormForUpdate extends Model
     {//$id = null if new form, if user Guest
         $this->id = $id;
         $this->user = $user;
+        $this->on(self::EVENT_POST_CREATED, [Yii::$app->feedService, 'addToFeeds']);
+
     }
 
     /**
@@ -42,7 +47,14 @@ class PostFormForUpdate extends Model
         if ($this->validate()) {
             $post = Post::findOne($this->id);
             $post->description = $this->description;//jo savybei suteikiam duomenį iš formos
-            return $post->save(false, ['description']);
+             if ($post->save(false, ['description'])) {
+                 $event = new PostCreatedEvent();
+                 $event->user = $this->user;//is post creator
+                 $event->post = $post;//pakraunam duomenimis
+
+                 $this->trigger(self::EVENT_POST_CREATED, $event);//add to Feed
+                 return true;
+             }
         }
         return false;//po blogos validacijos
     }
