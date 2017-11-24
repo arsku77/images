@@ -56,7 +56,7 @@ use Yii;
                         'style' => 'margin: -30px 0px 0px 0px;',
                     ]) ?>
 
-                    <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
+                    <?= Html::a('Delete post', ['/post/default/delete', 'id' => $item['id']], [
                         'class' => 'btn btn-danger',
                         'style' => 'margin: -30px 0px 0px 0px;',
                         'data' => [

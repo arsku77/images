@@ -45,6 +45,63 @@ class Post extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return bool
+     */
+    public function beforeDelete()
+    {
+        $this->deleteCommentsToRedis();
+        $this->deleteComplaintsToRedis();
+        $this->deleteLikesToRedis();
+
+        return parent::beforeDelete();//really delete $this
+    }
+
+    /**
+     * delete all comments one post in Redis
+     *
+     */
+    public function deleteComplaintsToRedis():void
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $keyComplaints = "post:{$this->id}:complaints";
+        $redis->del($keyComplaints);
+    }
+
+    /**
+     * get all likes users ids one post
+     * remove all post id from user likes in Redis
+     * delete post record from redis
+     *
+     */
+    public function deleteLikesToRedis():void
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+
+        $keyLikes = "post:{$this->id}:likes";
+        if ($idsUsers = $redis->smembers($keyLikes)) {
+            foreach ($idsUsers as $idUser) {
+                $redis->srem("user:{$idUser}:likes", $this->id);
+            }
+            $redis->del($keyLikes);
+        }
+    }
+
+    /**
+     * delete all comments one post in Redis
+     *
+     */
+    public function deleteCommentsToRedis():void
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $keyComments = "post:{$this->id}:comments";
+        $redis->del($keyComments);
+    }
+
+
+    /**
      * @inheritdoc
      */
     public static function findIdentity($id)
@@ -72,9 +129,24 @@ class Post extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * @return mixed
+     */
     public function getImage()
     {
         return Yii::$app->storage->getFile($this->filename);
+    }
+
+    /**
+     * Delete post picture from file system
+     * @return boolean
+     */
+    public function deletePicture(): bool
+    {
+        if ($this->filename && Yii::$app->storage->deleteFile($this->filename)) {
+            return true;
+        }
+        return false;
     }
 
     /**

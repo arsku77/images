@@ -78,7 +78,7 @@ class DefaultController extends Controller
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('success', 'Post created!');
-                return $this->goHome();
+                return $this->redirect(['default/index']);
             }
         }
 
@@ -113,6 +113,27 @@ class DefaultController extends Controller
         return $this->redirect(['default/index']);
     }
 
+    /**
+     * Deletes an existing Post model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $currentUserLogged = Yii::$app->user->identity;
+        $postModelForDelete = $this->findModel($id);
+        if ($postModelForDelete &&
+            $currentUserLogged->getId()==$postModelForDelete->user_id) {
+            if ($postModelForDelete->delete()) {
+                Yii::$app->session->setFlash('success', 'Post and its picture deleted');
+            } else {
+                Yii::$app->session->setFlash('danger', 'Error occured');
+            }
+
+        }
+        return $this->redirect(['default/index']);
+    }
 
 
     public function actionLike()
@@ -200,6 +221,21 @@ class DefaultController extends Controller
         ];
     }
 
+    /**
+     * Finds the Post model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Post the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Post::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 
 
 
