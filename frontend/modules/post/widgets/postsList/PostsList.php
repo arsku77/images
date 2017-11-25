@@ -16,24 +16,12 @@ use frontend\modules\post\models\forms\PostForm;
 class PostsList extends Widget
 {
 
-    
     public $showLimit = null;
     public $posts;
     public $currentUserIdentity;
 
-    
     public function run()
     {
-//        $max = Yii::$app->params['limitPostsInPostList'];
-//
-//        if ($this->showLimit) {
-//            $max = $this->showLimit;
-//        }
-
-//        $list = Comment::getCommentsList($max, $this->postId);
-//        $currentUserIdentity = Yii::$app->user->identity;
-//        $post = Post::findOne($this->postId);
-//
         $model = new PostFormForUpdate(null, $this->currentUserIdentity);
 
         return $this->render('block', [

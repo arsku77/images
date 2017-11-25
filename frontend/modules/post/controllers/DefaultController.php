@@ -51,6 +51,7 @@ class DefaultController extends Controller
         $currentUser = Yii::$app->user->identity;
         $model = new PostFormForUpdate($id, $currentUser);
         $post = $this->findPost($id);
+
         $modelComment = new CommentForm(null, $post, $currentUser);
 
         return $this->render('view', [
@@ -126,7 +127,7 @@ class DefaultController extends Controller
     public function actionDelete($id)
     {
         $currentUserLogged = Yii::$app->user->identity;
-        $postModelForDelete = $this->findModel($id);
+        $postModelForDelete = $this->findPost($id);
         if ($postModelForDelete &&
             $currentUserLogged->getId()==$postModelForDelete->user_id) {
             if ($postModelForDelete->delete()) {
@@ -210,13 +211,13 @@ class DefaultController extends Controller
 
     /**
      * @param integer $id
-     * @return User
+     * @return Post
      * @throws NotFoundHttpException
      */
-    private function findPost($id)
+    protected function findPost($id)
     {
-        if ($user = Post::findOne($id)) {
-            return $user;
+        if ($post = Post::findOne($id)) {
+            return $post;
         }
         throw new NotFoundHttpException();
     }
@@ -247,21 +248,6 @@ class DefaultController extends Controller
         ];
     }
 
-    /**
-     * Finds the Post model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Post the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Post::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 
     /**
      * Finds the Feed model based on its primary key value.

@@ -47,7 +47,8 @@ class PostFormForUpdate extends Model
         if ($this->validate()) {
             $post = Post::findOne($this->id);
             $post->description = $this->description;//jo savybei suteikiam duomenį iš formos
-             if ($post->save(false, ['description'])) {
+            $post->updated_at = time();//jo savybei suteikiam duomenį iš formos
+             if ($post->save(false, ['description', 'updated_at' ])) {
                  $event = new PostCreatedEvent();
                  $event->user = $this->user;//is post creator
                  $event->post = $post;//pakraunam duomenimis
