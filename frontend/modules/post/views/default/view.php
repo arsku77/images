@@ -119,6 +119,7 @@ $this->title = Yii::t('post','POST');
                                             [
                                                 'class' => 'btn btn-danger',
                                                 'style' => 'margin: 0px 0px 0px 0px;',
+                                                'title' => Yii::t('post','Delete this post and his all comments, feeds, picture'),
                                                 'data' => [
                                                     'confirm' => 'Are you sure you want to delete Post?',
                                                     'method' => 'post',

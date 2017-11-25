@@ -84,6 +84,7 @@ $this->title = Yii::t('index','Subscribed');
                                                 [
                                                     'class' => 'btn btn-danger',
                                                     'style' => 'margin: 0px 0px 0px 0px;',
+                                                    'title' => Yii::t('post','Delete this feeds only, but not news or picture'),
                                                     'data' => [
                                                         'confirm' => 'Are you sure you want to delete this item?',
                                                         'method' => 'post',

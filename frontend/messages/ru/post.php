@@ -16,6 +16,6 @@ return [
     'Post reported!' => 'Сообщение обжалована!',
     'Report post' => 'Обжаловать новость',
     'Post has been reported' => 'Это новость уже обжалована',
-
-
+    'Delete this post and his all comments, feeds, picture' => 'Удалить этот пост и все его комментарии, каналы, изображение.',
+    'Delete this feeds only, but not news or picture' => 'Удалите только эти каналы, но не новости или изображения.',
     ];

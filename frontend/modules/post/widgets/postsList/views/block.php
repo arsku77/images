@@ -59,6 +59,7 @@ use Yii;
                     <?= Html::a('Delete post', ['/post/default/delete', 'id' => $item['id']], [
                         'class' => 'btn btn-danger',
                         'style' => 'margin: -30px 0px 0px 0px;',
+                        'title' => Yii::t('post','Delete this post and his all comments, feeds, picture'),
                         'data' => [
                             'confirm' => 'Are you sure you want to delete this post?',
                             'method' => 'post',
