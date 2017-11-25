@@ -49,10 +49,12 @@ class DefaultController extends Controller
         }
 
         $currentUser = Yii::$app->user->identity;
+        $model = new PostFormForUpdate($id, $currentUser);
         $post = $this->findPost($id);
         $modelComment = new CommentForm(null, $post, $currentUser);
 
         return $this->render('view', [
+            'model' => $model,
             'post' => $post,
             'currentUser' => $currentUser,
             'modelComment' => $modelComment
@@ -108,7 +110,8 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post())&&$model->save()) {
 
             Yii::$app->session->setFlash('success', 'Post updated!');
-            return $this->redirect(['default/index']);
+            return $this->redirect(Yii::$app->request->referrer);
+//            return $this->redirect(['default/index']);
         }
 
         return $this->redirect(['default/index']);

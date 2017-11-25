@@ -52,7 +52,7 @@ use Yii;
 
                     <?= Html::submitButton('Update', [
                         'class' => 'btn btn-secondary',
-                        'name' => 'comment-update-button',
+                        'name' => 'post-update-button',
                         'style' => 'margin: -30px 0px 0px 0px;',
                     ]) ?>
 

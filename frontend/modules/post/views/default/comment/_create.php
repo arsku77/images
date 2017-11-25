@@ -13,8 +13,9 @@ use yii\bootstrap\ActiveForm;
         <?= $form->field($model, 'text')
             ->textarea([
                 'id' => 'comment',
-                'rows' => 6,
+                'rows' => 4,
                 'class' => 'form-control',
+                'style' => 'font-weight:200;padding:0px 0px 0px 0px;margin: 0px 0px 0px 0px;width:80%',
                 'placeholder' => 'Text write here',
             ])->label(Yii::t('post','Comment respectfully comment. Thank you.')) ?>
     </p>

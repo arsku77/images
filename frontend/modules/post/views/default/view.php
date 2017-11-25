@@ -7,6 +7,8 @@ use yii\helpers\Url;
 use yii\web\JqueryAsset;
 use frontend\modules\post\widgets\commentsList\CommentsList;
 use Yii;
+use yii\bootstrap\ActiveForm;
+
 $this->title = Yii::t('post','POST');
 ?>
     <div class="page-posts no-padding">
@@ -18,6 +20,7 @@ $this->title = Yii::t('post','POST');
                 <div class="blog-posts blog-posts-large">
 
                     <div class="row">
+
 
 
                         <!-- feed item -->
@@ -37,8 +40,44 @@ $this->title = Yii::t('post','POST');
                             <div class="post-type-image">
                                 <img src="<?php echo $post->getImage(); ?>" alt="">
                             </div>
+
+                            <?php if ($post->isAuthor($currentUser)): ?>
+
+                                <?php $form = ActiveForm::begin([
+                                    'id' => 'post-update-form' . $post->getId(),
+                                    'method' => 'post',
+                                    'action' => [
+                                        '/post/default/update',
+                                        'id' => $post->getId(),
+                                    ]
+                                ]); ?>
+
+                            <?php endif; ?>
+
+
+
+
                             <div class="post-description">
-                                <p><?php echo Html::encode($post->description); ?></p>
+
+                                <?php if ($post->isAuthor($currentUser)): ?>
+
+                                    <?= $form->field($model, 'description')
+                                        ->textarea(['rows' => 3,
+                                            'value' => Html::encode($post->description),
+                                            'class' => 'form-control',
+                                            'style' => 'font-weight:200;padding:0px 0px 0px 0px;margin: 0px 0px 0px 0px;width:80%',
+                                        ])
+                                        ->label(Yii::t('post','News respectfully post. Thank you.'), [
+                                            'style' => 'font-weight:100;padding:0px 0px 0px 0px;margin: 10px 0px 0px 0px;width:80%',
+                                        ]) ?>
+
+                                <?php else: ?>
+
+                                    <p><?php echo Html::encode($post->description); ?></p>
+
+                                <?php endif; ?>
+
+
                             </div>
                             <div class="post-bottom">
                                 <div class="post-likes">
@@ -61,9 +100,22 @@ $this->title = Yii::t('post','POST');
                                     <span><?php echo Yii::$app->formatter->asDatetime($post->created_at); ?></span>
                                 </div>
 
-                                <div class="post-comments">
-                                    <?php if ($post->isAuthor($currentUser)): ?>
-                                        <?php echo Html::a('Delete this Post', ['/post/default/delete', 'id' => $post->getId()],
+
+
+                                <?php if ($post->isAuthor($currentUser)): ?>
+                                    <div class="post-comments">
+
+                                        <?= Html::submitButton('Update', [
+                                            'class' => 'btn btn-secondary',
+                                            'name' => 'post-update-button',
+                                            'style' => 'margin: 0px 0px 0px 0px;',
+                                        ]) ?>
+
+<!--                                    </div>-->
+<!---->
+<!---->
+<!--                                    <div class="post-comments">-->
+                                        <?= Html::a('Delete this Post', ['/post/default/delete', 'id' => $post->getId()],
                                             [
                                                 'class' => 'btn btn-danger',
                                                 'style' => 'margin: 0px 0px 0px 0px;',
@@ -73,8 +125,14 @@ $this->title = Yii::t('post','POST');
                                                 ],
 
                                             ]); ?>
-                                    <?php endif; ?>
-                                </div>
+
+
+                                    </div>
+                                    <?php ActiveForm::end(); ?>
+                                <?php endif; ?>
+
+
+
 
 
 
