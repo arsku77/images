@@ -13,6 +13,7 @@ class ProfileForm extends Model
     public $about;
     public $id;
     public $username;
+    public $flagShowUpdateForm;
 
     /**
      * @inheritdoc
@@ -22,6 +23,7 @@ class ProfileForm extends Model
         return [
             [['username'], 'required'],
             [['id'], 'safe'],
+            [['flagShowUpdateForm'], 'safe'],
             [['about'], 'string', 'max' => Yii::$app->params['maxLengthProfileTextAboutSelf']],
         ];
     }
@@ -29,9 +31,10 @@ class ProfileForm extends Model
     /**
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $flagShowUpdateForm = null)
     {
         $this->user = $user;
+        $this->flagShowUpdateForm = $flagShowUpdateForm;
         $this->about = $user->about;
         $this->id = $user->id;
         $this->username = $user->username;

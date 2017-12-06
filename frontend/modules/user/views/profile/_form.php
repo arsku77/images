@@ -15,6 +15,7 @@ use yii\widgets\ActiveForm;
     'action' => [
         'profile/update',
         'id' => $model->id,
+        'flagShowUpdateForm' => true,
         ]
 ]); ?>
     <?= $form->field($model, 'username')

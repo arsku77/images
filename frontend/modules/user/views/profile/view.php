@@ -65,8 +65,17 @@ $this->title = Html::encode($user->username);
 
                             <!--                            <a href="#" class="btn btn-default">Upload profile image</a>-->
                             <a href="#" class="btn btn-default">Edit profile</a>
+                            <?php echo Html::a('Edit profile', ['profile/update', 'id' => $user->getId()], [
+                                'class' => 'btn btn-secondary',
+                                'id' => 'btnShowUpdate',
+                                'data' => [
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
+
                             <br/>
                             <br/>
+
                             <div class="alert alert-success display-none" id="profile-image-success">Profile image updated</div>
                             <div class="alert alert-danger display-none" id="profile-image-fail"></div>
                             <?php if ($currentUser && !$currentUser->equals($user)): ?>
@@ -97,12 +106,15 @@ $this->title = Html::encode($user->username);
                             </div>
                         <?php endif;?>
                         <!-- profile update form-->
-                        <div class="comment-respond">
+                        <?php if ($modelProfile->flagShowUpdateForm): ?>
+                            <div class="comment-respond">
                                 <h4><?php echo Yii::t('user','Update profile here'); ?></h4>
                                 <?= $this->render('_form', [
                                     'model' => $modelProfile,
                                 ]) ?>
-                        </div>
+                            </div>
+                        <?php endif;?>
+
                         <!--profile update form end-->
 
 

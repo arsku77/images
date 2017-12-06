@@ -29,7 +29,7 @@ class ProfileController extends Controller
         $user = $this->findUser($nickname);
         $postList = $user->getPostList($limitPosts);
         $modelPicture = new PictureForm();
-        $modelProfile = new ProfileForm($user);
+        $modelProfile = new ProfileForm($user, $flagShowUpdateForm = false);
 //        echo '<pre>';
 //        print_r($postItems);
 //        echo '<pre>';die;
@@ -44,7 +44,7 @@ class ProfileController extends Controller
     }
 
 
-    public function actionUpdate($id)
+    public function actionUpdate($id, $flagShowUpdateForm = null)
     {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/user/default/login']);
@@ -60,9 +60,16 @@ class ProfileController extends Controller
             return $this->goHome();
         }
 
-        $modelProfile = new ProfileForm($userNeedEdit);
+        $modelProfile = new ProfileForm($userNeedEdit, $flagShowUpdateForm);
+
+        if ($flagShowUpdateForm){
+            $modelProfile->load(Yii::$app->request->post());
+            return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname()]);
+        }
         if ($modelProfile->load(Yii::$app->request->post()) && $modelProfile->save()) {
             Yii::$app->session->setFlash('success', Yii::t('user','Profile updated!'));
+        } else {
+            Yii::$app->session->setFlash('danger', Yii::t('user','Profile not updated!'));
         }
         return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname()]);
     }
