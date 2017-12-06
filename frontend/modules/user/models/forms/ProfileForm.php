@@ -12,6 +12,7 @@ class ProfileForm extends Model
     public $user;
     public $about;
     public $id;
+    public $username;
 
     /**
      * @inheritdoc
@@ -19,28 +20,21 @@ class ProfileForm extends Model
     public function rules()
     {
         return [
-//            [['parent_id', 'post_id', 'author_id'], 'integer'],
-            //  [['parent_id'], 'integer'],
-
-//            [['username'], 'required'],
-//            [['about'], 'safe'],
+            [['username'], 'required'],
             [['id'], 'safe'],
             [['about'], 'string', 'max' => Yii::$app->params['maxLengthProfileTextAboutSelf']],
-
         ];
     }
 
     /**
      * @param User $user
-     * @param $config array
      */
     public function __construct(User $user)
     {
         $this->user = $user;
         $this->about = $user->about;
         $this->id = $user->id;
-//        $this->about = $user->about;
-//        parent::__construct($config);
+        $this->username = $user->username;
     }
 
     /**
@@ -51,10 +45,9 @@ class ProfileForm extends Model
     {
         if ($this->validate()) {
             $userForUpdate = $this->user;
-//            $userForUpdate = User::findOne($this->id);
-          //  $userForUpdate->username = $this->user->username;
+            $userForUpdate->username = $this->user->username;
             $userForUpdate->about = $this->about;
-            if ($userForUpdate->save(false,['about'])) {
+            if ($userForUpdate->save(false,['username', 'about'])) {
                 return true;
             }
             return false;

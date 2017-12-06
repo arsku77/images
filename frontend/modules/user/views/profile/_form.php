@@ -22,23 +22,15 @@ use yii\widgets\ActiveForm;
             'value' => Html::encode($model->about),
             'class' => 'form-control',
         ])
-        ->label(Yii::t('post','Comment respectfully comment. Thank you.'), [
+        ->label(Yii::t('user','Write about yourself.'), [
             'style' => 'font-weight:50;padding:0px 0px 0px 0px;margin: 10px 0px 0px 0px;width:60%',
         ]) ?>
 
     <?= Html::submitButton('Update', [
         'class' => 'btn btn-secondary',
         'style' => 'margin: 0px 0px 0px 0px;',
-        'name' => 'comment-update-button',
+        'name' => 'profile-update-button',
     ]) ?>
 
-    <?= Html::a('Delete comment', ['comment/delete', 'id' => $model->id], [
-        'class' => 'btn btn-danger',
-        'style' => 'margin: 0px 0px 0px 0px;',
-        'data' => [
-            'confirm' => 'Are you sure you want to delete this comment?',
-            'method' => 'post',
-        ],
-    ]) ?>
 <?php ActiveForm::end(); ?>
 

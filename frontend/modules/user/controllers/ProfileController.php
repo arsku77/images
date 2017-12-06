@@ -43,6 +43,7 @@ class ProfileController extends Controller
         ]);
     }
 
+
     public function actionUpdate($id)
     {
         if (Yii::$app->user->isGuest) {
@@ -51,10 +52,14 @@ class ProfileController extends Controller
 
         $currentLoggedUser = Yii::$app->user->identity;
         $userNeedEdit = $this->findUserById($id);
+        if (!$userNeedEdit -> equals($currentLoggedUser)){
+
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('danger', 'Not your profile, not updated!');
+            return $this->goHome();
+        }
+
         $modelProfile = new ProfileForm($userNeedEdit);
-//        echo '<pre>';
-//        print_r($postItems);
-//        echo '<pre>';die;
         if ($modelProfile->load(Yii::$app->request->post()) && $modelProfile->save()) {
             Yii::$app->session->setFlash('success', 'Profile updated!');
         }
