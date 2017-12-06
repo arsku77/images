@@ -52,6 +52,7 @@ class ProfileController extends Controller
 
         $currentLoggedUser = Yii::$app->user->identity;
         $userNeedEdit = $this->findUserById($id);
+
         if (!$userNeedEdit -> equals($currentLoggedUser)){
 
             Yii::$app->user->logout();
@@ -61,7 +62,7 @@ class ProfileController extends Controller
 
         $modelProfile = new ProfileForm($userNeedEdit);
         if ($modelProfile->load(Yii::$app->request->post()) && $modelProfile->save()) {
-            Yii::$app->session->setFlash('success', 'Profile updated!');
+            Yii::$app->session->setFlash('success', Yii::t('user','Profile updated!'));
         }
         return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname()]);
     }

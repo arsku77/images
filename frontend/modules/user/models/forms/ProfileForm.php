@@ -45,7 +45,7 @@ class ProfileForm extends Model
     {
         if ($this->validate()) {
             $userForUpdate = $this->user;
-            $userForUpdate->username = $this->user->username;
+            $userForUpdate->username = $this->username;
             $userForUpdate->about = $this->about;
             if ($userForUpdate->save(false,['username', 'about'])) {
                 return true;
