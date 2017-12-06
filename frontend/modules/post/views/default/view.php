@@ -158,7 +158,7 @@ $this->title = Yii::t('post','POST');
                         </div>
                         <!-- comment item end -->
 
-                        <!--post form-->
+                        <!-- new comment form-->
                         <div class="col-sm-12 col-xs-12">
                             <div class="comment-respond">
                                 <h4><?php echo Yii::t('post','Leave a Reply'); ?></h4>
@@ -168,7 +168,7 @@ $this->title = Yii::t('post','POST');
                                 ]) ?>
                             </div>
                         </div>
-                        <!--post form end-->
+                        <!--new comment form end-->
                     </div>
                 </div>
             </div>

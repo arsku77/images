@@ -17,9 +17,9 @@ use frontend\models\User;
 class CommentForm extends Model
 {
     public $id;
-    public $parent_id;
-    public $post_id;
-    public $author_id;
+//    public $parent_id;
+//    public $post_id;
+//    public $author_id;
     public $text;
     private $post;
     private $user;
@@ -34,7 +34,7 @@ class CommentForm extends Model
 //            [['parent_id', 'post_id', 'author_id'], 'integer'],
             //  [['parent_id'], 'integer'],
             [['text'], 'required'],
-            [['text'], 'string', 'max' => Yii::$app->params['maxCommentLenghtInPost']],
+            [['text'], 'string', 'max' => Yii::$app->params['maxCommentLengthInPost']],
 
         ];
     }

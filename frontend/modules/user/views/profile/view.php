@@ -96,6 +96,19 @@ $this->title = Html::encode($user->username);
                                 <hr>
                             </div>
                         <?php endif;?>
+                        <!-- profile update form-->
+                        <div class="comment-respond">
+                                <h4><?php echo Yii::t('user','Update profile here'); ?></h4>
+                                <?= $this->render('_form', [
+                                    'model' => $modelProfile,
+                                ]) ?>
+                        </div>
+                        <!--profile update form end-->
+
+
+
+
+
                         <div class="profile-bottom">
                             <div class="profile-post-count">
                                 <span><?php echo $user->getPostCount(); echo Yii::t('post', 'Posts'); ?></span>

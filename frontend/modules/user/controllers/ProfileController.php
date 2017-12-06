@@ -2,6 +2,7 @@
 
 namespace frontend\modules\user\controllers;
 
+use frontend\modules\user\models\forms\ProfileForm;
 use Yii;
 use yii\web\Controller;
 use frontend\models\User;
@@ -28,6 +29,7 @@ class ProfileController extends Controller
         $user = $this->findUser($nickname);
         $postList = $user->getPostList($limitPosts);
         $modelPicture = new PictureForm();
+        $modelProfile = new ProfileForm($user);
 //        echo '<pre>';
 //        print_r($postItems);
 //        echo '<pre>';die;
@@ -36,8 +38,27 @@ class ProfileController extends Controller
             'user' => $user,
             'currentUser' => $currentUser,
             'modelPicture' => $modelPicture,
+            'modelProfile' => $modelProfile,
             'postList' => $postList,
         ]);
+    }
+
+    public function actionUpdate($id)
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        $currentLoggedUser = Yii::$app->user->identity;
+        $userNeedEdit = $this->findUserById($id);
+        $modelProfile = new ProfileForm($userNeedEdit);
+//        echo '<pre>';
+//        print_r($postItems);
+//        echo '<pre>';die;
+        if ($modelProfile->load(Yii::$app->request->post()) && $modelProfile->save()) {
+            Yii::$app->session->setFlash('success', 'Profile updated!');
+        }
+        return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname()]);
     }
 
     /**
@@ -129,7 +150,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param integer $nickname
+     * @param integer $id
      * @return User
      * @throws NotFoundHttpException
      */

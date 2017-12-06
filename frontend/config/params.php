@@ -15,7 +15,8 @@ return [
     ],
     'feedPostLimit' => 200,
     'maxCommentsInOnePost' => 6,
-    'maxCommentLenghtInPost' => 1000,
+    'maxCommentLengthInPost' => 1000,
+    'maxLengthProfileTextAboutSelf' => 1000,
     'limitPostsInProfile' => 20,
     'limitPostsInPostList' => 50,
     'supportedLanguages' => [
