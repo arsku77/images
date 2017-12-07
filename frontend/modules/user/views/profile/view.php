@@ -62,23 +62,28 @@ $this->title = Html::encode($user->username);
 
                             <?php endif; ?>
 
+                            <?php if ($modelProfile->flagShowUpdateForm): ?>
 
-                            <?php echo Html::a('Edit profile', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => true], [
-                                'class' => 'btn btn-default',
-                                'id' => 'btnShowUpdate',
-                                'data' => [
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
+                                <?php echo Html::a('Close update field', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => false], [
+                                    'class' => 'btn btn-default',
+                                    'id' => 'btnHideUpdate',
+                                    'data' => [
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
 
-                            <?php echo Html::a('Close update field', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => false], [
-                                'class' => 'btn btn-default',
-                                'id' => 'btnHideUpdate',
-                                'data' => [
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
+                            <?php else: ?>
 
+
+                                <?php echo Html::a('Edit profile', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => true], [
+                                    'class' => 'btn btn-default',
+                                    'id' => 'btnShowUpdate',
+                                    'data' => [
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
+
+                               <?php endif; ?>
                             <br/>
                             <br/>
 
