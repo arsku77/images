@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
         ]) ?>
 
     <?= $form->field($model, 'about')
-        ->textarea(['rows' => 4,
+        ->textarea(['rows' => 2,
             'value' => Html::encode($model->about),
             'class' => 'form-control',
         ])

@@ -105,12 +105,6 @@ $this->title = Html::encode($user->username);
                             <?php endif; ?>
 
                         </div>
-                        <?php if ($user->about): ?>
-                            <div class="profile-description">
-                                <h5><p><?php echo HtmlPurifier::process($user->about); ?></p></h5>
-                                <hr>
-                            </div>
-                        <?php endif;?>
                         <!-- profile update form-->
 
                         <?php if ($modelProfile->flagShowUpdateForm): ?>
@@ -119,8 +113,16 @@ $this->title = Html::encode($user->username);
                                 <?= $this->render('_form', [
                                     'model' => $modelProfile,
                                 ]) ?>
-
+                            <br>
                             </div>
+                        <?php else: ?>
+                            <?php if ($user->about): ?>
+                                <div class="profile-description">
+                                    <h5><p><?php echo HtmlPurifier::process($user->about); ?></p></h5>
+                                    <hr>
+                                </div>
+                            <?php endif;?>
+
                         <?php endif;?>
 
                         <!--profile update form end-->
