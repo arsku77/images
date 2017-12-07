@@ -4,10 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\User */
+/* @var $model \frontend\modules\user\models\forms\ProfileForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 
 <?php $form = ActiveForm::begin([
     'id' => 'profile-update-form' . $model->id,

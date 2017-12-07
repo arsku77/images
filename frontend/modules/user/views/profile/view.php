@@ -60,30 +60,32 @@ $this->title = Html::encode($user->username);
                                 <?php endif; ?>
                                 <?= Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['/user/profile/view', 'nickname' => ($user->nickname ? $user->nickname : $user->id)], ['class' => 'btn btn-info']) ?>
 
+                                <?php if ($modelProfile->flagShowUpdateForm): ?>
+
+                                    <?php echo Html::a(Yii::t('user','Close update field'),
+                                        ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => false], [
+                                            'class' => 'btn btn-default',
+                                            'id' => 'btnHideUpdate',
+                                            'data' => [
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+
+                                <?php else: ?>
+
+                                    <?php echo Html::a(Yii::t('user','Edit profile'),
+                                        ['profile/update',
+                                            'id' => $user->getId(),
+                                            'flagShowUpdateForm' => true,],
+                                        ['class' => 'btn btn-default',
+                                            'id' => 'btnShowUpdate',
+                                            'data' => [
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+                                <?php endif; ?>
+
                             <?php endif; ?>
-
-                            <?php if ($modelProfile->flagShowUpdateForm): ?>
-
-                                <?php echo Html::a('Close update field', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => false], [
-                                    'class' => 'btn btn-default',
-                                    'id' => 'btnHideUpdate',
-                                    'data' => [
-                                        'method' => 'post',
-                                    ],
-                                ]) ?>
-
-                            <?php else: ?>
-
-
-                                <?php echo Html::a('Edit profile', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => true], [
-                                    'class' => 'btn btn-default',
-                                    'id' => 'btnShowUpdate',
-                                    'data' => [
-                                        'method' => 'post',
-                                    ],
-                                ]) ?>
-
-                               <?php endif; ?>
                             <br/>
                             <br/>
 
@@ -110,16 +112,17 @@ $this->title = Html::encode($user->username);
                             <?php endif; ?>
 
                         </div>
-                        <!-- profile update form-->
 
                         <?php if ($modelProfile->flagShowUpdateForm): ?>
+                            <!-- profile update form-->
                             <div class="comment-respond">
                                 <h4><?php echo Yii::t('user','Update profile here'); ?></h4>
                                 <?= $this->render('_form', [
                                     'model' => $modelProfile,
                                 ]) ?>
-                            <br>
+                                <br>
                             </div>
+                            <!--profile update form end-->
                         <?php else: ?>
                             <?php if ($user->about): ?>
                                 <div class="profile-description">
@@ -127,14 +130,7 @@ $this->title = Html::encode($user->username);
                                     <hr>
                                 </div>
                             <?php endif;?>
-
                         <?php endif;?>
-
-                        <!--profile update form end-->
-
-
-
-
 
                         <div class="profile-bottom">
                             <div class="profile-post-count">
@@ -180,8 +176,6 @@ $this->title = Html::encode($user->username);
     </div>
 
 </div>
-
-
 
 
 

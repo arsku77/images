@@ -10,13 +10,20 @@ use yii\web\NotFoundHttpException;
 use frontend\modules\user\models\forms\PictureForm;
 use yii\web\UploadedFile;
 use yii\web\Response;
-use frontend\models\Post;
-use frontend\modules\post\models\forms\PostForm;
 
 
 class ProfileController extends Controller
 {
 
+    /**
+     * @param $nickname
+     * @param bool $flagShowUpdateForm
+     * @return string|Response
+     * button (but not form) btnShowUpdate in \frontend\modules\user\views\profile\view.php
+     * pass $flagShowUpdateForm = true, and this action
+     * pass to profile update form (ProfileForm), she $flagShowUpdateForm pass to
+     * \frontend\modules\user\views\profile\view.php
+     */
     public function actionView($nickname, $flagShowUpdateForm = false)
     {
         if (Yii::$app->user->isGuest) {
@@ -30,9 +37,6 @@ class ProfileController extends Controller
         $postList = $user->getPostList($limitPosts);
         $modelPicture = new PictureForm();
         $modelProfile = new ProfileForm($user, $flagShowUpdateForm);
-//        echo '<pre>';
-//        print_r($postItems);
-//        echo '<pre>';die;
 
         return $this->render('view', [
             'user' => $user,
@@ -43,7 +47,16 @@ class ProfileController extends Controller
         ]);
     }
 
-
+    /**
+     * @param $id
+     * @param bool $flagShowUpdateForm
+     * @return string|Response
+     * button (but not form) btnShowUpdate in \frontend\modules\user\views\profile\view.php
+     * with action profile/update transmits $flagShowUpdateForm = true|false for this method,
+     * this method-action, parameter $flagShowUpdateForm pass to profile update form (ProfileForm),
+     * she $flagShowUpdateForm pass to
+     * \frontend\modules\user\views\profile\view.php
+     */
     public function actionUpdate($id, $flagShowUpdateForm = false)
     {
         if (Yii::$app->user->isGuest) {
@@ -63,7 +76,7 @@ class ProfileController extends Controller
         $modelProfile = new ProfileForm($userNeedEdit, $flagShowUpdateForm);
 
         if ($flagShowUpdateForm || !$modelProfile->load(Yii::$app->request->post())){
-           // $modelProfile->load(Yii::$app->request->post());
+            // this request is of not active form - this button click - simply show or hide form update profile in view
             return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname(), 'flagShowUpdateForm' => $flagShowUpdateForm]);
         }
         if ($modelProfile->load(Yii::$app->request->post()) && $modelProfile->save()) {

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace frontend\modules\user\models\forms;
 
 use Yii;
@@ -30,8 +29,9 @@ class ProfileForm extends Model
 
     /**
      * @param User $user
+     * @param  $flagShowUpdateForm boolean
      */
-    public function __construct(User $user, $flagShowUpdateForm = null)
+    public function __construct(User $user, $flagShowUpdateForm = false)
     {
         $this->user = $user;
         $this->flagShowUpdateForm = $flagShowUpdateForm;
@@ -47,10 +47,9 @@ class ProfileForm extends Model
     public function save() : bool
     {
         if ($this->validate()) {
-            $userForUpdate = $this->user;
-            $userForUpdate->username = $this->username;
-            $userForUpdate->about = $this->about;
-            if ($userForUpdate->save(false,['username', 'about'])) {
+            $this->user->username = $this->username;
+            $this->user->about = $this->about;
+            if ($this->user->save(false,['username', 'about'])) {
                 return true;
             }
             return false;
