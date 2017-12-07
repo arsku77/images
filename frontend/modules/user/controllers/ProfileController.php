@@ -62,7 +62,7 @@ class ProfileController extends Controller
 
         $modelProfile = new ProfileForm($userNeedEdit, $flagShowUpdateForm);
 
-        if ($flagShowUpdateForm){
+        if ($flagShowUpdateForm || !$modelProfile->load(Yii::$app->request->post())){
            // $modelProfile->load(Yii::$app->request->post());
             return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname(), 'flagShowUpdateForm' => $flagShowUpdateForm]);
         }

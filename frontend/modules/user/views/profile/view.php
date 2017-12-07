@@ -71,6 +71,14 @@ $this->title = Html::encode($user->username);
                                 ],
                             ]) ?>
 
+                            <?php echo Html::a('Close update field', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => false], [
+                                'class' => 'btn btn-default',
+                                'id' => 'btnHideUpdate',
+                                'data' => [
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
+
                             <br/>
                             <br/>
 
@@ -104,12 +112,14 @@ $this->title = Html::encode($user->username);
                             </div>
                         <?php endif;?>
                         <!-- profile update form-->
+
                         <?php if ($modelProfile->flagShowUpdateForm): ?>
                             <div class="comment-respond">
                                 <h4><?php echo Yii::t('user','Update profile here'); ?></h4>
                                 <?= $this->render('_form', [
                                     'model' => $modelProfile,
                                 ]) ?>
+
                             </div>
                         <?php endif;?>
 
