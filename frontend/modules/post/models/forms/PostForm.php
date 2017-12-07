@@ -41,11 +41,11 @@ class PostForm extends Model
     }
 
     /**
-     * @param integer $id = null,
+     * @param integer $id,
      * @param User $user
      */
-    public function __construct($id = null, User $user = null)
-    {//$id = null if new form, if user Guest
+    public function __construct($id, User $user)
+    {
         $this->id = $id;
         $this->user = $user;
         $this->on(self::EVENT_AFTER_VALIDATE, [$this, 'resizePicture']);//po validacijos iskviecia si metoda

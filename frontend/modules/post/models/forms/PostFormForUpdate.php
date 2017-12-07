@@ -32,7 +32,7 @@ class PostFormForUpdate extends Model
      * @param User $user
      */
     public function __construct($id = null, User $user = null)
-    {//$id = null if new form, if user Guest
+    {//$id = null user = null, if user Guest can small view last news in \frontend\modules\post\views\default\index.php
         $this->id = $id;
         $this->user = $user;
         $this->on(self::EVENT_POST_CREATED, [Yii::$app->feedService, 'addToFeeds']);

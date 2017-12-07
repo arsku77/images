@@ -72,8 +72,8 @@ class DefaultController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/user/default/login']);
         }
-
-        $model = new PostForm(null, Yii::$app->user->identity);
+        $userPostAuthor = Yii::$app->user->identity;
+        $model = new PostForm(null, $userPostAuthor);
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -82,7 +82,7 @@ class DefaultController extends Controller
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('success', 'Post created!');
-                return $this->redirect(['default/index']);
+                return $this->redirect(['/user/profile/view', 'nickname' => $userPostAuthor->getNickname()]);
             }
         }
 
