@@ -63,10 +63,8 @@ $this->title = Html::encode($user->username);
                             <?php endif; ?>
 
 
-                            <!--                            <a href="#" class="btn btn-default">Upload profile image</a>-->
-                            <a href="#" class="btn btn-default">Edit profile</a>
-                            <?php echo Html::a('Edit profile', ['profile/update', 'id' => $user->getId()], [
-                                'class' => 'btn btn-secondary',
+                            <?php echo Html::a('Edit profile', ['profile/update', 'id' => $user->getId(),  'flagShowUpdateForm' => true], [
+                                'class' => 'btn btn-default',
                                 'id' => 'btnShowUpdate',
                                 'data' => [
                                     'method' => 'post',

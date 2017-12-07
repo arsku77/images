@@ -17,7 +17,7 @@ use frontend\modules\post\models\forms\PostForm;
 class ProfileController extends Controller
 {
 
-    public function actionView($nickname)
+    public function actionView($nickname, $flagShowUpdateForm = false)
     {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/user/default/login']);
@@ -29,7 +29,7 @@ class ProfileController extends Controller
         $user = $this->findUser($nickname);
         $postList = $user->getPostList($limitPosts);
         $modelPicture = new PictureForm();
-        $modelProfile = new ProfileForm($user, $flagShowUpdateForm = false);
+        $modelProfile = new ProfileForm($user, $flagShowUpdateForm);
 //        echo '<pre>';
 //        print_r($postItems);
 //        echo '<pre>';die;
@@ -44,7 +44,7 @@ class ProfileController extends Controller
     }
 
 
-    public function actionUpdate($id, $flagShowUpdateForm = null)
+    public function actionUpdate($id, $flagShowUpdateForm = false)
     {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/user/default/login']);
@@ -63,15 +63,15 @@ class ProfileController extends Controller
         $modelProfile = new ProfileForm($userNeedEdit, $flagShowUpdateForm);
 
         if ($flagShowUpdateForm){
-            $modelProfile->load(Yii::$app->request->post());
-            return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname()]);
+           // $modelProfile->load(Yii::$app->request->post());
+            return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname(), 'flagShowUpdateForm' => $flagShowUpdateForm]);
         }
         if ($modelProfile->load(Yii::$app->request->post()) && $modelProfile->save()) {
             Yii::$app->session->setFlash('success', Yii::t('user','Profile updated!'));
         } else {
             Yii::$app->session->setFlash('danger', Yii::t('user','Profile not updated!'));
         }
-        return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname()]);
+        return $this->redirect(['view', 'nickname' => $userNeedEdit->getNickname(), 'flagShowUpdateForm' => false]);
     }
 
     /**

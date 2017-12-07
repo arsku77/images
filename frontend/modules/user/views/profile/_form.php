@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     'action' => [
         'profile/update',
         'id' => $model->id,
-        'flagShowUpdateForm' => true,
+        'flagShowUpdateForm' => false,
         ]
 ]); ?>
     <?= $form->field($model, 'username')
@@ -43,4 +43,3 @@ use yii\widgets\ActiveForm;
     ]) ?>
 
 <?php ActiveForm::end(); ?>
-
