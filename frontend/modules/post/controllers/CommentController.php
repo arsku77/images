@@ -15,7 +15,8 @@ class CommentController extends Controller
 {
 
     /**
-     * create new comment
+     * @param $postId
+     * @return \yii\web\Response
      */
     public function actionCreate($postId)
     {
@@ -29,9 +30,6 @@ class CommentController extends Controller
         $model = new CommentForm(null, $post, $currentUser);
 
         if ($model->load(Yii::$app->request->post())) {
-//            echo '<pre>';
-//            print_r($model);
-//            echo '<pre>';die;
 
             if ($model->save()) {
 
@@ -42,8 +40,11 @@ class CommentController extends Controller
 
         return $this->redirect(['view', 'id' => $postId]);
     }
+
     /**
-     * update comment
+     * @param $id
+     * @param $postId
+     * @return \yii\web\Response
      */
     public function actionUpdate($id, $postId)
     {
@@ -68,7 +69,8 @@ class CommentController extends Controller
     }
 
     /**
-     * delete comment by id
+     * @param $id
+     * @return \yii\web\Response
      */
     public function actionDelete($id)
     {

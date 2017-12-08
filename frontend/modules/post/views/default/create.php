@@ -16,15 +16,12 @@ $this->title = Yii::t('post','Create');
         <div class="row">
             <div class="page page-post col-sm-12 col-xs-12 post-82">
 
-
                 <div class="blog-posts blog-posts-large">
 
                     <div class="row">
 
                         <!-- feed item -->
                         <article class="post col-sm-12 col-xs-12">
-
-
 
                             <h4><?php echo Yii::t('post','Create post'); ?></h4>
 

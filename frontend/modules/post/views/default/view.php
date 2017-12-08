@@ -111,10 +111,6 @@ $this->title = Yii::t('post','POST');
                                             'style' => 'margin: 0px 0px 0px 0px;',
                                         ]) ?>
 
-<!--                                    </div>-->
-<!---->
-<!---->
-<!--                                    <div class="post-comments">-->
                                         <?= Html::a('Delete this Post', ['/post/default/delete', 'id' => $post->getId()],
                                             [
                                                 'class' => 'btn btn-danger',
@@ -131,9 +127,6 @@ $this->title = Yii::t('post','POST');
                                     </div>
                                     <?php ActiveForm::end(); ?>
                                 <?php endif; ?>
-
-
-
 
 
 
