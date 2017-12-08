@@ -85,7 +85,7 @@ FontAwesomeAsset::register($this);
                                 . '</li>';
                         }
                         echo Nav::widget([
-                            'options' => ['class' => 'menu navbar-nav navbar-right'],
+                            'options' => ['class' => 'main-menu menu navbar-nav navbar-right'],
                             'items' => $menuItems,
                         ]);
                         ?>
@@ -103,6 +103,7 @@ FontAwesomeAsset::register($this);
         <?= $content ?>
 
     </div>
+
     <div class="push"></div>
 </div>
 
