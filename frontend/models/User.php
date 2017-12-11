@@ -209,23 +209,13 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @inheritdoc
-     */
-//    public static function findIdentity($id)
-//    {
-//        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
-//    }
-
-
-    /**
-     * @return mixed
+     * @param $id
+     * @return string
      */
     public static function getNickNameById($id)
     {
-//        return ($this->nickname) ? $this->nickname : $this->getId();
 
         return (self::findIdentity($id)) ? self::findIdentity($id)->nickname : $id;
-//        return ($this->findIdentity($id)->nickname) ? $this->findIdentity($id)->nickname : $id;
     }
 
     /**

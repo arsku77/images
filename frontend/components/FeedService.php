@@ -2,6 +2,8 @@
 
 namespace frontend\components;
 
+use frontend\models\Post;
+use frontend\models\User;
 use yii\base\Component;
 use yii\base\Event;
 use frontend\models\Feed;
@@ -23,52 +25,23 @@ class FeedService extends Component
 
         /* @var $user User */
         $user = $event->getUser();
-        /* @var $user Post */
+        /* @var $post Post */
         $post = $event->getPost();
 
         $followers = $user->getFollowers();
 
-
         foreach ($followers as $follower) {
-            $feedItem = new Feed();
-            $feedItem->user_id = $follower['id'];
-            $feedItem->author_id = $user->id;
-            $feedItem->author_name = $user->username;
-            $feedItem->author_nickname = $user->getNickname();
-            $feedItem->author_picture = $user->getPicture();
-            $feedItem->post_id = $post->id;
-            $feedItem->post_filename = $post->filename;
-            $feedItem->post_description = $post->description;
-            $feedItem->post_created_at = $post->created_at;
-//
-//            echo '<pre>';
-//            print_r($feedItem->user_id);
-//            echo '<pre>';
-//            print_r($feedItem->author_id);
-//            echo '<pre>';
-//            print_r($feedItem->author_name);
-//            echo '<pre>';
-//            print_r($feedItem->author_nickname);
-//            echo '<pre>';
-//            print_r($feedItem->author_picture);
-//            echo '<pre>';
-//            print_r($feedItem->post_id);
-//            echo '<pre>';
-//            print_r($feedItem->post_filename);
-//            echo '<pre>';
-//            print_r($feedItem->post_description);
-//            echo '<pre>';
-//            print_r($feedItem->post_created_at);
-//            echo '<pre>';
-//
-//
-//            if ($feedItem->save()){
-//             echo 'įrašė';}else{
-//                echo 'neįrašė';
-//            }
-//
-//            die;
-
+            $feedItem = new Feed([
+                'user_id' => $follower['id'],
+                'author_id' => $user->id,
+                'author_name' => $user->username,
+                'author_nickname' => $user->getNickname(),
+                'author_picture' => $user->getPicture(),
+                'post_id' => $post->id,
+                'post_filename' => $post->filename,
+                'post_description' => $post->description,
+                'post_created_at' => $post->created_at,
+            ]);
             $feedItem->save();
         }
     }

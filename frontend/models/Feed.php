@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "feed".
@@ -18,7 +19,7 @@ use Yii;
  * @property string $post_description
  * @property integer $post_created_at
  */
-class Feed extends \yii\db\ActiveRecord
+class Feed extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -73,28 +74,40 @@ class Feed extends \yii\db\ActiveRecord
      */
     public function countLikes()
     {
-        /* @var $redis Connection */
-        $redis = Yii::$app->redis;
-        return $redis->scard("post:{$this->post_id}:likes");
+        /* @var $redis yii\redis\Connection */
+        if (!empty(Yii::$app->redis)) {
+                $redis = Yii::$app->redis;
+                return $redis->scard("post:{$this->post_id}:likes");
+        }
+        return 0;
     }
 
     /**
+     * @param $postId
      * @return mixed
      */
     public function countCommentsToRedis($postId)
     {
-        /* @var $redis Connection */
-        $redis = Yii::$app->redis;
-        return $redis->scard("post:{$postId}:comments");
+        /* @var $redis yii\redis\Connection */
+        if (!empty(Yii::$app->redis)) {
+            $redis = Yii::$app->redis;
+            return $redis->scard("post:{$postId}:comments");
+        }
+        return 0;
     }
+
     /**
-     * @param \frontend\models\User $user
+     * @param User $user
+     * @return bool|mixed
      */
     public function isReported(User $user)
     {
-        /* @var $redis Connection */
-        $redis = Yii::$app->redis;
-        return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
+        /* @var $redis yii\redis\Connection */
+        if (!empty(Yii::$app->redis)) {
+            $redis = Yii::$app->redis;
+            return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
+        }
+        return false;
     }
 
     /**
@@ -103,7 +116,7 @@ class Feed extends \yii\db\ActiveRecord
      */
     public function isFollower(User $user): bool
     {
-            return $user->getId() == $this->user_id;
+        return $user->getId() === $this->user_id;
     }
 
 
