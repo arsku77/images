@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -15,8 +15,9 @@ use yii\behaviors\TimestampBehavior;
  * @property string $text
  * @property integer $created_at
  * @property integer $updated_at
+ * @property mixed user
  */
-class Comment extends \yii\db\ActiveRecord
+class Comment extends ActiveRecord
 {
     public function behaviors()
     {
@@ -78,7 +79,7 @@ class Comment extends \yii\db\ActiveRecord
 
     /**
      * Get author of the comments
-     * @return User|null
+     * @return \yii\db\ActiveQuery
      */
     public function getAuthor()
     {
@@ -92,7 +93,7 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getAuthorName()
     {
-        return $this->user->username;
+        return ($this->user) ? $this->user->username : null;
     }
 
     /**
@@ -101,12 +102,15 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function getAuthorNickName()
     {
-        return ($this->user->nickname) ? $this->user->nickname : $this->user->id;
+        if ($this->user){
+            return ($this->user->nickname) ? $this->user->nickname : $this->user->id;
+        }
+        return null;
     }
 
     /**
      * Get user of the post
-     * @return User|null
+     * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
@@ -116,7 +120,7 @@ class Comment extends \yii\db\ActiveRecord
 
     /**
      * Get post about the comments
-     * @return Post|null
+     * @return \yii\db\ActiveQuery
      */
     public function getPost()
     {
