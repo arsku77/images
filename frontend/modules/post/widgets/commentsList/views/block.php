@@ -36,21 +36,19 @@ use Yii;
                             <?= $form->field($model, 'text')
                                 ->textarea(['rows' => 4,
                                     'value' => Html::encode($item['text']),
-                                    'class' => 'form-control',
+                                    'class' => 'form-control comment-form-block-comment-text',
                                 ])
                                 ->label(Yii::t('post','Comment respectfully comment. Thank you.'), [
-                                    'style' => 'font-weight:50;padding:0px 0px 0px 0px;margin: 10px 0px 0px 0px;width:60%',
+                                    'class' => 'comment-form-block-comment-text-label',
                                 ]) ?>
 
                             <?= Html::submitButton('Update', [
-                                'class' => 'btn btn-secondary',
-                                'style' => 'margin: -30px 0px 0px 0px;',
+                                'class' => 'btn btn-secondary comment-form-block-submit-button',
                                 'name' => 'comment-update-button',
                             ]) ?>
 
                             <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
-                                'class' => 'btn btn-danger',
-                                'style' => 'margin: -30px 0px 0px 0px;',
+                                'class' => 'btn btn-danger comment-form-block-submit-button',
                                 'data' => [
                                     'confirm' => 'Are you sure you want to delete this comment?',
                                     'method' => 'post',

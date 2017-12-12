@@ -113,9 +113,9 @@ class PostForm extends Model
     private function findPost($id = null)
     {
         if ($id) {
-            return $post = Post::findOne($id);//for update
+            return Post::findOne($id);//for update
         }
-        return $post = new Post();//for add new post
+        return new Post();//for add new post
     }
 
 

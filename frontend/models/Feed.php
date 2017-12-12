@@ -70,14 +70,23 @@ class Feed extends ActiveRecord
     }
 
     /**
+     * @param $userId
+     * @return bool
+     */
+    public function isAddressee($userId): bool
+    {
+        return $userId === $this->user_id;
+    }
+
+    /**
      * @return mixed
      */
     public function countLikes()
     {
         /* @var $redis yii\redis\Connection */
         if (!empty(Yii::$app->redis)) {
-                $redis = Yii::$app->redis;
-                return $redis->scard("post:{$this->post_id}:likes");
+            $redis = Yii::$app->redis;
+            return $redis->scard("post:{$this->post_id}:likes");
         }
         return 0;
     }

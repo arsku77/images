@@ -127,7 +127,7 @@ header .header-top .brand-logo h1 span {
 }
 
 .header-main-nav .main-nav-wrapper .main-menu ul li.active {
-     background-color: #eee;
+    background-color: #eee;
 }
 
 .header-main-nav .main-nav-wrapper .main-menu ul li a {
@@ -247,7 +247,7 @@ header .header-top .brand-logo h1 span {
 }
 
 
-body.page .page-post .post-description p 
+body.page .page-post .post-description p
 {
     padding: 15px 0 15px 0;
     margin-bottom: 0;
@@ -257,7 +257,7 @@ body.page .page-post .post-description p
 .row {
     /*margin-right: 0px;*/
     /*margin-left: 0px;*/
-padding: 10px 0 0 0;
+    padding: 10px 0 0 0;
 }
 
 footer .footer {
@@ -326,6 +326,25 @@ footer .footer p.text {
 .post .author-name a {
     color: #888;
 }
+/*create news form*/
+.post-form-news-text {
+    width: 70%;
+    font-weight: 400;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+
+.post-form-news-text-label {
+    width: 70%;
+    font-weight: 100;
+    padding: 0 0 0 0;
+    margin: 10px 0 0 0;
+}
+
+.post-form-submit-button {
+    margin: 0 0 0 0;
+}
+
 
 .main .blog-posts .comments-post {
     display: inline-block;
@@ -425,6 +444,32 @@ footer .footer p.text {
 .comments-post ul.comment-list li .comment-info h4.author a:hover {
     color: #c16fb6;
 }
+/*----comments _form in one post----*/
+.comment-form-comment-text {
+    width: 80%;
+    font-weight: 200;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+
+.comment-form-block-comment-text {
+    width: 60%;
+    font-weight: 400;
+    padding: 0 0 0 0;
+    margin: 10px 0 0 0;
+}
+
+.comment-form-block-comment-text-label {
+    width: 60%;
+    font-weight: 100;
+    padding: 0 0 0 0;
+    margin: 10px 0 0 0;
+}
+
+.comment-form-block-submit-button {
+    margin: -30px 0 0 0;
+}
+
 
 /** profile **/
 .profile
@@ -459,7 +504,7 @@ footer .footer p.text {
     font-size: 13px;
 }
 
-.profile .profile-description p 
+.profile .profile-description p
 {
     padding: 25px 0;
     margin-bottom: 0;

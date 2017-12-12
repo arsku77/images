@@ -33,11 +33,10 @@ $this->title = Yii::t('post','Create');
 
                             <?= $form->field($model, 'description')
                                 ->textarea(['rows' => 4,
-                                    'class' => 'form-control',
-                                    'style' => 'font-weight:200;padding:0px 0px 0px 0px;margin: 0px 0px 0px 0px;width:70%',
+                                    'class' => 'form-control post-form-news-text',
                                 ])
                                 ->label(Yii::t('post','News respectfully post. Thank you.'), [
-                                    'style' => 'font-weight:100;padding:0px 0px 0px 0px;margin: 10px 0px 0px 0px;width:70%',
+                                    'class' => 'post-form-news-text-label',
                                 ]) ?>
 
                             <?php echo Html::submitButton('Create', ['class' => 'btn btn-success']); ?>

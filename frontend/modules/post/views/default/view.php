@@ -106,15 +106,13 @@ $this->title = Yii::t('post','POST');
                                     <div class="post-comments">
 
                                         <?= Html::submitButton('Update', [
-                                            'class' => 'btn btn-secondary',
+                                            'class' => 'btn btn-secondary post-form-submit-button',
                                             'name' => 'post-update-button',
-                                            'style' => 'margin: 0px 0px 0px 0px;',
                                         ]) ?>
 
                                         <?= Html::a('Delete this Post', ['/post/default/delete', 'id' => $post->getId()],
                                             [
-                                                'class' => 'btn btn-danger',
-                                                'style' => 'margin: 0px 0px 0px 0px;',
+                                                'class' => 'btn btn-danger post-form-submit-button',
                                                 'title' => Yii::t('post','Delete this post and his all comments, feeds, picture'),
                                                 'data' => [
                                                     'confirm' => 'Are you sure you want to delete Post?',

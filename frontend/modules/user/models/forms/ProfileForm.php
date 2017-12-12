@@ -52,8 +52,9 @@ class ProfileForm extends Model
             if ($this->user->save(false,['username', 'about'])) {
                 return true;
             }
-            return false;
+
         }
+        return false;
     }
 
 }

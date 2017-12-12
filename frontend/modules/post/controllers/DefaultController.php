@@ -150,8 +150,7 @@ class DefaultController extends Controller
     {
         $currentUserLogged = Yii::$app->user->identity;
         $feedModelForDelete = $this->findFeedModel($id);
-        if ($feedModelForDelete &&
-            $currentUserLogged->getId()==$feedModelForDelete->user_id) {
+        if ($feedModelForDelete && $feedModelForDelete->isAddressee($currentUserLogged->getId())) {
             if ($feedModelForDelete->delete()) {
                 Yii::$app->session->setFlash('success', 'Items is deleted');
             } else {
