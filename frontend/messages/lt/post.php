@@ -2,6 +2,8 @@
 return [
     'Posts' => ' Naujienų',
     'Comments' => ' Komentarų',
+    'Comment created!' => 'Komentaras sukurtas!',
+    'Comment updated!' => 'Komentaras atnaujintas!',
     'Likes' => ' Patiktukų',
     'Like' => 'Patiko',
     'Unlike' => 'Nepatiko',

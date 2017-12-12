@@ -29,16 +29,17 @@ class CommentController extends Controller
         $post = $this->findPost($postId);
         $model = new CommentForm(null, $post, $currentUser);
 
-        if ($model->load(Yii::$app->request->post())) {
-
-            if ($model->save()) {
-
-                Yii::$app->session->setFlash('success', 'Comment created!');
-                return $this->redirect(['default/view', 'id' => $postId]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            try {
+                Yii::$app->session->setFlash('success', Yii::t('post','Comment created!'));
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', 'There was an error saving your comment.');
             }
+            return $this->redirect(['default/view', 'id' => $postId]);
         }
 
-        return $this->redirect(['view', 'id' => $postId]);
+        return $this->redirect(['default/view', 'id' => $postId]);
     }
 
     /**
@@ -61,8 +62,13 @@ class CommentController extends Controller
 
         if ($model->load(Yii::$app->request->post())&&$model->save()) {
 
-                Yii::$app->session->setFlash('success', 'Comment updated!');
-                return $this->redirect(['default/view', 'id' => $postId]);
+            try {
+                Yii::$app->session->setFlash('success', Yii::t('post','Comment updated!'));
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', 'There was an error updating your comment.');
+            }
+            return $this->redirect(['default/view', 'id' => $postId]);
         }
 
         return $this->redirect(['default/view', 'id' => $id]);
@@ -99,8 +105,8 @@ class CommentController extends Controller
 
     /**
      * @param integer $id
-     * @return User
-     * @throws NotFoundHttpException
+     * @return \frontend\models\User
+     * @throws yii\web\NotFoundHttpException
      */
     private function findPost($id)
     {
