@@ -148,6 +148,7 @@ class DefaultController extends Controller
      */
     public function actionDeleteFeed($id)
     {
+
         $currentUserLogged = Yii::$app->user->identity;
         $feedModelForDelete = $this->findFeedModel($id);
         if ($feedModelForDelete && $feedModelForDelete->isAddressee($currentUserLogged->getId())) {

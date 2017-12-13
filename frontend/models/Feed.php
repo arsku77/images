@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use frontend\models\traits\OwnersTrait;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -69,15 +70,7 @@ class Feed extends ActiveRecord
         return $this->getPrimaryKey();
     }
 
-    /**
-     * @param $userId
-     * @return bool
-     */
-    public function isAddressee($userId): bool
-    {
-        return $userId === $this->user_id;
-    }
-
+use OwnersTrait;
     /**
      * @return mixed
      */
