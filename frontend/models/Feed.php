@@ -70,7 +70,12 @@ class Feed extends ActiveRecord
         return $this->getPrimaryKey();
     }
 
-use OwnersTrait;
+    /**
+     * @param $userId
+     * @return bool
+     */
+    use OwnersTrait;
+
     /**
      * @return mixed
      */

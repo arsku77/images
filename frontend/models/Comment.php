@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use frontend\models\traits\OwnersTrait;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
@@ -71,11 +72,8 @@ class Comment extends ActiveRecord
      * @param User $user
      * @return bool
      */
-    public function isAuthor(User $user): bool
-    {
-        return $user->getId() == $this->author_id;
+    use OwnersTrait;
 
-    }
 
     /**
      * Get author of the comments

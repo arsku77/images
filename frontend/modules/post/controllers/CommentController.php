@@ -91,7 +91,7 @@ class CommentController extends Controller
 
         $currentUser = Yii::$app->user->identity;
 
-        if ($comment->isAuthor($currentUser)||$post->isAuthor($currentUser)){
+        if ($comment->isOwner($currentUser)||$post->isAuthor($currentUser)){
 
             if ($comment->delete()) {
                 $post->unCommentRemToRedis($comment);

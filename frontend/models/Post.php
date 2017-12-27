@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use frontend\models\traits\OwnersTrait;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 /**
@@ -162,13 +163,8 @@ class Post extends \yii\db\ActiveRecord
      * @param User $user
      * @return bool
      */
-    public function isAuthor(User $user = null): bool
-    {
-        if ($user) {
-            return $user->getId() == $this->user_id;
-        }
-        return false;
-    }
+    use OwnersTrait;
+
 
     /**
      * Get author of the post

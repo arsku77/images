@@ -21,7 +21,7 @@ use Yii;
                     </a>
                     <span>(<?php echo Yii::$app->formatter->asDatetime($item['created_at']); ?>)</span></h4>
 
-                <?php if ($item->isAuthor(Yii::$app->user->identity)): ?>
+                <?php if ($item->isOwner(Yii::$app->user->identity)): ?>
 
                     <div class="col-lg-6">
                         <?php $form = ActiveForm::begin([
@@ -65,7 +65,7 @@ use Yii;
 
                 <?php endif; ?>
 
-                <?php if ($post->isAuthor(Yii::$app->user->identity)&&!$item->isAuthor(Yii::$app->user->identity)): ?>
+                <?php if ($post->isAuthor(Yii::$app->user->identity)&&!$item->isOwner(Yii::$app->user->identity)): ?>
 
                     <div>
                         <?= Html::a('Delete comment', ['comment/delete', 'id' => $item['id']], [
