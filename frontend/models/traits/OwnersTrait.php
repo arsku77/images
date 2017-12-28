@@ -15,7 +15,7 @@ trait OwnersTrait
      * @param $userId
      * @return bool
      */
-    public function isAddresses($userId): bool
+    public function isAddressee($userId): bool
     {
         return $userId === $this->user_id;
     }
