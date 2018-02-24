@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arsku
- * Date: 2017.12.12
- * Time: 22:08
- */
 
 namespace frontend\models\traits;
 use frontend\models\User;

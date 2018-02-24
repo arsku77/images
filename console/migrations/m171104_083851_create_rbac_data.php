@@ -61,7 +61,7 @@ class m171104_083851_create_rbac_data extends Migration
         $user = new User([
             'email' => 'admin@admin.com',
             'username' => 'Admin',
-            'password_hash' => '$2y$13$P9.d7KUb8C6BHCvkdzMsrOi5U.vIAw01UmriB.34PiN50e8nTGFge',
+            'password_hash' => '$2y$13$P9.d7KUb8C6BHCvkdzMsrOi5U.vIAw01UmriB.34PiN50e8nTGFge',//111111
         ]);
         $user->generateAuthKey();
         $user->save();
