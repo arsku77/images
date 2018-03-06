@@ -5,6 +5,7 @@ namespace frontend\modules\post\controllers;
 use frontend\modules\post\models\forms\PostFormForUpdate;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
 use frontend\models\Post;
